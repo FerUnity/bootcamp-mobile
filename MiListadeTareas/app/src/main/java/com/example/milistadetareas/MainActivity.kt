@@ -52,12 +52,13 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ToDoList(modifier: Modifier = Modifier) {
-    // Declaramos las estructura de datos a utilizar en la Screen
+    // Declaramos las 2 estructuras de datos a utilizar en la Screen
     var tarea by remember { mutableStateOf("") }
     val listaTareas = remember { mutableStateListOf<String?>(null) }
 
     // Definimos la estructura general de la aplicación en formato vertical
     Column(
+        //Centramos los elem cvontenidos horizontalmente:
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
@@ -67,19 +68,23 @@ fun ToDoList(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold,
             color = Color.Red,
+            //textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(8.dp)
+                //.fillMaxWidth()
         )
 
         // Agregamos el campo para agregar el nombre de una nueva tarea
         TextField(
-            //Asociamos el valor de texto del textField con la var tarea:
+            //Asociamos el valor de texto del textField con la var string tarea,
+            // def arriba:
             value = tarea,
             onValueChange = { tarea = it },
             label = { Text("Nombre de la tarea") },
             placeholder = { Text("Ingresa una nueva tarea") },
             singleLine = true,
             modifier = Modifier
+                //Hacia todas partes esta el padding de 8dp
                 .padding(8.dp)
                 .fillMaxWidth()
         )
@@ -87,35 +92,50 @@ fun ToDoList(modifier: Modifier = Modifier) {
         // Agregamos el botón para agregar una nueva tarea
         Button(
             onClick = {
-                //Agregamos el texto tarea al onClick del boton
+                //Con onClick, agregamos el texto tarea a la listaTareas:
                 listaTareas.add(tarea)
                 // Luego borramos el texto de la var tarea,
-                // para que se borre autom del textfield y no tener que hacerlo manualmente:
+                // para que se borre autom del Textfield y no tener que hacerlo manualmente:
                 tarea = ""
             },
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
+                //Cuando escriba en el textField se vera
+                // el fondo del btn rojo y su texto blanco
                 containerColor = Color.Red,
                 contentColor = Color.White
             ),
+            //Aqui se habilita el btn cuando se ewcriba algo en el textField:
             enabled = tarea.isNotBlank()
         ) {
-            // Agregamos el ícono
+            // Agregamos el ícono de signo + y el texto del btn
             Icon(
                 imageVector = Icons.Default.Add,
                 contentDescription = "Agregar tarea",
+                //Espacio de 4 dp entre el icono "+" y el texto "Agregar tarea"
                 modifier = Modifier.padding(end = 4.dp)
             )
 
-            // Agregamos el texto
+            // Agregamos el texto.
+            // Ojo el txt en los botones, siempre viene centrado (Por Material design)
             Text("Agregar tarea")
         }
 
-        // Definimos una nueva columna solo para mostrar las tareas
+        // Definimos una nueva columna solo para mostrar la listaTareas,
+        //esta column hereda de la column de arriba, que la contiene
         Column(
             modifier = Modifier
+                //El weight(1f) en este caso nos indica la cantidad de espacio vertical,
+                // vertical porque es una Columna, que usara esta columna hacia abajo
+                //  y por ende el widget listaTareas, del resto del espacio disponible,
+                //O sea debajo del boton,
+                //tb de la listaTareas porque esta columna la contiene:
+                //En este caso es 1f(fraccion), o 1:1, o sea que esta col y por ende la listaTareas,
+                // ocupara el total del espacio disponible hacia abajo.
+                //Com esto evito dar un tamaño numerico que no va a ser igual en todos los dispositivos,
+                // por ende se puede cortar o quedar pasado la pantalla
                 .weight(1f)
                 .padding(
                     horizontal = 8.dp,
@@ -123,8 +143,14 @@ fun ToDoList(modifier: Modifier = Modifier) {
                 )
                 .fillMaxWidth()
         ) {
-            // Aca esta la lista que se comienza a llenar,
-            // Iteramos por cada una de las tareas almacenadas
+            // Aca esta el pintado de la lista que se comienza a llenar,
+            // Iteramos por cada una de las tareas almacenadas.
+
+            //Aca con el foreach recorremos cada tarea(var string ingresada en el TextField),
+            // de la listaTareas,
+            // Si la var tarea existe, KLin llama it a cada elem del foreach
+            // los cuales seran presentados
+            // y cerraran con la linea horizontal por abajo
             listaTareas.forEach { tarea ->
                 tarea?.let {
                     // Cada tarea es presentada como un ícono y texto en una fila
@@ -136,11 +162,14 @@ fun ToDoList(modifier: Modifier = Modifier) {
                             )
                             .fillMaxWidth()
                     ) {
+                        //Icono de visto bueno o check:
                         Icon(
                             imageVector = Icons.Default.Done,
                             contentDescription = "Bullet",
+                            //Separacion entre el check y el texto ingresado
                             modifier = Modifier.padding(end = 4.dp)
                         )
+                        //Y el texto que se traspaso desde el TextField: text = it,
                         Text(
                             text = it,
                             style = MaterialTheme.typography.bodyMedium,
@@ -148,7 +177,7 @@ fun ToDoList(modifier: Modifier = Modifier) {
                         )
                     }
 
-                    // Agregamos un separador horizontal
+                    // Agregamos un separador horizontal entre cada texto ingresado:
                     HorizontalDivider(
                         modifier = Modifier.padding(
                             horizontal = 8.dp,
