@@ -1,9 +1,13 @@
-package cl.uchile.postgrado.mobile.milistadetareas
+package com.example.proyectopersonal
 
+import android.R
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +18,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -33,17 +39,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-//import cl.uchile.postgrado.mobile.milistadetareas.ui.theme.MiListaDeTareasTheme
-import com.example.milistadetareas.ui.theme.MiListaDeTareasTheme
+import androidx.compose.ui.window.PopupProperties
+import com.example.proyectopersonal.ui.theme.ProyectoPersonalTheme
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.ui.text.style.TextDecoration
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MiListaDeTareasTheme {
+            ProyectoPersonalTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    ToDoList(modifier = Modifier.padding(innerPadding))
+                    MiProyecto(
+                        name = "Android",
+                        modifier = Modifier.padding(innerPadding)
+                    )
                 }
             }
         }
@@ -51,37 +63,140 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ToDoList(modifier: Modifier = Modifier) {
+fun MiProyecto(name: String, modifier: Modifier = Modifier) {
     // Declaramos las 2 estructuras de datos a utilizar en la Screen
     var tarea by remember { mutableStateOf("") }
     val listaTareas = remember { mutableStateListOf<String?>(null) }
+    //Vars para el menu desplaegable de Hospitales:
+    var expanded by remember { mutableStateOf(false) }
+    val items = listOf("Opción 1", "Opción 2", "Opción 3")
+    var selectedIndex by remember { mutableStateOf(0) }
 
     // Definimos la estructura general de la aplicación en formato vertical
     Column(
         //Centramos los elem cvontenidos horizontalmente:
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
+        modifier = Modifier.background(color = Color.LightGray)
+
     ) {
         // Agregamos el componente que presentará el título
         Text(
-            text = "Mi Lista de Tareas",
+            text = "Sistema de Orientación Hospitalaria",
             style = MaterialTheme.typography.headlineLarge,
+            textDecoration = TextDecoration.Underline,
             fontWeight = FontWeight.Bold,
-            color = Color.Red,
-            //textAlign = TextAlign.Center,
+            color = Color.Blue,
+            textAlign = TextAlign.Center,
             modifier = Modifier
-                .padding(8.dp)
-                //.fillMaxWidth()
+                .padding(top = 24.dp, bottom = 12.dp)
+                .fillMaxWidth()
         )
 
+        //Agregamos un menu desplegable de Hpsitales:
+
+            Text(
+                text = "Seleccione Hospital",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold,
+                color = Color.Red,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .padding(8.dp)
+                //.fillMaxWidth()
+            )
+
+            Text(
+                text = items[selectedIndex],
+                modifier = Modifier
+                    .clickable { expanded = true }
+                    .padding(16.dp)
+            )
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                properties = PopupProperties(focusable = true)
+            ) {
+                items.forEachIndexed { index, s ->
+                    DropdownMenuItem(onClick = {
+                        selectedIndex = index
+                        expanded = false
+                    }, text = "") {
+                        Text(s)
+                    }
+
+                }
+            }
+        // Agregamos un separador horizontal entre cada texto ingresado:
+        HorizontalDivider(
+            modifier = Modifier.padding(
+                horizontal = 8.dp,
+                vertical = 8.dp
+            )
+        )
+
+        //Agregamos un menu desplegable de Especialidades:
+
+        Text(
+            text = "Seleccione Especialidad",
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold,
+            color = Color.Magenta,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .padding(8.dp)
+            //.fillMaxWidth()
+        )
+
+        Text(
+            text = items[selectedIndex],
+            modifier = Modifier
+                .clickable { expanded = true }
+                .padding(16.dp)
+        )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            properties = PopupProperties(focusable = true)
+        ) {
+            items.forEachIndexed { index, s ->
+                DropdownMenuItem(onClick = {
+                    selectedIndex = index
+                    expanded = false
+                }, text = "") {
+                    Text(s)
+                }
+
+            }
+        }
+
+        // Agregamos un separador horizontal entre cada texto ingresado:
+        HorizontalDivider(
+            modifier = Modifier.padding(
+                horizontal = 8.dp,
+                vertical = 8.dp
+            )
+        )
+
+
+
         // Agregamos el campo para agregar el nombre de una nueva tarea
+        Text(
+            text = "Ingrese lista de medicamentos",
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold,
+            color = Color.Blue,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .padding(8.dp)
+            //.fillMaxWidth()
+        )
         TextField(
             //Asociamos el valor de texto del textField con la var string tarea,
             // def arriba:
             value = tarea,
             onValueChange = { tarea = it },
-            label = { Text("Nombre de la tarea") },
-            placeholder = { Text("Ingresa una nueva tarea") },
+            label = { Text("Medicamento") },
+            placeholder = { Text("Ingresa Medicamento") },
             singleLine = true,
             modifier = Modifier
                 //Hacia todas partes esta el padding de 8dp
@@ -190,10 +305,17 @@ fun ToDoList(modifier: Modifier = Modifier) {
     }
 }
 
+private fun ColumnScope.DropdownMenuItem(
+    onClick: () -> Unit,
+    text: String,
+    interactionSource: @Composable () -> Unit
+) {
+}
+
 @Preview(showBackground = true)
 @Composable
-fun ToDoListPreview() {
-    MiListaDeTareasTheme {
-        ToDoList()
+fun GreetingPreview() {
+    ProyectoPersonalTheme {
+        MiProyecto("Android")
     }
 }
