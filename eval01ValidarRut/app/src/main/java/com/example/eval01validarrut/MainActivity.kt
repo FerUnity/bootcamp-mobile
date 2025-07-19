@@ -10,7 +10,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -39,6 +42,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
@@ -114,7 +118,7 @@ fun TopBar(drawerState: DrawerState, scope: CoroutineScope) {
                 imageVector = Icons.Filled.Menu,
                 contentDescription = "Inicio",
                 //Abrir el ModalNavigationDrawer
-                modifier = Modifier.clickable { scope.launch { drawerState.open() } }
+               //modifier = Modifier.clickable { scope.launch { drawerState.open() } }
 
             )
         },
@@ -162,13 +166,35 @@ fun calculo(modifier: Modifier = Modifier) {
         //Fin atributos Scaffold
         {
             //Cuerpo Scaffold:
+                innerPadding ->
+            Column(
+                modifier = Modifier
+                    .padding(innerPadding),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(start = 12.dp, end = 8.dp, top = 8.dp, bottom = 12.dp),
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Start,
+                    text =
+                        """
+                     Esta app permite verificar si el Rut ingresado es Valido o no.
+                     
+                     Por favor ingrese el Rut en el primer campo y luego el digito verificador en el segundo campo.                     
+                           Luego presione boton Verificar.
+                                              
+                """.trimIndent(),
+                )
 
-//            innerPadding ->
-//            calculo(
-//                modifier = Modifier.padding(innerPadding)
-//            )
+//                Spacer(
+//                    modifier = Modifier.height(16.dp)
+//                )
 
-        } //Cierre content Scaffold
+
+            } //Cierre Column del innerPadding
+
+        } //Cierre cuerpo Scaffold
 
     } //Cierre ModalNavDrawer
 
@@ -181,6 +207,7 @@ fun calculo(modifier: Modifier = Modifier) {
 
 
     ) {
+        //Cuerpo Columna
         textoEntrada(
             "Ingrese rut sin puntos ni guion y sin digito verificador",
             numero1,
@@ -236,12 +263,14 @@ fun calculo(modifier: Modifier = Modifier) {
             else {
                 textoFinal = "El valor ingresasdo NO corresponde a un Rut real"
             }
+
             //Borrar texto de los TextField:
             numero1 = ""
             numero2 = ""
 
 
         })
+            //Cierre attr onClick btn Verificar
         {
             //Cuerpo button:
             Icon(
@@ -257,7 +286,8 @@ fun calculo(modifier: Modifier = Modifier) {
                 modifier = Modifier.padding(start = 8.dp))
 
 
-        }
+        } //Cierre cuerpo Btn
+
         //Agregamos un separador horizontal
         HorizontalDivider(
             modifier = Modifier.padding(
@@ -279,7 +309,7 @@ fun textoEntrada(
     text: String,
     onValueChange: (String) -> Unit
 ) {
-    //Compopnenetes Widget:
+    //Componenetes Widget:
     TextField(
         value = text,
         onValueChange = onValueChange,
