@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.proyectopersonal"
+    namespace = "com.example.shoppinglistmodular"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.proyectopersonal"
+        applicationId = "com.example.shoppinglistmodular"
         minSdk = 26
         targetSdk = 36
         versionCode = 1
@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.runtime.android)
+    implementation(libs.androidx.navigation.compose.jvmstubs)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
