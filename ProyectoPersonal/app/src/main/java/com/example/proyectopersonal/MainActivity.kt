@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,14 +39,21 @@ import com.example.proyectopersonal.ui.theme.ProyectoPersonalTheme
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.BottomAppBarDefaults
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -59,6 +69,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.proyectopersonal.ui.screens.IndexDetailScreen.IndexDetailScreen
+import com.example.proyectopersonal.ui.screens.IndexScreen.IndexScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -69,264 +85,35 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ProyectoPersonalTheme {
-                MiProyecto()
+                AppNavigation()
             }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+// Componente que permite navegar entre pantallas
 @Composable
-fun TopBar(drawerState: DrawerState, scope: CoroutineScope) {
-    CenterAlignedTopAppBar(
-        title = {
-            Text(
-                textAlign = TextAlign.Center,
-                text = "Sistema de Consulta Hospitalaria",
-                textDecoration = TextDecoration.None,
-                fontSize = 25.sp
-
-            )
-
-        },
-        navigationIcon = {
-            Icon(
-                //imageVector = Icons.Filled.ArrowBack,
-                //tint = Color(white),
-                imageVector = Icons.Filled.Menu,
-                contentDescription = "Inicio",
-                //Abrir el ModalNavigationDrawer
-                //modifier = Modifier.clickable { scope.launch { drawerState.open() } }
-
-            )
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.Blue,
-            titleContentColor = Color.White,
-            navigationIconContentColor = Color.Black
-        )
-
-    )
-
-}
-
-@Composable
-fun FAButton(){
-    //ExtendedFloatingActionButton o LargeFloatingActionButton:
-    ExtendedFloatingActionButton(
-        containerColor = Color.Blue,
-        contentColor = Color.White,
-        onClick = { /*TODO*/ }
-    ) {
-        //Cuerpo boton
-        Icon(
-            //Icono +:
-            imageVector = Icons.Filled.Add,
-            contentDescription = "Agregar",
-            //Pinto amarillo el color del icono +:
-            tint = Color.Yellow,
-            modifier = Modifier.padding(end = 8.dp)
-        )
-        Text("Agregar")
-
+fun AppNavigation() {
+    val navController: NavHostController = rememberNavController()
+    NavHost(navController = navController, startDestination = "home") {
+        composable("home") {
+            IndexScreen(navController)
+        }
+        composable("index_detail/{index}") { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id")
+            val index = backStackEntry.arguments?.getString("index")
+            //val date = backStackEntry.arguments?.getString("date")
+            IndexDetailScreen(navController, index)
+        }
 
     }
 }
 
-@Composable
-fun BottomBar(){
-    NavigationBar(
-        containerColor = Color.Blue,
-        contentColor = Color.White,
-        //Se define la elevacion por sobre el area de contenido:
-        tonalElevation = 10.dp,
-        windowInsets = BottomAppBarDefaults.windowInsets
-    ) {
-        //La sgte fila(Row) engloba los 3 elementos del bottomBar:
-        //Cada uno de esos 3 elementos esta contenido en una Columna
-        // que ontiene un Icon y un Text,
-        // y en que cada columna tiene el mismo peso = 1f:
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-        )
-        {
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Home,
-                    contentDescription = "Inicio",
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
-                Text(
-                    text = "Inicio",
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
-            }
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Email,
-                    contentDescription = "Correo",
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
-                Text(
-                    text = "Correo",
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
-            }
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.AccountCircle,
-                    contentDescription = "Cuenta",
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
-                Text(
-                    text = "Cuenta",
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
-            }
-        }
-        //Cierre Row que engloba horizontalmente las 3 cols:Inicio, Correo , Cuenta
-    } //Cierre cuerpo NavigationBar()
-}//Cierre fun BottomBar(){}
 
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MiProyecto(
-//    name: String,
-//    modifier: Modifier = Modifier
-)
-{
-    // Declaramos las 2 estructuras de datos a utilizar en la Screen
-    //Los 2 sgtes val se usan con el ModalNavDrawer(){}
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-    val scrollState = rememberScrollState()
-    //Para el menu desplegable:
-    val hospitalCategories: List<String> = listOf("Mutual","San Borja","JJAguirre")
-    var expanded by remember { mutableStateOf(false) }
-    var hospitalCategory by remember { mutableStateOf(hospitalCategories[0]) }
-
-    //Scaffold es un componente que permite construir pantallas organizadas,
-    // incorporando áreas predefinidas como:
-    //topBar: barra superior
-    //bottomBar: barra inferior
-    //floatingActionButton(FAB): botón flotante
-    //content: zona principal de la pantalla
-    //Es ideal para crear pantallas coherentes con las guías de Material Design.
-
-    Scaffold(
-        topBar = {
-
-            TopBar(drawerState, scope)
-
-
-        }
-//        bottomBar = {
-//            BottomBar()
-//
-//        },
-
-        //Boton flotante redondo, rojo con el singo +:
-//        floatingActionButton = {
-//            FAButton()
-//        },
-//        modifier = Modifier.fillMaxWidth()
-    )
-    //Fin atributos Scaffold
-
-    //Llamamos a la fun composable ShoppingList(), de abajo,
-    // en el content del Scaffold, o sea entre sus {}
-    {  //Cuerpo Scaffold:
-
-            innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-            //verticalArrangement = Arrangement.spacedBy(16.dp),
-        ){
-
-        } //Cierre Column del innerPadding
-
-    }//Cierre content Scaffold
-
-
-    // Definimos la estructura general de la aplicación en formato vertical
-    Column(
-        modifier = Modifier
-            .padding(top = 100.dp)
-            .fillMaxSize()
-            //Para evitar que el teclado tape los componenetes en la pantalla:
-            .verticalScroll(scrollState)
-            .imePadding(),
-
-
-    ) {
-
-        //Agregamos un menu desplegable de Hpsitales:
-        ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = { expanded = !expanded },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            TextField(
-                value = hospitalCategory,
-                onValueChange = { },
-                readOnly = true, //No pemite escribir en el textField
-                label = { Text("Seleccione un Hospital") },
-                //Icono triangulo chico para desplegar el menu
-                trailingIcon = { TrailingIcon(expanded = expanded) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    //Esencial para que funcione correctamente el menu desplegable:
-                    .menuAnchor(MenuAnchorType.PrimaryEditable, true)
-
-            )
-            ExposedDropdownMenu(
-                expanded = expanded,
-                //Para que al presionar en cualq parte se cierre el menu desplegable
-                onDismissRequest = { expanded = false }
-            ) {
-                hospitalCategories.forEach { opt ->
-                    //Por cada item del menu desplegable, se crea un item:
-                    DropdownMenuItem(
-                        //Como texto va cada categ de la lista de hospitales:
-                        text = { Text(opt) },
-                        onClick = {
-                            //Al hacer click asigno la opcion que elegi
-                            // a la var hospitalCategoy
-                            // y se muestra en el texto del TextField:
-                            hospitalCategory = opt
-                            //Luego cierro el menu desplegable:
-                            expanded = false
-                        }
-                    ) //Cierre DropdownMenuItem
-                }
-            }
-
-
-        }
-    } //Cierre Column
-
-
-
-}
-
-
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview() {
     ProyectoPersonalTheme {
-        MiProyecto()
+        AppNavigation()
     }
 }
