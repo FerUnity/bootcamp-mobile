@@ -42,7 +42,7 @@ class IndexViewModel: ViewModel() {
             "Especialidades" -> especialidadCategories
             //Si selecciono Internacionales me muestra opt de la Lista indexInternationalOptions
 
-            //En otro casdo es que no se selecciono nada:
+            //En otro caso es que no se selecciono nada:
             else -> emptyList()
         }
 

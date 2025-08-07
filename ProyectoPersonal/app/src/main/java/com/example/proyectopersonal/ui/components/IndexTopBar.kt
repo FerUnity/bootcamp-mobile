@@ -1,21 +1,19 @@
 package com.example.proyectopersonal.ui.components
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.proyectopersonal.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,7 +22,7 @@ fun IndexTopBar() {
         title = {
             Text(
                 textAlign = TextAlign.Center,
-                text = "Sistema de Orientación Hospitalaria.",
+                text = stringResource(id = R.string.app_name),
                 textDecoration = TextDecoration.None,
                 fontSize = 25.sp
 

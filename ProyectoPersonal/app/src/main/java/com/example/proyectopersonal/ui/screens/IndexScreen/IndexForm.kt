@@ -1,5 +1,7 @@
 package com.example.proyectopersonal.ui.screens.IndexScreen
 
+import android.widget.Toast
+import com.example.proyectopersonal.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -73,7 +76,7 @@ fun IndexForm(
         ) {
 
             Text(
-                "Por favor seleccione un Hospital",
+                stringResource(R.string.deployment_1),
                 Modifier.padding(top = 10.dp, bottom = 10.dp),
                 textAlign = TextAlign.Center,
                 textDecoration = TextDecoration.None,
@@ -108,7 +111,7 @@ fun IndexForm(
                 onValueChange = {},
                 //No se puede escribir, solo aparece la opcion elegida:
                 readOnly = true,
-                label = { Text("Tipo de Servicio") },
+                label = { Text(stringResource(R.string.select_service)) },
                 //Icono triangulo chico para desplegar el menu:
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedIndexType) },
                 modifier = Modifier
@@ -138,7 +141,7 @@ fun IndexForm(
             }
 
 
-        } //Cierre ExposedDropdownMenuBox
+        } //Cierre ExposedDropdownMenuBox 1
 
         //PARA EL SERVICIO ELEGIDO: SEGUN SE SELECCIONO ANTEIORMENTE HOSPITALES O ESPECIALIDADES:
         Box(
@@ -150,7 +153,7 @@ fun IndexForm(
         ) {
 
             Text(
-                "Por favor seleccione una opcion",
+                stringResource(R.string.option_select),
                 Modifier.padding(top = 10.dp, bottom = 10.dp),
                 textAlign = TextAlign.Center,
                 textDecoration = TextDecoration.None,
@@ -221,32 +224,6 @@ fun IndexForm(
             )
         }
 
-        //PARA LA FECHA
-        //Para ingresar la fecha ponemos un TextField, date tb es el del negocio por ende va al viewModel:
-//            var date by remember { mutableStateOf("") }
-//        TextField(
-//            value = indexModel.date,
-//            onValueChange = { indexModel.onDateChange(it) },
-//            placeholder = { Text("Formato dd/mm/aaaa") },
-//            label = { Text("Fecha") },
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(16.dp)
-//        )
-
-        //ERROR DE FECHA O DATE:
-        // Creamos un mensaje emergente de error con la fun let y las var de error del IndexViewModel:
-//            indexModel.indexErrorMessage?.let { errorMessage ->
-//                Text(text = errorMessage, color = androidx.compose.ui.graphics.Color.Red)
-//            }
-//        indexModel.dateErrorMessage?.let {
-//            Text(
-//                text = it,
-//                color = MaterialTheme.colorScheme.error,
-//                modifier = Modifier.padding(start = 16.dp)
-//            )
-//        }
-
 
         //Boton para que una vez seleccla opcion elegida, lo ingrese y nos lleve a la pantalla
         //de consulta del detalle de la opcion seleccionado:
@@ -257,15 +234,21 @@ fun IndexForm(
                 val result = indexModel.validateForm()
                 if (result.isSuccess) {
                     //Nos vamos a la sgte pantalla, asi:
-                    //Fijarse que se pasan los 2 param del formulario asi,
-                    // ${indexModel.index } y ${indexModel.date}"), asi:
-                    navController.navigate("index_detail/${indexModel.index }")}
+                    //Fijarse que se pasan el param del formulario asi,
+                    // ${indexModel.index }, asi:
+                    navController.navigate("index_detail/${indexModel.index }")
+
+                    //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
+                    val text = "Redireccionando al Detalle de la opcion elegida"
+                    val duration: Int = Toast.LENGTH_SHORT
+                    Toast.makeText(navController.context, text, duration).show()
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text("Consultar")
+            Text(stringResource(R.string.details_button))
 
         }
 

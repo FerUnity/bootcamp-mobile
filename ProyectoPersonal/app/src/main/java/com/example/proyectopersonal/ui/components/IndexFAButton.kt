@@ -9,7 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.proyectopersonal.R
 
 @Composable
 fun FAButton() {
@@ -28,7 +30,7 @@ fun FAButton() {
             tint = Color.Yellow,
             modifier = Modifier.padding(end = 8.dp)
         )
-        Text("Agregar")
+        Text(stringResource(R.string.add_button))
 
 
     }

@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">ProyectoPersonal</string>
+    <string name="add_button">AddProduct</string>
+    <string name="email_label" translatable="false">Email</string>
+    <string name="save_button">Save</string>
+    <string name="details_button">Consultar</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="add_product_success">This product was added!</string>
+    <string name="price_label">USD %s</string>
+    <string name="deployment_1">Selection_1</string>
+    <string name="select_service">Service_selection</string>
+    <string name="option_select">select_option</string>
 </resources>

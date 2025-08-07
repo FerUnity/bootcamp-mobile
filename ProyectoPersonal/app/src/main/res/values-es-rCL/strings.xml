@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sistema de Orientación Hospitalaria</string>
+    <string name="add_button">Agregar</string>
+    <string name="save_button">Guardar</string>
+    <string name="details_button">Consultar</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="add_product_success">El producto ha sido agregado!</string>
+    <string name="price_label">CLP%s</string>
+    <string name="deployment_1">Por favor seleccione un Hospital o una Especialidad</string>
+    <string name="select_service">Tipo de Servicio</string>
+    <string name="option_select">Por favor seleccione una opcion</string>
+</resources>
