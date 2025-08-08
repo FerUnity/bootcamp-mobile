@@ -41,15 +41,14 @@ android {
 
 dependencies {
     //Para usar viewModel:
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.2")
+    //implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.2")
 
     //Fin viewModel
 
         // ... other dependencies
     //implementation("androidx.navigation:navigation-compose:2.7.7") // Use the latest stable version
 
-    //Splashscreen:
-    implementation(libs.androidx.splashscreen)
+
 //    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -59,8 +58,11 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.navigation.runtime.android)
-    implementation(libs.androidx.navigation.compose.jvmstubs)
+    implementation(libs.androidx.navigation.compose)
+    //Splashscreen:
+    implementation(libs.androidx.splashscreen)
+//    implementation(libs.androidx.navigation.runtime.android)
+//    implementation(libs.androidx.navigation.compose.jvmstubs)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
