@@ -44,8 +44,13 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.2")
 
     //Fin viewModel
+
+        // ... other dependencies
+    //implementation("androidx.navigation:navigation-compose:2.7.7") // Use the latest stable version
+
     //Splashscreen:
     implementation(libs.androidx.splashscreen)
+//    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

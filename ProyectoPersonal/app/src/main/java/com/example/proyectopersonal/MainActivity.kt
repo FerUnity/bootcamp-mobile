@@ -7,13 +7,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.proyectopersonal.ui.theme.ProyectoPersonalTheme
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.proyectopersonal.ui.screens.IndexDetailScreen.IndexDetailScreen
 import com.example.proyectopersonal.ui.screens.IndexScreen.IndexScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.NavHostController
 
 
 class MainActivity : ComponentActivity() {
@@ -51,7 +51,7 @@ fun AppNavigation() {
 }
 
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     ProyectoPersonalTheme {
