@@ -41,9 +41,9 @@ fun IndexScreen(navController: NavHostController) {
         },
         //Llamamos a la fun FAButton() del archivo FAButton.kt que arma el FAB:
         // Boton flotante redondo, rojo con el singo +:
-        floatingActionButton = {
-            FAButton()
-        },
+//        floatingActionButton = {
+//            FAButton()
+//        },
 
         //Que el scaffold ocupe toda la pantalla
         modifier = Modifier.fillMaxSize()
