@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -59,15 +61,32 @@ fun IndexForm(
 //    val scope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
 
-    //Una imagen de fondo de pantalla:
     Image(
-        painter = painterResource(R.drawable.ic_launcher_background),
+        painter = painterResource(R.mipmap.ic_bg_hospitales2_foreground),
         contentDescription = "Fondo de pantalla",
-        contentScale = ContentScale.Crop,
+        contentScale = ContentScale.Fit,
         //Se tiene definir el tamaño asi:
         modifier = Modifier
             .fillMaxSize()
     )
+
+    //Una imagen de fondo de pantalla:
+    //Generar un espacio o Spacer para que el logo de HOSPITAL
+    // ocupe la parte inf de la pantalla,
+    // Para usar weight debe estar dentro de un Column():
+    Column() {
+        Spacer(modifier = Modifier.weight(1f))
+
+        Image(
+            painter = painterResource(R.mipmap.ic_bg_hospitales_foreground),
+            contentDescription = "Fondo de pantalla",
+            contentScale = ContentScale.Fit,
+            //Se tiene definir el tamaño asi:
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f)
+        )
+    }
 
     // Definimos la estructura general de la aplicación en formato vertical:
     Column(
@@ -77,7 +96,7 @@ fun IndexForm(
             //Para evitar que el teclado tape los componenetes en la pantalla:
             .verticalScroll(scrollState)
             .imePadding(),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
 
 
@@ -86,7 +105,7 @@ fun IndexForm(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 12.dp, end = 12.dp)
+                .padding(top = 20.dp, start = 12.dp, end = 12.dp)
                 .background(Color.Cyan)
 
 
@@ -250,20 +269,28 @@ fun IndexForm(
                 // guardamos el resultado de la validacion en un valor:
                 val result = indexModel.validateForm()
                 if (result.isSuccess) {
-                    //Nos vamos a la sgte pantalla, asi:
+                    //OJO: Con la sgte indicacion:
+                    // navController.navigate("index_detail/${indexModel.index }"),
+                    // le decimos a este btn onClick,
+                    // que nos lleve a la pantalla secundaria IndexDetailScreen.kt:
                     //Fijarse que se pasan el param del formulario asi,
                     // ${indexModel.index }, asi:
                     navController.navigate("index_detail/${indexModel.index }")
 
                     //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
-                    val text = "Redireccionando al Detalle de la opcion elegida"
-                    val duration: Int = Toast.LENGTH_SHORT
+                    val text = "Detalle de la opcion"
+                    val duration: Int = Toast.LENGTH_LONG
                     Toast.makeText(navController.context, text, duration).show()
                 }
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                // en Color.kt y al tema en Theme.kt:
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.surface
+            ),
         ) {
             Text(stringResource(R.string.details_button))
 

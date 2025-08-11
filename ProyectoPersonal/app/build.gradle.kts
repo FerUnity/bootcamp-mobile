@@ -45,7 +45,7 @@ dependencies {
 
     //Fin viewModel
 
-        // ... other dependencies
+    // ... other dependencies
     //implementation("androidx.navigation:navigation-compose:2.7.7") // Use the latest stable version
 
 
@@ -60,9 +60,13 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     //Splashscreen:
-    implementation(libs.androidx.splashscreen)
-//    implementation(libs.androidx.navigation.runtime.android)
-//    implementation(libs.androidx.navigation.compose.jvmstubs)
+//    implementation(libs.androidx.splashscreen)
+    implementation("androidx.core:core-splashscreen:1.0.1")
+//Dependencias de Google maps:
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.maps.android:maps-compose:2.11.4")
+    //Fin maps
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

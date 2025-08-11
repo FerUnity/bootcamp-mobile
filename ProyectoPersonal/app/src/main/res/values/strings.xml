@@ -10,4 +10,5 @@
     <string name="deployment_1">Selection_1</string>
     <string name="select_service">Service_selection</string>
     <string name="option_select">select_option</string>
+    <string name="button_back">back_button</string>
 </resources>

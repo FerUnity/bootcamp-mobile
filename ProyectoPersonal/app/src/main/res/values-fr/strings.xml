@@ -10,4 +10,5 @@
     <string name="deployment_1">Veuillez sélectionner un hôpital ou une spécialité</string>
     <string name="select_service">Type de service</string>
     <string name="option_select">Veuillez sélectionner une option</string>
+    <string name="button_back">Retour</string>
 </resources>
