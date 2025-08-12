@@ -19,9 +19,47 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.proyectopersonal.R
 import com.example.proyectopersonal.ui.components.IndexTopBar
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.CoroutineScope
 
-// Pantalla que muestra el DETALLE del producto, al pres el btn Detalle de la lista de productos.
+// Pantalla que muestra el DETALLE del producto,
+// al pres el btn Detalle de la lista de productos.
+
+@Composable
+fun MapScreen(modifier: Modifier = Modifier) {
+    val sanBorja = LatLng(-33.460859960868305, -70.64187263068847)
+   val cameraPositionState = rememberCameraPositionState {
+       position = CameraPosition.fromLatLngZoom(sanBorja, 15f)
+   }
+        GoogleMap(
+            modifier = Modifier,
+            cameraPositionState = cameraPositionState){
+
+        }
+    }
+
+//    Box(modifier = Modifier.fillMaxSize()) {
+//        GoogleMapView(
+//            modifier = Modifier.matchParentSize(),
+//            cameraPositionState = cameraPositionState
+//        )
+//    }
+
+
+//@Composable
+//fun GoogleMapView(
+//    modifier: Modifier = Modifier,
+//    cameraPositionState: CameraPositionState = rememberCameraPositionState()
+//) {
+//    GoogleMap(
+//        modifier = modifier,
+//        cameraPositionState = cameraPositionState
+//    )
+//}
+
 @Composable
 fun IndexDetailForm(id: String?, modifier: Modifier = Modifier, navController: NavHostController) {
     Column(
@@ -61,11 +99,19 @@ fun IndexDetailScreen(navController: NavHostController, id: String?) {
         },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        IndexDetailForm(
-            id,
-            modifier = Modifier.padding(innerPadding),
-            navController
-        )
+            MapScreen(
+                modifier = Modifier
+                    .padding(innerPadding)
+            )
+            IndexDetailForm(
+                id,
+                modifier = Modifier
+                    .padding(innerPadding),
+                navController
+            )
+
+
+
     }
 
 
