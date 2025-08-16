@@ -61,6 +61,7 @@ fun IndexForm(
 //    val scope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
 
+    //Otra imagen de fondo de pantalla:
     Image(
         painter = painterResource(R.mipmap.ic_bg_hospitales2_foreground),
         contentDescription = "Fondo de pantalla",
@@ -116,7 +117,8 @@ fun IndexForm(
                 Modifier.padding(top = 10.dp, bottom = 10.dp),
                 textAlign = TextAlign.Center,
                 textDecoration = TextDecoration.None,
-                fontSize = 25.sp
+                style = MaterialTheme.typography.titleLarge,
+                //fontSize = 25.sp
 
             )
 
@@ -193,7 +195,7 @@ fun IndexForm(
                 Modifier.padding(top = 10.dp, bottom = 10.dp),
                 textAlign = TextAlign.Center,
                 textDecoration = TextDecoration.None,
-                fontSize = 25.sp
+                style = MaterialTheme.typography.titleLarge
             )
 
         }
@@ -292,6 +294,7 @@ fun IndexForm(
                 contentColor = MaterialTheme.colorScheme.surface
             ),
         ) {
+            //TExto sobre el btn
             Text(stringResource(R.string.details_button))
 
         }
@@ -299,163 +302,6 @@ fun IndexForm(
     }   //Cierre cont Column()
 
 } //Cierre fun IndexForm()
-
-
-
-
-
-
-
-
-//MI COLUMNA PROY PERSONAL ORIGINAL:
-//    Column(
-//        modifier = Modifier
-//            .padding(top = 100.dp)
-//            .fillMaxSize()
-//            //Para evitar que el teclado tape los componenetes en la pantalla:
-//            .verticalScroll(scrollState)
-//            .imePadding(),
-//
-//
-//        ) {
-//        //Content columna
-//        Box(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(start = 12.dp, end = 12.dp)
-//                .background(Color.Cyan)
-//
-//
-//        ) {
-//
-//            Text(
-//                "Por favor seleccione un Hospital",
-//                Modifier.padding(top = 10.dp, bottom = 10.dp),
-//                textAlign = TextAlign.Center,
-//                textDecoration = TextDecoration.None,
-//                fontSize = 25.sp
-//
-//            )
-//
-//        }
-//
-//
-//        //Agregamos un menu desplegable de Hositales:
-//        ExposedDropdownMenuBox(
-//            expanded = expanded,
-//            onExpandedChange = { expanded = !expanded },
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(16.dp)
-//        ) {
-//            TextField(
-//                value = hospitalCategory,
-//                onValueChange = { },
-//                readOnly = true, //No pemite escribir en el textField
-//                label = { Text("Seleccione un Hospital") },
-//                //Icono triangulo chico para desplegar el menu
-//                trailingIcon = { TrailingIcon(expanded = expanded) },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    //Esencial para que funcione correctamente el menu desplegable:
-//                    .menuAnchor(MenuAnchorType.PrimaryEditable, true)
-//
-//            )
-//            ExposedDropdownMenu(
-//                expanded = expanded,
-//                //Para que al presionar en cualq parte se cierre el menu desplegable
-//                onDismissRequest = { expanded = false }
-//            ) {
-//                hospitalCategories.forEach { opt ->
-//                    //Por cada item del menu desplegable, se crea un item:
-//                    DropdownMenuItem(
-//                        //Como texto va cada categ de la lista de hospitales:
-//                        text = { Text(opt) },
-//                        onClick = {
-//                            //Al hacer click asigno la opcion que elegi
-//                            // a la var hospitalCategoy
-//                            // y se muestra en el texto del TextField:
-//                            hospitalCategory = opt
-//                            //Luego cierro el menu desplegable:
-//                            expanded = false
-//                        }
-//                    ) //Cierre DropdownMenuItem
-//                }
-//            }
-//
-//
-//        } //Cierre content ExposedDropdownMenuBox_1
-//
-//        Box(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(start = 12.dp, end = 12.dp, top = 24.dp)
-//                .background(Color.Cyan)
-//
-//        ) {
-//
-//            Text(
-//                "Por favor seleccione una Especialidad",
-//                Modifier.padding(top = 10.dp, bottom = 10.dp),
-//                textAlign = TextAlign.Center,
-//                textDecoration = TextDecoration.None,
-//                fontSize = 25.sp
-//            )
-//
-//        }
-//
-//
-//        //Cremos un segundo ExposedDropdownMenuBox para especialidades:
-//        ExposedDropdownMenuBox(
-//            expanded = expanded,
-//            onExpandedChange = { expanded = !expanded },
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(16.dp)
-//        ) {
-//            TextField(
-//                value = especialidadCategory,
-//                onValueChange = { },
-//                readOnly = true, //No pemite escribir en el textField
-//                label = { Text("Seleccione la Especialidad") },
-//                //Icono triangulo chico para desplegar el menu
-//                trailingIcon = { TrailingIcon(expanded = expanded) },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    //Esencial para que funcione correctamente el menu desplegable:
-//                    .menuAnchor(MenuAnchorType.PrimaryEditable, true)
-//
-//            )
-//            ExposedDropdownMenu(
-//                expanded = expanded,
-//                //Para que al presionar en cualq parte se cierre el menu desplegable
-//                onDismissRequest = { expanded = false }
-//            ) {
-//                especialidadCategories.forEach { opt ->
-//                    //Por cada item del menu desplegable, se crea un item:
-//                    DropdownMenuItem(
-//                        //Como texto va cada categ de la lista de hospitales:
-//                        text = { Text(opt) },
-//                        onClick = {
-//                            //Al hacer click asigno la opcion que elegi
-//                            // a la var hospitalCategoy
-//                            // y se muestra en el texto del TextField:
-//                            especialidadCategory = opt
-//                            //Luego cierro el menu desplegable:
-//                            expanded = false
-//                        }
-//                    ) //Cierre DropdownMenuItem
-//                }
-//            }
-//
-//
-//        } //Cierre content ExposedDropdownMenuBox_2
-//
-//
-//
-//
-//    } //Cierre Column
-
 
 
 

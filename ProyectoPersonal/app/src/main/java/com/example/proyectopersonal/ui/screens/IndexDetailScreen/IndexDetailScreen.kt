@@ -94,7 +94,7 @@ fun IndexDetailScreen(navController: NavHostController, id: String?) {
 
     Scaffold(
         topBar = {
-            //Usamos la fun composable ShoppingListTopBar, de la clase ShoppingListScreen.kt:
+            //Usamos la fun composable IndexTopBar, de la clase IndexTopBar.kt:
             IndexTopBar(drawerState, scope)
         },
         modifier = Modifier.fillMaxSize()
@@ -102,6 +102,7 @@ fun IndexDetailScreen(navController: NavHostController, id: String?) {
             MapScreen(
                 modifier = Modifier
                     .padding(innerPadding)
+
             )
             IndexDetailForm(
                 id,
@@ -109,6 +110,10 @@ fun IndexDetailScreen(navController: NavHostController, id: String?) {
                     .padding(innerPadding),
                 navController
             )
+
+
+
+
 
 
 
