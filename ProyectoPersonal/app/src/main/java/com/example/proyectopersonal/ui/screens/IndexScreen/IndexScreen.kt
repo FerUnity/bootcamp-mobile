@@ -10,7 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import com.example.proyectopersonal.R
 import com.example.proyectopersonal.ui.components.FAButton
 import com.example.proyectopersonal.ui.components.IndexTopBar
 import kotlinx.coroutines.CoroutineScope
@@ -34,7 +36,7 @@ fun IndexScreen(navController: NavHostController) {
         //Que el scaffold tenga un topBar
         topBar = {
             //Llamamos a la fun IndexTopBar() del archivo IndexTopBar.kt que arma el topBar:
-            IndexTopBar(drawerState, scope)
+            IndexTopBar(drawerState, scope, stringResource(R.string.app_name))
         },
         snackbarHost = {
             SnackbarHost(snackbarHostState)

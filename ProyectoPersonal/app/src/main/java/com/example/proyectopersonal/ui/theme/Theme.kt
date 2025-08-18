@@ -18,22 +18,23 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun ProyectoPersonalTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+//    darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     //dynamicColor: Boolean = true,
+    //Para usar DATASTORE se debe ajustar asi el theme, porque se def como String en userSettingViewModel:
+    theme: String,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        //Esto es valido solo para Dynamic Color Scheme:
-//        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-//            val context = LocalContext.current
-//            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-//        }
-
-        //Si no tengo  Dynamic Color Scheme, solo decido entre ambos modos del telefono:
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val colorScheme = when(theme) {
+        "Light" -> LightColorScheme
+        "Dark" -> DarkColorScheme
+        else ->
+            //Si viene otra cosa, que solo puede ser la conf del sistema,
+            // hay que preguntar si el sistema esta en modo oscuro y llamamos a ese modo, sino en claro:
+            if (isSystemInDarkTheme())
+                DarkColorScheme
+            else
+                LightColorScheme
     }
 
     MaterialTheme(

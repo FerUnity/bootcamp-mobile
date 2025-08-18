@@ -12,6 +12,9 @@ navigationRuntimeAndroid = "2.9.3"
 navigationComposeJvmstubs = "2.9.3"
 splashscreen = "1.0.1"
 navigationCompose = "2.9.3"
+datastore = "1.1.7"
+compiler = "3.2.0-alpha11"
+gson = "2.10.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,6 +37,9 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 #androidx-splashscreen = { group = "androidx.core", name = "splashscreen", version.ref = "splashScreen" }
 androidx-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 #core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "core-splashscreen" }
+androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+androidx-compiler = { group = "androidx.databinding", name = "compiler", version.ref = "compiler" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 
 
 [plugins]

@@ -15,11 +15,17 @@ import com.example.proyectopersonal.ui.screens.IndexScreen.IndexScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
+import com.example.proyectopersonal.model.UserSettingsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
+    companion object {
+        lateinit var userSettingsViewModel: UserSettingsViewModel
+//        lateinit var shoppingListViewModel: ShoppingListViewModel
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         var showSplashScreen = true
@@ -32,14 +38,30 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
+        //Cargar los ajustes guardados de usuario de la app,Theme y Lenguaje desde el DataStore:
+        userSettingsViewModel = UserSettingsViewModel(applicationContext)
+        userSettingsViewModel.getSettings(applicationContext)
+
         enableEdgeToEdge()
         setContent {
-            ProyectoPersonalTheme {
+            ProyectoPersonalTheme(userSettingsViewModel.theme) {
                 AppNavigation()
             }
         }
     }
+
+    //Y antes de cerrar la app, fun onDestroy(), se almacena los datos de conf en el DATASTORE, asi:
+    override fun onDestroy() {
+        super.onDestroy()
+//        Guardamos los ajustes de usuario de la app,Theme y Lenguaje en el DataStore:
+        userSettingsViewModel.saveSettings(applicationContext)
+
+        //Guardamos la lista de compras en el json:
+//        shoppingListViewModel.saveProducts(applicationContext)
+    }
 }
+
+
 
 // Componente que permite navegar entre pantallas
 @Composable
@@ -65,7 +87,5 @@ fun AppNavigation() {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    ProyectoPersonalTheme {
-        AppNavigation()
-    }
+    AppNavigation()
 }

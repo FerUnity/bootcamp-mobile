@@ -2,55 +2,125 @@ package com.example.proyectopersonal.ui.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
+import com.example.proyectopersonal.MainActivity
 import com.example.proyectopersonal.R
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IndexTopBar(drawerState: DrawerState, scope: CoroutineScope) {
+fun IndexTopBar(drawerState: DrawerState, scope: CoroutineScope, text: String) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    var expanded by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
+    val userSettingsViewModel = MainActivity.userSettingsViewModel
+    var selectedTheme by remember { mutableStateOf(userSettingsViewModel.theme) }
     CenterAlignedTopAppBar(
         title = {
             Text(
                 textAlign = TextAlign.Center,
                 text = stringResource(id = R.string.app_name),
-                textDecoration = TextDecoration.None,
-                fontSize = 25.sp
+                style = MaterialTheme.typography.titleLarge
 
             )
 
         },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary
+        ),
         navigationIcon = {
-            Icon(
-                //imageVector = Icons.Filled.ArrowBack,
-                //tint = Color(white),
-                imageVector = Icons.Filled.Menu,
-                contentDescription = "Inicio",
-                //Abrir el ModalNavigationDrawer
-                //modifier = Modifier.clickable { scope.launch { drawerState.open() } }
+            IconButton(onClick = {
+                /* Open Account Modal */
+            }) {
+                Icon(
+                    //imageVector = Icons.Filled.ArrowBack,
+                    //tint = Color(white),
+                    imageVector = Icons.Filled.Menu,
+                    contentDescription = "Inicio",
+                    //Abrir el ModalNavigationDrawer
+                    //modifier = Modifier.clickable { scope.launch { drawerState.open() } }
 
-            )
+                )
+            }
+
+
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.Blue,
-            titleContentColor = Color.White,
-            navigationIconContentColor = Color.Black
-        )
+        actions = {
+            IconButton(onClick = { expanded = true }) {
+                Icon(
+                    imageVector = Icons.Filled.MoreVert,
+                    contentDescription = "Localized description"
+                )
+            }
+            ThemeSettingDialog(
+                showDialog = showDialog,
+                title = "Theme Settings",
+                onDismiss = { showDialog = false },
+                currentTheme = selectedTheme,
+                onThemeChange = { theme ->
+                    selectedTheme = theme
+                    userSettingsViewModel.theme = theme
+                    userSettingsViewModel.saveThemeSetting(MainActivity())
+                    showDialog = false
+                }
+            )
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                DropdownMenuItem(
+                    text = { Text("Theme Settings") },
+                    onClick = { showDialog = true },
+                    leadingIcon = {
+                        Icon(
+                            Icons.Filled.Settings,
+                            contentDescription = null
+                        )
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text("Language Settings") },
+                    onClick = {  },
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(R.drawable.outline_language_24),
+                            contentDescription = null
+                        )
+                    }
+                )
+            }
+        },
+        scrollBehavior = scrollBehavior
+
+
+
 
     )
-
 }
+
 
 //BOTTOMBAR:
 // @Composable

@@ -95,7 +95,7 @@ fun IndexDetailScreen(navController: NavHostController, id: String?) {
     Scaffold(
         topBar = {
             //Usamos la fun composable IndexTopBar, de la clase IndexTopBar.kt:
-            IndexTopBar(drawerState, scope)
+            IndexTopBar(drawerState, scope, stringResource(R.string.app_name))
         },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
