@@ -41,8 +41,9 @@ fun IndexTopBar(drawerState: DrawerState, scope: CoroutineScope, text: String) {
         title = {
             Text(
                 textAlign = TextAlign.Center,
+                //Texto: Sistema de orientacion hospitalaria
                 text = stringResource(id = R.string.app_name),
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleMedium
 
             )
 

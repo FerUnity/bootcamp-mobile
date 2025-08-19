@@ -107,18 +107,20 @@ fun IndexForm(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 20.dp, start = 12.dp, end = 12.dp)
-                .background(Color.Cyan)
+                .background(Color.Green)
 
 
         ) {
 
             Text(
+                //Por favor seleccione un hospital o una especialidad
                 stringResource(R.string.deployment_1),
                 Modifier.padding(top = 10.dp, bottom = 10.dp),
                 textAlign = TextAlign.Center,
                 textDecoration = TextDecoration.None,
                 style = MaterialTheme.typography.titleLarge,
                 //fontSize = 25.sp
+
 
             )
 
@@ -131,7 +133,7 @@ fun IndexForm(
         //var selectedIndex: String by remember { mutableStateOf(indexOptions[0]) }
 
         //PARA ELEGIR: HOSPITALES O ESPECIALIDADES:
-        // Creamos una priemra lista desplegable, la var exanded es de la pantalla no del negocio:
+        // Creamos una priemra lista desplegable, la var expanded es de la pantalla no del negocio:
         var expandedIndexType: Boolean by remember { mutableStateOf(false) }
         ExposedDropdownMenuBox(
             expanded = expandedIndexType,
@@ -183,13 +185,15 @@ fun IndexForm(
 
         //PARA EL SERVICIO ELEGIDO: SEGUN SE SELECCIONO ANTEIORMENTE HOSPITALES O ESPECIALIDADES:
         Box(
+            //Caja que contiene un texto:
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 12.dp, end = 12.dp, top = 24.dp)
-                .background(Color.Cyan)
+                .background(Color.Green)
 
         ) {
 
+            //TExto: Por favor seleccione una opcion
             Text(
                 stringResource(R.string.option_select),
                 Modifier.padding(top = 10.dp, bottom = 10.dp),
@@ -220,7 +224,7 @@ fun IndexForm(
                 onValueChange = {},
                 //No se puede escribir, solo aparece la opcion elegida:
                 readOnly = true,
-                label = { Text("Seleccion") },
+                label = { Text(stringResource(R.string.selection)) },
                 //Icono triangulo chico para desplegar el menu:
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedIndex) },
                 modifier = Modifier
@@ -254,6 +258,7 @@ fun IndexForm(
 
         //ERROR DE SELECCION VACIA:
         // Creamos un mensaje emergente de error con la fun let y las var de error del IndexViewModel:
+        // :"Por favor seleccione una opcion"
         indexModel.indexErrorMessage?.let {
             Text(
                 text = it,
@@ -267,7 +272,7 @@ fun IndexForm(
         //de consulta del detalle de la opcion seleccionado:
         Button(
             onClick = {
-                //USamos la fun validateForm() del archivo IndexViewModel.kt para vakidar el llenado del form,
+                //USamos la fun validateForm() del archivo IndexViewModel.kt para validar el llenado del form,
                 // guardamos el resultado de la validacion en un valor:
                 val result = indexModel.validateForm()
                 if (result.isSuccess) {
@@ -294,7 +299,7 @@ fun IndexForm(
                 contentColor = MaterialTheme.colorScheme.surface
             ),
         ) {
-            //TExto sobre el btn
+            //TExto sobre el btn: "Consultar"
             Text(stringResource(R.string.details_button))
 
         }
