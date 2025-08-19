@@ -11,4 +11,5 @@
     <string name="select_service">Tipo de Servicio</string>
     <string name="option_select">Por favor seleccione una opcion</string>
     <string name="button_back">Volver</string>
+    <string name="selection">Selección</string>
 </resources>
