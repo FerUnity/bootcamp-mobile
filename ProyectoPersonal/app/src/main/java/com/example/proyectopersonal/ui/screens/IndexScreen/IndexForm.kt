@@ -73,7 +73,7 @@ fun IndexForm(
 
     //Una imagen de fondo de pantalla:
     //Generar un espacio o Spacer para que el logo de Hospital
-    // ocupe la parte inf de la pantalla,
+    // pueda ocupar la parte inf de la pantalla,
     // Para usar weight debe estar dentro de un Column():
     Column() {
         Spacer(modifier = Modifier.weight(1f))
