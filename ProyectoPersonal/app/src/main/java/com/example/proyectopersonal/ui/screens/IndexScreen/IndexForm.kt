@@ -254,7 +254,7 @@ fun IndexForm(
             }
 
 
-        } //Cierre ExposedDropdownMenuBox
+        } //Cierre ExposedDropdownMenuBox 2
 
         //ERROR DE SELECCION VACIA:
         // Creamos un mensaje emergente de error con la fun let y las var de error del IndexViewModel:
@@ -269,7 +269,7 @@ fun IndexForm(
 
 
         //Boton para que una vez seleccla opcion elegida, lo ingrese y nos lleve a la pantalla
-        //de consulta del detalle de la opcion seleccionado:
+        //de consulta del detalle de la opcion seleccionado: indexDetailScreen.kt
         Button(
             onClick = {
                 //USamos la fun validateForm() del archivo IndexViewModel.kt para validar el llenado del form,
@@ -303,6 +303,40 @@ fun IndexForm(
             Text(stringResource(R.string.details_button))
 
         }
+
+
+//        ACA PODEMOS CREAR UN BTN PARA ACCEDER AL FORMULARIO PARA SOLICITAR MEDICAMENTOS:
+        Button(
+            onClick = {
+                //OJO: Con la sgte indicacion:
+                // navController.navigate("index_detail/${indexModel.index }"),
+                // le decimos a este btn onClick,
+                // que nos lleve a la pantalla secundaria IndexDetailScreen.kt:
+                //Fijarse que se pasan el param del formulario asi,
+                // ${indexModel.index }, asi:
+                navController.navigate("add_medicamento")
+
+                //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
+                val text = "Detalle de la opcion"
+                val duration: Int = Toast.LENGTH_LONG
+                Toast.makeText(navController.context, text, duration).show()
+
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                // en Color.kt y al tema en Theme.kt:
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.surface
+            ),
+        ) {
+            //TExto sobre el btn: "Consultar"
+            Text(stringResource(R.string.form_meds))
+
+        }
+
+
 
     }   //Cierre cont Column()
 

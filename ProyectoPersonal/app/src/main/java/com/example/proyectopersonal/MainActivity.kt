@@ -16,6 +16,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import com.example.proyectopersonal.model.UserSettingsViewModel
+import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoScreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -78,7 +79,10 @@ fun AppNavigation() {
             IndexDetailScreen(navController, index)
         }
 
-        //Faltaria otro composable por ej detalle del medicamento seleccionado:
+        //Faltaria otro composable para formulario de medicamentos seleccionado:
+        composable("add_medicamento") { backStackEntry ->
+            AddMedicamentoScreen(navController)
+        }
 
     }
 }

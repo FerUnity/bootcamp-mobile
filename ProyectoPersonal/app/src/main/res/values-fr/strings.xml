@@ -12,4 +12,5 @@
     <string name="option_select">Veuillez sélectionner une option</string>
     <string name="button_back">Retour</string>
     <string name="selection">sélection</string>
+    <string name="form_meds">Formulaire de médicaments</string>
 </resources>
