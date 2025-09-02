@@ -305,7 +305,7 @@ fun IndexForm(
         }
 
 
-//        ACA PODEMOS CREAR UN BTN PARA ACCEDER AL FORMULARIO PARA SOLICITAR MEDICAMENTOS:
+//        ACA CREAMOS UN BTN PARA ACCEDER AL FORMULARIO PARA SOLICITAR MEDICAMENTOS:
         Button(
             onClick = {
                 //OJO: Con la sgte indicacion:
@@ -331,7 +331,7 @@ fun IndexForm(
                 contentColor = MaterialTheme.colorScheme.surface
             ),
         ) {
-            //TExto sobre el btn: "Consultar"
+            //TExto sobre el btn: "Formulario de medicamentos"
             Text(stringResource(R.string.form_meds))
 
         }

@@ -79,7 +79,7 @@ fun AppNavigation() {
             IndexDetailScreen(navController, index)
         }
 
-        //Faltaria otro composable para formulario de medicamentos seleccionado:
+        //Aca otro composable para formulario de medicamentos seleccionado:
         composable("add_medicamento") { backStackEntry ->
             AddMedicamentoScreen(navController)
         }

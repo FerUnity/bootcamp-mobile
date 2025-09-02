@@ -56,7 +56,7 @@ fun AddMedicamentoForm(
 ) {
 
     //Lista expandible:
-    //La sgte lista tb deberia pasar al viewModel o al ProductData creo:
+    //La sgte lista tb deberia pasar al viewModel o al ProductData:
     val medicamentoCategories = listOf("Orales: comprimidos", "Tópicos: pomadas", "Ópticos: gotas para los ojos",
         "Intravenosos o intramusculares: viales", "Intradérmicos: insulina", "Rectales o vaginales: supositorios u óvulos")
     var expanded by remember { mutableStateOf(false) }
@@ -74,9 +74,10 @@ fun AddMedicamentoForm(
 
     //Imagen de fondo
     Image(
-        painter = painterResource(R.drawable.ic_launcher_background),
-        contentDescription = "Fondo de Pantalla",
-        contentScale = ContentScale.Crop,
+        painter = painterResource(R.mipmap.ic_bg_hospitales2_foreground),
+        contentDescription = "Fondo de pantalla",
+        contentScale = ContentScale.Fit,
+        //Se tiene definir el tamaño asi:
         modifier = Modifier
             .fillMaxSize()
     )
@@ -85,16 +86,17 @@ fun AddMedicamentoForm(
     Column() {
         Spacer(modifier = Modifier.weight(1f))
         Image(
-            painter = painterResource(R.drawable.ic_launcher_foreground),
-            contentDescription = "Android de Fondo",
-            contentScale = ContentScale.Crop,
+            painter = painterResource(R.mipmap.ic_bg_hospitales_foreground),
+            contentDescription = "Fondo de pantalla",
+            contentScale = ContentScale.Fit,
+            //Se tiene definir el tamaño asi:
             modifier = Modifier
                 .fillMaxSize()
                 .weight(1f)
         )
     }
 
-    //Columna sonde se estan lños widgets del formulario:
+    //Columna sonde estan lños widgets del formulario:
     Column(
         modifier = Modifier
             .padding(top = 100.dp)
@@ -113,7 +115,7 @@ fun AddMedicamentoForm(
         )
 
         TextField(
-            //Delegamos a la clase AddProductViewModel los valores de value y onValueChange,
+            //Delegamos a la clase AddMedicamentoViewModel los valores de value y onValueChange,
             // para que estos no se borran por ej al rotar la pantalla:
             value = viewModel.productName,
             //Y cada vez que se haga un cambio, que se valide el campo respectivo,
