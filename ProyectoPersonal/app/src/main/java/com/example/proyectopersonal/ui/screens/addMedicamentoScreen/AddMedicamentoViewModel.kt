@@ -7,8 +7,61 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 
 class AddMedicamentoViewModel: ViewModel() {
+
+    val medsTypeOptions: List<String> = listOf("Orales: comprimidos", "Tópicos: pomadas", "Ópticos: gotas para los ojos",
+        "Intravenosos o intramusculares: viales", "Intradérmicos: insulina")
+
+
+    //Lista 2, de indices economicos disponibles nacionales, esto es del negocio no de la pantalla, por ende va al viewModel::
+    val orales: List<String> = listOf("ABACAVIR", "ACETAMINOFÉN", "Ácido ACETILSALICÍLICO", "ACICLOVIR")
+
+    //Lista 3 de indices economicos disponibles internacionales, esto es del negocio no de la pantalla, por ende va al viewModel::
+    val pomadas: List<String> = listOf("Voltadol Forte","Zovicrem","Blastoestimulina","Traumeel S","Radio Salil")
+
+    val opticos: List<String> = listOf("neomicina","polimixina","bacitracina")
+
+    val intravenosos: List<String> = listOf("Tylenol", "Epinefrina", "Ampicilina", "Anfotericina B", "Dexametasona")
+
+    val intradermicos: List<String> = listOf("Vacuna contra la hepatitis B","Vacuna contra el tétanos","Vacuna contra el neumococo")
+
+    var medsType by mutableStateOf("")
+
+    fun getMedsOptions(): List<String> {
+        return when (medsType) {
+            "Orales: comprimidos" -> orales
+            //Si selecciono Nacionales me muestra opt de la Lista indexNationalOptions
+
+            "Tópicos: pomadas" -> pomadas
+            //Si selecciono Internacionales me muestra opt de la Lista indexInternationalOptions
+
+            "Ópticos: gotas para los ojos" -> opticos
+
+            "Intravenosos o intramusculares: viales" -> intravenosos
+
+            "Intradérmicos: insulina" -> intradermicos
+
+            //En otro caso es que no se selecciono nada:
+            else -> emptyList()
+        }
+
+
+    }
+
+    var index by mutableStateOf("")
+        private set
     var productName by mutableStateOf("")
         private set
+
+    //Funciones cuando cambia cada valor de las var de las 3 listas:
+    fun onMedsTypeChange(newMedsType: String) {
+        medsType = newMedsType
+    }
+
+
+
+    fun onIndexChange(newIndex: String) {
+        index = newIndex
+    }
 
     //Y cuando haya un cambio en el valor de productName usamos la fun onProductNameChange:
     fun onProductNameChange(value: String) {

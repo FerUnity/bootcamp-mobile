@@ -15,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon
 import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.SnackbarDuration
@@ -58,7 +59,7 @@ fun AddMedicamentoForm(
     //Lista expandible:
     //La sgte lista tb deberia pasar al viewModel o al ProductData:
     val medicamentoCategories = listOf("Orales: comprimidos", "Tópicos: pomadas", "Ópticos: gotas para los ojos",
-        "Intravenosos o intramusculares: viales", "Intradérmicos: insulina", "Rectales o vaginales: supositorios u óvulos")
+        "Intravenosos o intramusculares: viales", "Intradérmicos: insulina")
     var expanded by remember { mutableStateOf(false) }
 
     //Para activar las animaciones:
@@ -114,38 +115,134 @@ fun AddMedicamentoForm(
                 .padding(16.dp)
         )
 
-        TextField(
-            //Delegamos a la clase AddMedicamentoViewModel los valores de value y onValueChange,
-            // para que estos no se borran por ej al rotar la pantalla:
-            value = viewModel.productName,
-            //Y cada vez que se haga un cambio, que se valide el campo respectivo,
-            // pero lo hacemos en el btn on click mejor:
-            onValueChange = {
-                viewModel.onProductNameChange(it)
-                //viewModel.validateForm()
-            },
-            label = { Text("Producto") },
-            placeholder = { Text("Nombre del Producto") },
-            isError = viewModel.productNameError != null,
-            singleLine = true,
+//        ACA EL DESPLEGABLE CON LAS CATEGORIAS DE MEDICAMENTOS:
+        //Creacion de lista desplegable categorias de medicamentos:
+
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-        )
+        ) {
+            TextField(
+                //Delegamos a la clase AddProductViewModel los valores de value y onValueChange,
+                // para que estos no se borran por ej al rotar la pantalla:
+                value = viewModel.medsType,
+                onValueChange = { },
+                readOnly = true,
+                label = { Text("Categoría") },
+                trailingIcon = { TrailingIcon(expanded = expanded) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .menuAnchor(MenuAnchorType.PrimaryEditable, true)
+                // Importante para que funcione correctamente
+
+            )
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+               viewModel.medsTypeOptions.forEach { opt ->
+                    DropdownMenuItem(
+                        text = { Text(opt) },
+                        onClick = {
+                            //Delegamos a la clase viewModel: AddProductViewModel para que al hacer click,
+                            // cambie el valor del desplegable por el texto elegido que esta en
+                            // AddProductViewModel.onProductCategoryChange():
+                            viewModel.onMedsTypeChange(opt)
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+        //Fin lista desplegable 1
+
+        //UNA VEZ ELEGIDA LA CATEGORIA DE MEDICAMENTO:
+        // Creamos una segunda lista desplegable, la var exanded es de la pantalla no del negocio:
+        var expandedIndex: Boolean by remember { mutableStateOf(false) }
+        ExposedDropdownMenuBox(
+            expanded = expandedIndex,
+            //Luego para que cambie de estado de abierto a cerrado,
+            // el menu desplegable con onExpandedChange:
+            onExpandedChange = { expandedIndex = !expandedIndex },
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+
+        ) {
+            //Cont del ExposedDropdownMenuBox:
+            TextField(
+                value = viewModel.index,
+                onValueChange = {},
+                //No se puede escribir, solo aparece la opcion elegida:
+                readOnly = true,
+                label = { Text(stringResource(R.string.selection)) },
+                //Icono triangulo chico para desplegar el menu:
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedIndex) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .menuAnchor(MenuAnchorType.PrimaryEditable, true)
+                // Importante para que funcione correctamente
+            )
+
+            ExposedDropdownMenu(
+                expanded = expandedIndex,
+                //Si pincho en cualq parte de la antalla que se cierre el menu desplegable:
+                onDismissRequest = { expandedIndex = false }
+            ) {
+                //indexOptions es la lista de indices disponibles,
+                // y por cada opcion de la lista hacemos un DropdownMenuItem:
+                viewModel.getMedsOptions().forEach { option ->
+                    DropdownMenuItem(
+                        text = { Text(option) },
+                        onClick = {
+                            expandedIndex = false
+                            //En la var  indexModel.onIndexChange(option), guardamos la opcion elegida:
+                            viewModel.onIndexChange(option)
+
+                        }
+                    )
+                }
+            }
+
+
+        } //Cierre ExposedDropdownMenuBox 2
+
+//        TextField(
+//            //Delegamos a la clase AddMedicamentoViewModel los valores de value y onValueChange,
+//            // para que estos no se borran por ej al rotar la pantalla:
+//            value = viewModel.medsType,
+//            readOnly = true,
+//            //Y cada vez que se haga un cambio, que se valide el campo respectivo,
+//            // pero lo hacemos en el btn on click mejor:
+//            onValueChange = {
+////                viewModel.onProductNameChange(it)
+//                //viewModel.validateForm()
+//            },
+//            label = { Text("Medicamento") },
+//            placeholder = { Text("Nombre del Medicamento") },
+////            isError = viewModel.productNameError != null,
+////            singleLine = true,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(16.dp)
+//        )
         //Y si me da un ERROR despues de escribir el nombre del prod:
         //OJO: Animacion para mostrar el error.
         // La animacion se activara cuando el valor del error(viewModel.productNameError) NO sea null:
-        AnimatedVisibility(visible = viewModel.productNameError != null) {
-            //Gramos el texto de error con la animacion:
-            Text(
-                text =  viewModel.productNameError?: "",
-                color = Color.Red,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp)
-            )
-
-        }
+//        AnimatedVisibility(visible = viewModel.productNameError != null) {
+//            //Gramos el texto de error con la animacion:
+//            Text(
+//                text =  viewModel.productNameError?: "",
+//                color = Color.Red,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(start = 16.dp)
+//            )
+//
+//        }
 
         TextField(
             //Delegamos a la clase AddProductViewModel los valores de value y onValueChange,
@@ -188,47 +285,47 @@ fun AddMedicamentoForm(
                 .padding(16.dp)
         )
 
-        //Creacion de lista desplegable categorias de medicamentos
-        ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = { expanded = !expanded },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            TextField(
-                //Delegamos a la clase AddProductViewModel los valores de value y onValueChange,
-                // para que estos no se borran por ej al rotar la pantalla:
-                value = viewModel.productCategory,
-                onValueChange = { },
-                readOnly = true,
-                label = { Text("Categoría") },
-                trailingIcon = { TrailingIcon(expanded = expanded) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .menuAnchor(MenuAnchorType.PrimaryEditable, true)
-                // Importante para que funcione correctamente
-
-            )
-            ExposedDropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false }
-            ) {
-                medicamentoCategories.forEach { opt ->
-                    DropdownMenuItem(
-                        text = { Text(opt) },
-                        onClick = {
-                            //Delegamos a la clase viewModel: AddProductViewModel para que al hacer click,
-                            // cambie el valor del desplegable por el texto elegido que esta en
-                            // AddProductViewModel.onProductCategoryChange():
-                            viewModel.onProductCategoryChange(opt)
-                            expanded = false
-                        }
-                    )
-                }
-            }
-        }
-        //Fin lista desplegable
+//        //Creacion de lista desplegable categorias de medicamentos
+//        ExposedDropdownMenuBox(
+//            expanded = expanded,
+//            onExpandedChange = { expanded = !expanded },
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(16.dp)
+//        ) {
+//            TextField(
+//                //Delegamos a la clase AddProductViewModel los valores de value y onValueChange,
+//                // para que estos no se borran por ej al rotar la pantalla:
+//                value = viewModel.productCategory,
+//                onValueChange = { },
+//                readOnly = true,
+//                label = { Text("Categoría") },
+//                trailingIcon = { TrailingIcon(expanded = expanded) },
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .menuAnchor(MenuAnchorType.PrimaryEditable, true)
+//                // Importante para que funcione correctamente
+//
+//            )
+//            ExposedDropdownMenu(
+//                expanded = expanded,
+//                onDismissRequest = { expanded = false }
+//            ) {
+//                medicamentoCategories.forEach { opt ->
+//                    DropdownMenuItem(
+//                        text = { Text(opt) },
+//                        onClick = {
+//                            //Delegamos a la clase viewModel: AddProductViewModel para que al hacer click,
+//                            // cambie el valor del desplegable por el texto elegido que esta en
+//                            // AddProductViewModel.onProductCategoryChange():
+//                            viewModel.onProductCategoryChange(opt)
+//                            expanded = false
+//                        }
+//                    )
+//                }
+//            }
+//        }
+//        //Fin lista desplegable
 
         TextField(
             //Delegamos a la clase AddProductViewModel los valores de value y onValueChange,

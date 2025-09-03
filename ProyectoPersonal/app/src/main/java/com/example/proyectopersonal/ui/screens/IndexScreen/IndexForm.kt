@@ -61,7 +61,7 @@ fun IndexForm(
 //    val scope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
 
-    //Otra imagen de fondo de pantalla:
+    //Una imagen de fondo de pantalla:
     Image(
         painter = painterResource(R.mipmap.ic_bg_hospitales2_foreground),
         contentDescription = "Fondo de pantalla",
@@ -71,7 +71,7 @@ fun IndexForm(
             .fillMaxSize()
     )
 
-    //Una imagen de fondo de pantalla:
+    //Otra imagen de fondo de pantalla:
     //Generar un espacio o Spacer para que el logo de Hospital
     // pueda ocupar la parte inf de la pantalla,
     // Para usar weight debe estar dentro de un Column():
