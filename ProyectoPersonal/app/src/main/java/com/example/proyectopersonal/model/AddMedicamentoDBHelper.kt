@@ -42,8 +42,8 @@ class AddMedicamentoDBHelper(context: Context) :
 
     }
 
-    //    fun para agregar o actualizar un medicamento a la tabla medicamentos de la BD.
-    //Esta fun se llama desde el viewModel,
+    //    fun para agregar o actualizar los datos de un medicamento en la tabla medicamentos de la BD.
+    //Esta fun se llama desde la fun saveMeds() del AddMedicamentoViewModel:
 //    Ojo el id no se agrega porque es autoincremental.
 //    Para crear los campos de cada medicamento, creamos la var medicamento de tipo ProductData:
     fun addOrUpdateMedicamento(medicamento: ProductData) {
@@ -81,9 +81,9 @@ class AddMedicamentoDBHelper(context: Context) :
             null,
             null
         )
-        //    Para crear y obtener los campos de cada medicamento,
-        //    de nuevo creamos la var medicamento de tipo ProductData.
-        //    Primero le decimos que sea null y si el cursor encuentra un medicamento, llenara sus campos:
+        //    Para obtener los campos de cada medicamento,
+        //    creamos la var medicamento de tipo ProductData.
+        //    Primero le decimos que sea null y si el cursor encuentra un medicamento por id, llenara sus campos:
         var medicamento: ProductData? = null
         if (cursor.moveToFirst()) {
             val id = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
@@ -92,9 +92,9 @@ class AddMedicamentoDBHelper(context: Context) :
             val descripcion = cursor.getString(cursor.getColumnIndexOrThrow("descripcion"))
             val precio = cursor.getDouble(cursor.getColumnIndexOrThrow("precio"))
             val categoria = cursor.getString(cursor.getColumnIndexOrThrow("categoria"))
-            //    Para crear y obtener los campos de cada medicamento por id,
-            //    de nuevo creamos la var medicamento de tipo ProductData
-            //    Y llenamos sus campos con los valores obtenidos del cursor aca arriba.
+
+            //    Finalmente creamos el medicamento con sus valores de cada campo,
+            //    obtenidos por id, del cursor aca arriba.
             medicamento = ProductData(
                 id,
                 nombre,
@@ -109,7 +109,8 @@ class AddMedicamentoDBHelper(context: Context) :
         return medicamento
     }
 
-//    fun para obtener una lista de todos los medicamentos de la tabla medicamentos de la BD:
+//    fun para obtener una lista de todos los medicamentos de la tabla medicamentos de la BD.
+//    Esta fun es llamada desde la fun loadMeds() del AddMedicamentoViewModel:
     fun getMedicamentos(): List<ProductData> {
         val medicamentos = mutableListOf<ProductData>()
         val db = readableDatabase
@@ -129,8 +130,8 @@ class AddMedicamentoDBHelper(context: Context) :
             val descripcion = cursor.getString(cursor.getColumnIndexOrThrow("descripcion"))
             val precio = cursor.getDouble(cursor.getColumnIndexOrThrow("precio"))
             val categoria = cursor.getString(cursor.getColumnIndexOrThrow("categoria"))
-            //    Para crear y obtener los campos de cada medicamento,
-            //    de nuevo creamos la var medicamento de tipo ProductData
+            //    Para obtener una lista de todos los medicamentos de la tabla medicamentos de la BD y sus campos,
+            //    creamos la var medicamento de tipo Lista de ProductData
             //    y llenamos sus campos con los valores obtenidos del cursor aca arriba.
             val medicamento = ProductData(
                 id,

@@ -259,6 +259,9 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
 
 
     //Para usar con JSON o SQLite:
+
+//    La fun loadMeds() se usa para cargar los datos desde la base de datos SQLite hacia la lista local medicamentos.
+//    Esta fun se invoca desde la fun onCreated() del MainActivity:
     fun loadMeds(context: Context) {
         /*        val json = "{medicamentos: []}"
                 try {
@@ -297,11 +300,15 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
 //        Obtenemos los datos de los medicamentos de la base de datos SQLite
         //y los guardamos en una nueva lista llamada val medicamentos:
         val medicamentos: List<ProductData> = medDbHelper.getMedicamentos()
-        //Y luego los agregamos a la lista de medicamentos local: this.medicamentos:
+        //Y luego estos medicamentos obtenidos de la base de datos SQLite,
+    // los agregamos a la lista de medicamentos local: this.medicamentos:
         this.medicamentos = medicamentos.toMutableList()
 
     }
 
+
+    //   La fun saveMeds() se usa para guardar los datos desde la lista local medicamentos hacia la base de datos SQLite.
+//    Esta fun se invoca desde la fun onDestroy() del MainActivity y desde la fun addProduct() del AddProductViewModel:
     fun saveMeds(context: Context) {
         /*        val json = Gson().toJson(medicamentos)
                 val json = JSONObject()
