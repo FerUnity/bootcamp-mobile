@@ -1,0 +1,28 @@
+{
+  "medicamentos": [
+    {
+      "id": 1,
+      "nombre": "Paracetamol",
+      "marca": "Bayer",
+      "descripcion": "Analgésico y antipirético",
+      "precio": 1000,
+      "categoria": "Orales: comprimidos"
+    },
+    {
+      "id": 2,
+      "nombre": "Zovicrem",
+      "marca": "Bayer",
+      "descripcion": "Alivio herpes labial",
+      "precio": 5000,
+      "categoria": "Topicos: pomadas"
+    },
+    {
+      "id": 3,
+      "nombre": "Neomicina",
+      "marca": "Bayer",
+      "descripcion": "Antibiótico",
+      "precio": 10000,
+      "categoria": "Opticos: gotas para los ojos"
+    }
+  ]
+}

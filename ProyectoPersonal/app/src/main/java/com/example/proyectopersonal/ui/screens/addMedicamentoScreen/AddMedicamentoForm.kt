@@ -58,8 +58,8 @@ fun AddMedicamentoForm(
 
     //Lista expandible:
     //La sgte lista tb deberia pasar al viewModel o al ProductData:
-    val medicamentoCategories = listOf("Orales: comprimidos", "Tópicos: pomadas", "Ópticos: gotas para los ojos",
-        "Intravenosos o intramusculares: viales", "Intradérmicos: insulina")
+//    val medicamentoCategories = listOf("Orales: comprimidos", "Tópicos: pomadas", "Ópticos: gotas para los ojos",
+//        "Intravenosos o intramusculares: viales", "Intradérmicos: insulina")
     var expanded by remember { mutableStateOf(false) }
 
     //Para activar las animaciones:
@@ -86,6 +86,7 @@ fun AddMedicamentoForm(
     //Generar un espacio o Spacer para que el logo de android ocupe la parte inf de la pantalla:
     Column() {
         Spacer(modifier = Modifier.weight(1f))
+//        OTRA IMAGEN DE FONDO ABAJO:
         Image(
             painter = painterResource(R.mipmap.ic_bg_hospitales_foreground),
             contentDescription = "Fondo de pantalla",
@@ -210,40 +211,9 @@ fun AddMedicamentoForm(
 
         } //Cierre ExposedDropdownMenuBox 2
 
-//        TextField(
-//            //Delegamos a la clase AddMedicamentoViewModel los valores de value y onValueChange,
-//            // para que estos no se borran por ej al rotar la pantalla:
-//            value = viewModel.medsType,
-//            readOnly = true,
-//            //Y cada vez que se haga un cambio, que se valide el campo respectivo,
-//            // pero lo hacemos en el btn on click mejor:
-//            onValueChange = {
-////                viewModel.onProductNameChange(it)
-//                //viewModel.validateForm()
-//            },
-//            label = { Text("Medicamento") },
-//            placeholder = { Text("Nombre del Medicamento") },
-////            isError = viewModel.productNameError != null,
-////            singleLine = true,
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(16.dp)
-//        )
-        //Y si me da un ERROR despues de escribir el nombre del prod:
-        //OJO: Animacion para mostrar el error.
-        // La animacion se activara cuando el valor del error(viewModel.productNameError) NO sea null:
-//        AnimatedVisibility(visible = viewModel.productNameError != null) {
-//            //Gramos el texto de error con la animacion:
-//            Text(
-//                text =  viewModel.productNameError?: "",
-//                color = Color.Red,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(start = 16.dp)
-//            )
-//
-//        }
 
+
+//        MARCA:
         TextField(
             //Delegamos a la clase AddProductViewModel los valores de value y onValueChange,
             // para que estos no se borran por ej al rotar la pantalla:
@@ -272,6 +242,8 @@ fun AddMedicamentoForm(
 
         }
 
+
+//        DESCRIPCION:
         TextField(
             //Delegamos a la clase AddProductViewModel los valores de value y onValueChange,
             // para que estos no se borran por ej al rotar la pantalla:
@@ -285,57 +257,68 @@ fun AddMedicamentoForm(
                 .padding(16.dp)
         )
 
-//        //Creacion de lista desplegable categorias de medicamentos
+//
+
+
+        //PRECIO: DESPLEGABLE: NO VA
+//        var expandedPrice: Boolean by remember { mutableStateOf(false) }
 //        ExposedDropdownMenuBox(
-//            expanded = expanded,
-//            onExpandedChange = { expanded = !expanded },
+//            expanded = expandedPrice,
+//            //Luego para que cambie de estado de abierto a cerrado,
+//            // el menu desplegable con onExpandedChange:
+//            onExpandedChange = { expandedPrice = !expandedPrice },
 //            modifier = Modifier
-//                .fillMaxWidth()
 //                .padding(16.dp)
+//                .fillMaxWidth()
+//
 //        ) {
+//            //Cont del ExposedDropdownMenuBox:
 //            TextField(
-//                //Delegamos a la clase AddProductViewModel los valores de value y onValueChange,
-//                // para que estos no se borran por ej al rotar la pantalla:
-//                value = viewModel.productCategory,
-//                onValueChange = { },
+//                value = viewModel.medsTypePrice,
+//                onValueChange = {},
+//                //No se puede escribir, solo aparece la opcion elegida:
 //                readOnly = true,
-//                label = { Text("Categoría") },
-//                trailingIcon = { TrailingIcon(expanded = expanded) },
+//                label = { Text(stringResource(R.string.selection)) },
+//                //Icono triangulo chico para desplegar el menu:
+//                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedPrice) },
 //                modifier = Modifier
 //                    .fillMaxWidth()
 //                    .menuAnchor(MenuAnchorType.PrimaryEditable, true)
 //                // Importante para que funcione correctamente
-//
 //            )
+//
 //            ExposedDropdownMenu(
-//                expanded = expanded,
-//                onDismissRequest = { expanded = false }
+//                expanded = expandedPrice,
+//                //Si pincho en cualq parte de la antalla que se cierre el menu desplegable:
+//                onDismissRequest = { expandedPrice = false }
 //            ) {
-//                medicamentoCategories.forEach { opt ->
+//                //indexOptions es la lista de indices disponibles,
+//                // y por cada opcion de la lista hacemos un DropdownMenuItem:
+//                viewModel.getMedPrice().toString().forEach { option ->
 //                    DropdownMenuItem(
-//                        text = { Text(opt) },
+//                        text = { Text(option.toString()) },
 //                        onClick = {
-//                            //Delegamos a la clase viewModel: AddProductViewModel para que al hacer click,
-//                            // cambie el valor del desplegable por el texto elegido que esta en
-//                            // AddProductViewModel.onProductCategoryChange():
-//                            viewModel.onProductCategoryChange(opt)
-//                            expanded = false
+//                            expandedPrice = false
+//                            //En la var  indexModel.onIndexChange(option), guardamos la opcion elegida:
+//                            viewModel.onMedsTypePriceChange(option.toString())
+//
 //                        }
 //                    )
 //                }
 //            }
-//        }
-//        //Fin lista desplegable
+//
+//
+//        } //Cierre ExposedDropdownMenuBox 3
 
+//        PRECIO:
         TextField(
             //Delegamos a la clase AddProductViewModel los valores de value y onValueChange,
             // para que estos no se borran por ej al rotar la pantalla:
-            value = viewModel.productPrice,
-            onValueChange = {
-                viewModel.onProductPriceChange(it)
-            },
+            value = viewModel.index,
+            onValueChange = {viewModel.getMedPrice()},
+            readOnly = true,
             label = { Text("Precio") },
-            placeholder = { Text("Precio del Producto") },
+//            placeholder = { Text("Precio del Producto") },
             isError = viewModel.productPriceError != null,
             singleLine = true,
             modifier = Modifier
@@ -370,9 +353,10 @@ fun AddMedicamentoForm(
                 onClick = {
                     viewModel.validateForm()
                     if (viewModel.isFormValid) {
-                        //Despues de agregar el producto la idea es volver a la pantalla anterior
+                        //Despues de presionar el btn agregar el producto la idea es volver a la pantalla anterior
                         // recuperando el total del contenido que se acaba de agregar y enviar, asi:
-                        viewModel.addProduct(navController.previousBackStackEntry?.savedStateHandle)
+                        viewModel.addProduct(navController.context,
+                            navController.previousBackStackEntry?.savedStateHandle)
 
                         //Aqui va el toast o snackbar:
 

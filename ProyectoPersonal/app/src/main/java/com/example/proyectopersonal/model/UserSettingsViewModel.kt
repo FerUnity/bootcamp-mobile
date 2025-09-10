@@ -19,8 +19,8 @@ import kotlinx.coroutines.runBlocking
 
 //Que herede de ViewModel:
 class UserSettingsViewModel(private val context: Context) : ViewModel() {
-    var theme by mutableStateOf("system") //"system" es el valor por def de theme.
-    var languaje by mutableStateOf("es-cl") //español-chile valor por def de languaje.
+    var theme: String by mutableStateOf("system") //"system" es el valor por def de theme.
+    var languaje: String by mutableStateOf("es-cl") //español-chile valor por def de languaje.
 
 //    Creamos una instancia para los syharedPreferences:
 //    val userPreferences: SharedPreferences = getSharedPreferences("user_preferences", Context.MODE_PRIVATE)
@@ -56,7 +56,9 @@ class UserSettingsViewModel(private val context: Context) : ViewModel() {
     // y una tercera cte o val que rep el mismo Datastore:
     val Context.dataStore by preferencesDataStore("userSettings")
 
-    //    Y creamos 2 fun, una para leer los datos de configuracion del Datastore,
+    //    Y creamos 2 fun,
+    //    una para leer los datos de configuracion del Datastore,
+    //    que se invoca al abrir la app: onCreate() del MainActivity:
     fun getSettings(context: Context) {
         runBlocking {
             val dataStore = context.dataStore
@@ -72,7 +74,8 @@ class UserSettingsViewModel(private val context: Context) : ViewModel() {
         }
     }
 
-    //    y otra fun para guardar los datos en el DataStore:
+    //    y otra fun para guardar los datos en el DataStore,
+    //    que se invoca al cerrar la app: onDestroy() del MainActivity:
     fun saveSettings(context: Context) {
         runBlocking {
             val dataStore = context.dataStore

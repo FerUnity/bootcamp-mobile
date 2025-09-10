@@ -16,6 +16,10 @@ datastore = "1.1.7"
 compiler = "3.2.0-alpha11"
 gson = "2.10.1"
 uiTextGoogleFonts = "1.9.0"
+transportApi = "4.0.0"
+roomCommonJvm = "2.7.2"
+sqlite = "3.36.0.3"
+roomKtx = "2.7.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +46,10 @@ androidx-datastore-preferences = { group = "androidx.datastore", name = "datasto
 androidx-compiler = { group = "androidx.databinding", name = "compiler", version.ref = "compiler" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
+transport-api = { group = "com.google.android.datatransport", name = "transport-api", version.ref = "transportApi" }
+androidx-room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "roomCommonJvm" }
+androidx-sqlite = { group = "androidx.sqlite", name = "sqlite", version.ref = "sqlite" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 
 
 [plugins]

@@ -17,16 +17,21 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import com.example.proyectopersonal.model.UserSettingsViewModel
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoScreen
+import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
     companion object {
-        lateinit var userSettingsViewModel: UserSettingsViewModel
-//        lateinit var shoppingListViewModel: ShoppingListViewModel
+        lateinit var userSettingsViewModel: UserSettingsViewModel //Datastore
+         lateinit var addMedicamentoViewModel: AddMedicamentoViewModel //Para usar con JSON
     }
 
+    //Al abrir la app se muestra el splashScreen,
+//    Se cargan los ajustes de usuario de la app,Theme y Lenguaje desde el DataStore,
+//    Y se cargan la lista de medicamentos ya guardados,
+//    y se muestra la pantalla principal:
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         var showSplashScreen = true
@@ -43,6 +48,11 @@ class MainActivity : ComponentActivity() {
         userSettingsViewModel = UserSettingsViewModel(applicationContext)
         userSettingsViewModel.getSettings(applicationContext)
 
+//        Cargar la lista de medicamewntos ya guardados:
+        addMedicamentoViewModel = AddMedicamentoViewModel(this)
+        addMedicamentoViewModel.getDbHelper(applicationContext)
+        addMedicamentoViewModel.loadMeds( applicationContext)
+
         enableEdgeToEdge()
         setContent {
             ProyectoPersonalTheme(userSettingsViewModel.theme) {
@@ -51,14 +61,15 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    //Y antes de cerrar la app, fun onDestroy(), se almacena los datos de conf en el DATASTORE, asi:
+    //Y antes de cerrar la app, fun onDestroy(), se almacena los datos de conf en el DATASTORE,
+    // y las BD en el json o SQLite:en JSON o SQLite, asi:
     override fun onDestroy() {
         super.onDestroy()
 //        Guardamos los ajustes de usuario de la app,Theme y Lenguaje en el DataStore:
         userSettingsViewModel.saveSettings(applicationContext)
 
-        //Guardamos la lista de compras en el json:
-//        shoppingListViewModel.saveProducts(applicationContext)
+        //Guardamos la lista de medicamentos en el json:
+        addMedicamentoViewModel.saveMeds(applicationContext)
     }
 }
 

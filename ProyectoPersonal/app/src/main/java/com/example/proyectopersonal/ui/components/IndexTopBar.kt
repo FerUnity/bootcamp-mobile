@@ -1,6 +1,7 @@
 package com.example.proyectopersonal.ui.components
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Settings
@@ -57,17 +58,10 @@ fun IndexTopBar(drawerState: DrawerState, scope: CoroutineScope, text: String) {
                 /* Open Account Modal */
             }) {
                 Icon(
-                    //imageVector = Icons.Filled.ArrowBack,
-                    //tint = Color(white),
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "Inicio",
-                    //Abrir el ModalNavigationDrawer
-                    //modifier = Modifier.clickable { scope.launch { drawerState.open() } }
-
+                    imageVector = Icons.Filled.AccountCircle,
+                    contentDescription = "Account"
                 )
             }
-
-
         },
         actions = {
             IconButton(onClick = { expanded = true }) {
@@ -115,10 +109,6 @@ fun IndexTopBar(drawerState: DrawerState, scope: CoroutineScope, text: String) {
             }
         },
         scrollBehavior = scrollBehavior
-
-
-
-
     )
 }
 

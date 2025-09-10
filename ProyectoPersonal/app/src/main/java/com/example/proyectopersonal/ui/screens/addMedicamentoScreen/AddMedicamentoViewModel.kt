@@ -1,38 +1,56 @@
 package com.example.proyectopersonal.ui.screens.addMedicamentoScreen
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-
-class AddMedicamentoViewModel: ViewModel() {
-
-    val medsTypeOptions: List<String> = listOf("Orales: comprimidos", "Tópicos: pomadas", "Ópticos: gotas para los ojos",
-        "Intravenosos o intramusculares: viales", "Intradérmicos: insulina")
+import com.example.proyectopersonal.model.AddMedicamentoDBHelper
+import com.example.proyectopersonal.model.ProductData
 
 
-    //Lista 2, de indices economicos disponibles nacionales, esto es del negocio no de la pantalla, por ende va al viewModel::
-    val orales: List<String> = listOf("ABACAVIR", "ACETAMINOFÉN", "Ácido ACETILSALICÍLICO", "ACICLOVIR")
+class AddMedicamentoViewModel(context: Context) : ViewModel() {
+    companion object {
+        lateinit var medDbHelper: AddMedicamentoDBHelper
+    }
+
+    var medicamentos = mutableListOf<ProductData>()
+        private set
+
+    val medsTypeOptions: List<String> = listOf(
+        "Orales: comprimidos", "Tópicos: pomadas", "Ópticos: gotas para los ojos",
+        "Intravenosos o intramusculares: viales", "Intradérmicos: insulina"
+    )
+
+
+    //Listas de categorias de meds, esto es del negocio no de la pantalla, por ende va al viewModel::
+    val orales: List<String> =
+        listOf("ABACAVIR", "ACETAMINOFÉN", "Ácido ACETILSALICÍLICO", "ACICLOVIR")
 
     //Lista 3 de indices economicos disponibles internacionales, esto es del negocio no de la pantalla, por ende va al viewModel::
-    val pomadas: List<String> = listOf("Voltadol Forte","Zovicrem","Blastoestimulina","Traumeel S","Radio Salil")
+    val pomadas: List<String> =
+        listOf("Voltadol Forte", "Zovicrem", "Blastoestimulina", "Traumeel S", "Radio Salil")
 
-    val opticos: List<String> = listOf("neomicina","polimixina","bacitracina")
+    val opticos: List<String> = listOf("neomicina", "polimixina", "bacitracina")
 
-    val intravenosos: List<String> = listOf("Tylenol", "Epinefrina", "Ampicilina", "Anfotericina B", "Dexametasona")
+    val intravenosos: List<String> =
+        listOf("Tylenol", "Epinefrina", "Ampicilina", "Anfotericina B", "Dexametasona")
 
-    val intradermicos: List<String> = listOf("Vacuna contra la hepatitis B","Vacuna contra el tétanos","Vacuna contra el neumococo")
+    val intradermicos: List<String> = listOf(
+        "Vacuna contra la hepatitis B",
+        "Vacuna contra el tétanos",
+        "Vacuna contra el neumococo"
+    )
 
     var medsType by mutableStateOf("")
 
     fun getMedsOptions(): List<String> {
         return when (medsType) {
             "Orales: comprimidos" -> orales
-            //Si selecciono Nacionales me muestra opt de la Lista indexNationalOptions
+            //Si selecciono Orales: comprimidos me muestra opt de la Lista orales
 
             "Tópicos: pomadas" -> pomadas
-            //Si selecciono Internacionales me muestra opt de la Lista indexInternationalOptions
 
             "Ópticos: gotas para los ojos" -> opticos
 
@@ -44,11 +62,45 @@ class AddMedicamentoViewModel: ViewModel() {
             else -> emptyList()
         }
 
+    }
+
+    var medsTypePrice by mutableStateOf("")
+    fun getMedPrice(): String {
+        return when (medsTypePrice) {
+            "ABACAVIR" -> "1000.0"
+            "ACETAMINOFÉN" -> "3000.0"
+            "Ácido ACETILSALICÍLICO" -> "5000.0"
+            "ACICLOVIR" -> "2000.0"
+
+            "Voltadol Forte" -> "3000.0"
+            "Zovicrem" -> "4000.0"
+            "Blastoestimulina" -> "5000.0"
+            "Traumeel S" -> "30000.0"
+            "Radio Salil" -> "15000.0"
+
+            "neomicina" -> "23000.0"
+            "polimixina" -> "33000.0"
+            "bacitracina" -> "83000.0"
+
+            "Tylenol" -> "43000.0"
+            "Epinefrina" -> "53000.0"
+            "Ampicilina" -> "63000.0"
+            "Anfotericina B" -> "93000.0"
+            "Dexametasona" -> "83000.0"
+
+
+            else -> "0.0"
+
+
+        }
 
     }
 
     var index by mutableStateOf("")
         private set
+
+    //    var indexPrice by mutableStateOf("")
+//        private set
     var productName by mutableStateOf("")
         private set
 
@@ -57,11 +109,15 @@ class AddMedicamentoViewModel: ViewModel() {
         medsType = newMedsType
     }
 
+    fun onMedsTypePriceChange(newMedsTypePrice: String) {
+        medsTypePrice = newMedsTypePrice
+    }
 
 
     fun onIndexChange(newIndex: String) {
         index = newIndex
     }
+
 
     //Y cuando haya un cambio en el valor de productName usamos la fun onProductNameChange:
     fun onProductNameChange(value: String) {
@@ -107,23 +163,23 @@ class AddMedicamentoViewModel: ViewModel() {
 
     //Y creamos una fun para validar el formulario,
     // creando valores(val) que rep el retrorno de las fun de validacion de los 3 campos:
-    fun validateForm(){
+    fun validateForm() {
         val productNameValidation = validateProductName(productName)
         val productBrandValidation = validateProductBrand(productBrand)
         val productPriceValidation = validateProductPrice(productPrice)
 
-        productNameError = if (productNameValidation is validateInput.Error){
+        productNameError = if (productNameValidation is validateInput.Error) {
             productNameValidation.message
             //Se pone else porque si queremos validar varias veces hay que borra el campor anterior
         } else {
             null
         }
-        productBrandError = if (productBrandValidation is validateInput.Error){
+        productBrandError = if (productBrandValidation is validateInput.Error) {
             productBrandValidation.message
         } else {
             null
         }
-        productPriceError = if (productPriceValidation is validateInput.Error){
+        productPriceError = if (productPriceValidation is validateInput.Error) {
             productPriceValidation.message
             //Se pone else porque si queremos validar varias veces hay que borra el campor anterior
         } else {
@@ -139,7 +195,10 @@ class AddMedicamentoViewModel: ViewModel() {
                 productPriceValidation is validateInput.Success
 
     }
-    fun addProduct(savedStateHandle: SavedStateHandle?) {
+
+    fun addProduct(context: Context, savedStateHandle: SavedStateHandle?) {
+        //Al agregar el medicamento a la lista local, lo guardamos en la base de datos SQLite, CREO:
+        saveMeds(context)
         // Preparamos la respuesta cuando se vuelva a la pantalla principal luego de agregar un producto, creo:
         savedStateHandle?.set("productName", productName)
         savedStateHandle?.set("productBrand", productBrand)
@@ -151,8 +210,8 @@ class AddMedicamentoViewModel: ViewModel() {
 
 
     sealed class validateInput {
-        object Success: validateInput()
-        data class Error(val message: String): validateInput()
+        object Success : validateInput()
+        data class Error(val message: String) : validateInput()
 
     }
 
@@ -183,12 +242,100 @@ class AddMedicamentoViewModel: ViewModel() {
         // ademas se usa double porque en otros paises se usa el precio con decimales:
         else if (productPrice.toDoubleOrNull() == null) {
             return validateInput.Error("El precio del producto debe ser un número")
-        }
-        else{
+        } else {
             return validateInput.Success
 
         }
 
 
     }
+
+
+    //   fun para guardar en la base de datos SQLite.
+//   Inicializamos aca el medDbHelper:
+    fun getDbHelper(context: Context) {
+        medDbHelper = AddMedicamentoDBHelper(context)
+    }
+
+
+    //Para usar con JSON o SQLite:
+    fun loadMeds(context: Context) {
+        /*        val json = "{medicamentos: []}"
+                try {
+        //        guardamos el contenido del arch json en la var json: cono texto:
+                val json: String = context.assets.open("medicamentos.json").bufferedReader().use {
+                    it.readText()
+                }
+                //Para interpretar el arch json usamos la lib Gson:
+                val medicamentos = Gson().fromJson(json, T::class.java)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                val medList = JSONObject(json)
+                val medArray: JSONArray = medList.getJSONArray("medicamentos")
+                for (i in 0 until medArray.length()) {
+                    val medicamento = medArray.getJSONObject(i)
+                    var id = medicamento.getInt("id")
+                    val nombre = medicamento.getString("nombre")
+                    val marca = medicamento.getString("marca")
+                    val descripcion = medicamento.getString("descripcion")
+                    val precio: Float? = medicamento.getDouble("precio").toFloat()
+                    val categoria = medicamento.getString("categoria")
+                    val productData = ProductData(
+                        id = id,
+                        nombre = nombre,
+                        marca = marca,
+                        descripcion = descripcion,
+                        precio = precio,
+                        categoria = categoria
+                    )
+                    medicamentos.add(productData)
+
+                }*/
+        //Luego para cargar los datos desde la base de datos SQLite con la lista de medicamentos:
+
+//        Obtenemos los datos de los medicamentos de la base de datos SQLite
+        //y los guardamos en una nueva lista llamada val medicamentos:
+        val medicamentos: List<ProductData> = medDbHelper.getMedicamentos()
+        //Y luego los agregamos a la lista de medicamentos local: this.medicamentos:
+        this.medicamentos = medicamentos.toMutableList()
+
+    }
+
+    fun saveMeds(context: Context) {
+        /*        val json = Gson().toJson(medicamentos)
+                val json = JSONObject()
+                try  {
+                    context.openFileOutput("medicamentos.json", Context.MODE_PRIVATE).use {
+                        it.write(json.toByteArray())}
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                val medArray = JSONArray()
+                for (med: ProductData in medicamentos) {
+                    val medicamento = JSONObject()
+                    medicamento.put("id", med.id)
+                    medicamento.put("nombre", med.nombre)
+                    medicamento.put("marca", med.marca)
+                    medicamento.put("descripcion", med.descripcion)
+                    medicamento.put("precio", med.precio)
+                    medicamento.put("categoria", med.categoria)
+                    medArray.put(medicamento)
+                    }
+                json.put("medicamentos", medArray)*/
+        //Para guardar los datos en la base de datos SQLite:
+        //Recorremos los medicamentos de la lista local medicamentos:
+        for (medicamento: ProductData in medicamentos) {
+            //Y los agregamos o actualizamos a la base de datos SQLite:
+            medDbHelper.addOrUpdateMedicamento(medicamento)
+        }
+
+
+    }
+
+
 }
+
+
+
+
