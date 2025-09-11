@@ -17,17 +17,39 @@ class AddMedicamentoDBHelper(context: Context) :
 
     //        fun para crear la tabla medicamentos de la BD
     override fun onCreate(db: SQLiteDatabase?) {
-        val createTable = """
+//        Creamos dos tablas: Pero se administran por el mismo DAO:
+        //        AddMedicamentoDAO, porque estan relacionadas
+        //    La primera tabla llamada meds_list es una tabla de listas de compras de medicamentos:
+        //    Con los campos id, listName, listDescription y listCategory:
+        var createTable = """
+            CREATE TABLE meds_list (
+               id INTEGER PRIMARY KEY AUTOINCREMENT,
+               listName TEXT,
+               listDescription TEXT,
+               listCategory TEXT               
+           );
+       """
+        db?.execSQL(createTable)
+
+        //    Y la segunda tabla llamada medicamentos, son todos los medicamentos. No necesariamente los que me interesa comprar:
+        //    Con los campos id, nombre, marca, descripcion, precio y categoria.
+         createTable = """
            CREATE TABLE medicamentos (
                id INTEGER PRIMARY KEY AUTOINCREMENT,
                nombre TEXT,
                marca TEXT,
                descripcion TEXT,
                precio REAL,
-               categoria TEXT
-           )
+               categoria TEXT,
+               medListId INTEGER REFERENCES meds_list(id) 
+               //O sea que cada medicamento pertenece a la lista de medicamentos de arriba
+               
+                
+           );
        """.trimIndent()
         db?.execSQL(createTable)
+//       Extendemos la BD con una nueva tabla llamada shopping_list:
+
     }
 
     //    fun para actualizar la tabla medicamentos de la BD
