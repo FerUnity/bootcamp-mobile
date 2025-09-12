@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
 
 //        Cargar la lista de medicamewntos ya guardados:
         addMedicamentoViewModel = AddMedicamentoViewModel(this)
-        addMedicamentoViewModel.getDbHelper(applicationContext)
+        addMedicamentoViewModel.getDao(applicationContext)
         addMedicamentoViewModel.loadMeds( applicationContext)
 
         enableEdgeToEdge()

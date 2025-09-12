@@ -11,7 +11,7 @@ class AddMedicamentoDBHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {
         private const val DATABASE_NAME = "medicamentos.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
 
     }
 

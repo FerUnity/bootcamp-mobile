@@ -6,13 +6,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.example.proyectopersonal.model.AddMedicamentoDAOHelper
 import com.example.proyectopersonal.model.AddMedicamentoDBHelper
 import com.example.proyectopersonal.model.ProductData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class AddMedicamentoViewModel(context: Context) : ViewModel() {
     companion object {
-        lateinit var medDbHelper: AddMedicamentoDBHelper
+        lateinit var medDaoHelper: AddMedicamentoDAOHelper
     }
 
     var medicamentos = mutableListOf<ProductData>()
@@ -250,11 +254,30 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
 
     }
 
+    fun addProductFromHandler(savedStateHandle: SavedStateHandle?) {
+       val id = savedStateHandle?.get<Int>("id") ?: 0
+        val medicamento = ProductData(
+            id = id,
+            nombre = savedStateHandle?.get<String>("productName") ?: "",
+            marca = savedStateHandle?.get<String>("productBrand") ?: "",
+            descripcion = savedStateHandle?.get<String>("productDescription") ?: "",
+            precio = savedStateHandle?.get<Double>("productPrice") ?: 0.0,
+            categoria = savedStateHandle?.get<String>("productCategory") ?: "",
+            medListId = 0
+        )
+//        val db = DatabaseBuilder.getInstance(savedStateHandle.get<Context>("context")!!)
+//        val productDao = db.productDAO()
+//        CoroutineScope(Dispatchers.IO).launch {
+//            productDao.insert(medicamento)
+//        }
+        medicamentos.add(medicamento)
+    }
+
 
     //   fun para guardar en la base de datos SQLite.
 //   Inicializamos aca el medDbHelper:
-    fun getDbHelper(context: Context) {
-        medDbHelper = AddMedicamentoDBHelper(context)
+    fun getDao(context: Context) {
+        medDaoHelper = AddMedicamentoDAOHelper  (AddMedicamentoDBHelper(context))
     }
 
 
@@ -299,7 +322,7 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
 
 //        Obtenemos los datos de los medicamentos de la base de datos SQLite
         //y los guardamos en una nueva lista llamada val medicamentos:
-        val medicamentos: List<ProductData> = medDbHelper.getMedicamentos()
+        val medicamentos: List<ProductData> = medDaoHelper.getMedicamentos(0)
         //Y luego estos medicamentos obtenidos de la base de datos SQLite,
     // los agregamos a la lista de medicamentos local: this.medicamentos:
         this.medicamentos = medicamentos.toMutableList()
@@ -333,8 +356,19 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
         //Para guardar los datos en la base de datos SQLite:
         //Recorremos los medicamentos de la lista local medicamentos:
         for (medicamento: ProductData in medicamentos) {
-            //Y los agregamos o actualizamos a la base de datos SQLite:
-            medDbHelper.addOrUpdateMedicamento(medicamento)
+
+//           Luego comparamos que el medicamento este o no en la Base de datos SQLite., segun su id
+            //El resultado de la comparacion lo guardamos en la val m:
+            val m: ProductData? = medDaoHelper.getMedicamentosById(medicamento.id!!)
+
+//           Si el medicamento local no esta en la base de datos SQLite(m= null), lo agregamos, medDaoHelper.addMedicamento(medicamento)
+            if (m == null) {
+                medDaoHelper.addMedicamento(medicamento)
+
+//            Si el medicamento local ya esta en la base de datos SQLite (else), lo actualizamos, medDaoHelper.updateMedicamento(medicamento)
+            } else {
+                medDaoHelper.updateMedicamento(medicamento)
+            }
         }
 
 

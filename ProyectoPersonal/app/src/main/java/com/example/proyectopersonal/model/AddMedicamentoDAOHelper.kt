@@ -11,6 +11,7 @@ class AddMedicamentoDAOHelper(var dbHelper: AddMedicamentoDBHelper) : MedShoppin
         TODO("Not yet implemented")
     }
 
+    //Ahora se llama a esta fun desde la fun saveMeds() del AddMedicamentoViewModel:
     override fun addMedicamento(medicamento: ProductData): Long {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
@@ -61,8 +62,45 @@ class AddMedicamentoDAOHelper(var dbHelper: AddMedicamentoDBHelper) : MedShoppin
             return medicamento
     }
 
+//    Ahora llamamos a esta fun desde la fun loadMeds() del AddMedicamentoViewModel:
     override fun getMedicamentos(medListId: Int): List<ProductData> {
-        TODO("Not yet implemented")
+//        Creamos una lista mutable de medicamentos llamada: val medicamentos:
+        val medicamentos = mutableListOf<ProductData>()
+        val db = dbHelper.readableDatabase
+        val cursor = db.query(
+            "medicamentos",
+            arrayOf("id", "nombre", "marca", "descripcion", "precio", "categoria"),
+            "medListId = ?",
+            arrayOf(medListId.toString()),
+            null,
+            null,
+            null
+        )
+        while (cursor.moveToNext()) {
+//            Recorremos la lista de medicamentos encontrados en la BD,
+            val id = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
+            val nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"))
+            val marca = cursor.getString(cursor.getColumnIndexOrThrow("marca"))
+            val descripcion = cursor.getString(cursor.getColumnIndexOrThrow("descripcion"))
+            val precio = cursor.getDouble(cursor.getColumnIndexOrThrow("precio"))
+            val categoria = cursor.getString(cursor.getColumnIndexOrThrow("categoria"))
+            //Creamos el medicamento (val medicamento) con sus valores de cada campo encontrados por el cursor en la BD:
+            val medicamento = ProductData(
+                id,
+                nombre,
+                marca,
+                descripcion,
+                precio,
+                categoria
+            )
+            //Agregamos el/los medicamento(s) encontrado en la BD y guardados en (val medicamento),
+            // a la lista de compras de medicamentos local: val medicamentos
+            medicamentos.add(medicamento)
+        }
+        cursor.close()
+        db.close()
+//    Retornamos la lista actualizada de medicamentos local con los medicamentos encontrados en la BD:
+        return medicamentos
 
     }
 
@@ -70,7 +108,39 @@ class AddMedicamentoDAOHelper(var dbHelper: AddMedicamentoDBHelper) : MedShoppin
         medListId: Int,
         category: String
     ): List<ProductData> {
-        TODO("Not yet implemented")
+        val medicamentos = mutableListOf<ProductData>()
+        val db = dbHelper.readableDatabase
+        val cursor = db.query(
+            "medicamentos",
+            arrayOf("id", "nombre", "marca", "descripcion", "precio", "categoria"),
+            "medListId = ? AND categoria = ?",
+            arrayOf(medListId.toString(), category),
+            null,
+            null,
+            null
+        )
+        while (cursor.moveToNext()) {
+            val id = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
+            val nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"))
+            val marca = cursor.getString(cursor.getColumnIndexOrThrow("marca"))
+            val descripcion = cursor.getString(cursor.getColumnIndexOrThrow("descripcion"))
+            val precio = cursor.getDouble(cursor.getColumnIndexOrThrow("precio"))
+            val categoria = cursor.getString(cursor.getColumnIndexOrThrow("categoria"))
+//            Creamos el medicamewnto con sus valores de cada campo encontrados por el cursor en la BD:
+            val medicamento = ProductData(
+                id,
+                nombre,
+                marca,
+                descripcion,
+                precio,
+                categoria
+            )
+//            Agregamos el medicamento encontrado en la BD a la lista de compras de medicamentos local:
+            medicamentos.add(medicamento)
+        }
+        cursor.close()
+        db.close()
+        return medicamentos
     }
 
     /* override fun getMedicamentos(): List<ProductData> {
