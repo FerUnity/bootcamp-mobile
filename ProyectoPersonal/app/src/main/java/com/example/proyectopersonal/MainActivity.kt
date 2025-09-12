@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.proyectopersonal.ui.screens.IndexDetailScreen.IndexDetailScreen
 import com.example.proyectopersonal.ui.screens.IndexScreen.IndexScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import com.example.proyectopersonal.model.UserSettingsViewModel
@@ -50,8 +51,8 @@ class MainActivity : ComponentActivity() {
 
 //        Cargar la lista de medicamewntos ya guardados:
         addMedicamentoViewModel = AddMedicamentoViewModel(this)
-        addMedicamentoViewModel.getDao(applicationContext)
-        addMedicamentoViewModel.loadMeds( applicationContext)
+        addMedicamentoViewModel.loadMedsList(applicationContext)
+
 
         enableEdgeToEdge()
         setContent {
@@ -69,7 +70,6 @@ class MainActivity : ComponentActivity() {
         userSettingsViewModel.saveSettings(applicationContext)
 
         //Guardamos la lista de medicamentos en el json:
-        addMedicamentoViewModel.saveMeds(applicationContext)
     }
 }
 

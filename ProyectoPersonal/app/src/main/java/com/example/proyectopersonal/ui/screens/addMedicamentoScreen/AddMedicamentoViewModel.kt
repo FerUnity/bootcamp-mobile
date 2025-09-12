@@ -6,21 +6,100 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.example.proyectopersonal.model.AddMedicamentoDAOHelper
-import com.example.proyectopersonal.model.AddMedicamentoDBHelper
+import androidx.room.Room
+import com.example.proyectopersonal.model.AppDatabase
+import com.example.proyectopersonal.model.MedsListData
 import com.example.proyectopersonal.model.ProductData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
+//SI LO USAREMOS CON ROOM: CAMBIAMOS VRAIAS COSAS
 
 class AddMedicamentoViewModel(context: Context) : ViewModel() {
-    companion object {
+    /*    companion object {
         lateinit var medDaoHelper: AddMedicamentoDAOHelper
+    }*/
+
+    //    ROOM:
+    var medicamentos = mutableListOf<ProductData>()
+        private set //Para que tenga gettter y setter y sea propio de esta clase
+
+    var medsList = mutableListOf<MedsListData>()
+    private set
+
+
+    //    El DatabaseBuilder es un objeto singleton que se utiliza para obtener una instancia de la base de datos,
+    //    en tiempo de ejecucion de la app
+    object DatabaseBuilder {
+        //Creamos una var de clase BD que referencia a la clase abstracta AppDatabase, por ende a la BD Sqlite:
+        private var db: AppDatabase? = null
+
+        //    Obtenemos una instancia de la BD para que sea sigleton:
+        fun getInstance(context: Context): AppDatabase {
+            if (db == null) {
+                db = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    //Aca ponemos el nombre de la BD:
+                    "meds_list.db"
+                ).build()
+            }
+            return db!!
+
+        }
     }
 
-    var medicamentos = mutableListOf<ProductData>()
-        private set
+//    Cargar la lista de medicamentos ya guardados en la BD:
+    fun loadMeds(medListId: Int, context: Context) {
+        //Obtenemos una instancia de la BD
+        val db = DatabaseBuilder.getInstance(context)
+//     Obtenemos su productDao
+        val productDao = db.productDao()
+        CoroutineScope(Dispatchers.IO).launch {
+//            Obtenemos y cargo la lista de medicamentos desder el DAO,
+            //     que tenga como valor de id = medListId
+            medicamentos = productDao.getMedicamentos(medListId).toMutableList()
+        }
+    }
+
+//    Cargar la lista de compras de medicamentos ya guardados en la BD:
+    fun loadMedsList(context: Context) {
+        //Obtenemos una instancia de la BD
+        val db = DatabaseBuilder.getInstance(context)
+//     Obtenemos su productDao
+        val medShoppingListDao = db.medShoppingListDao()
+        CoroutineScope(Dispatchers.IO).launch {
+//            Obtenemos y cargo la lista de compras de medicamentos desder el DAO,
+            //     que tenga como valor de id = medListId
+            medsList = medShoppingListDao.getMedShoppingLists().toMutableList()
+
+
+        }
+    }
+
+
+//    Para guardar la lista de medicamentos en la BD al cerrar la app:
+    fun addProductFromHandler(savedStateHandle: SavedStateHandle?) {
+        val id = savedStateHandle?.get<Int>("id") ?: 0
+        val medicamento = ProductData(
+            id = id,
+            nombre = savedStateHandle?.get<String>("productName") ?: "",
+            marca = savedStateHandle?.get<String>("productBrand") ?: "",
+            descripcion = savedStateHandle?.get<String>("productDescription") ?: "",
+            precio = savedStateHandle?.get<Double>("productPrice") ?: 0.0,
+            categoria = savedStateHandle?.get<String>("productCategory") ?: "",
+            medListId = 0
+        )
+        val db = DatabaseBuilder.getInstance(savedStateHandle!!.get<Context>("context")!!)
+        val productDao = db.productDao()
+        CoroutineScope(Dispatchers.IO).launch {
+            productDao.insertMedicamento(medicamento)
+        }
+        medicamentos.add(medicamento)
+    }
+
 
     val medsTypeOptions: List<String> = listOf(
         "Orales: comprimidos", "Tópicos: pomadas", "Ópticos: gotas para los ojos",
@@ -202,7 +281,7 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
 
     fun addProduct(context: Context, savedStateHandle: SavedStateHandle?) {
         //Al agregar el medicamento a la lista local, lo guardamos en la base de datos SQLite, CREO:
-        saveMeds(context)
+//        saveMeds(context)
         // Preparamos la respuesta cuando se vuelva a la pantalla principal luego de agregar un producto, creo:
         savedStateHandle?.set("productName", productName)
         savedStateHandle?.set("productBrand", productBrand)
@@ -254,39 +333,23 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
 
     }
 
-    fun addProductFromHandler(savedStateHandle: SavedStateHandle?) {
-       val id = savedStateHandle?.get<Int>("id") ?: 0
-        val medicamento = ProductData(
-            id = id,
-            nombre = savedStateHandle?.get<String>("productName") ?: "",
-            marca = savedStateHandle?.get<String>("productBrand") ?: "",
-            descripcion = savedStateHandle?.get<String>("productDescription") ?: "",
-            precio = savedStateHandle?.get<Double>("productPrice") ?: 0.0,
-            categoria = savedStateHandle?.get<String>("productCategory") ?: "",
-            medListId = 0
-        )
-//        val db = DatabaseBuilder.getInstance(savedStateHandle.get<Context>("context")!!)
-//        val productDao = db.productDAO()
-//        CoroutineScope(Dispatchers.IO).launch {
-//            productDao.insert(medicamento)
-//        }
-        medicamentos.add(medicamento)
-    }
 
 
-    //   fun para guardar en la base de datos SQLite.
+
+    //  NO VA CON ROOM LO SIGUIENTE:
+//  fun para guardar en la base de datos SQLite.
 //   Inicializamos aca el medDbHelper:
-    fun getDao(context: Context) {
+    /*fun getDao(context: Context) {
         medDaoHelper = AddMedicamentoDAOHelper  (AddMedicamentoDBHelper(context))
-    }
+    }*/
 
 
     //Para usar con JSON o SQLite:
 
 //    La fun loadMeds() se usa para cargar los datos desde la base de datos SQLite hacia la lista local medicamentos.
 //    Esta fun se invoca desde la fun onCreated() del MainActivity:
-    fun loadMeds(context: Context) {
-        /*        val json = "{medicamentos: []}"
+    /* fun loadMeds(context: Context) {
+        *//*        val json = "{medicamentos: []}"
                 try {
         //        guardamos el contenido del arch json en la var json: cono texto:
                 val json: String = context.assets.open("medicamentos.json").bufferedReader().use {
@@ -317,7 +380,7 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
                     )
                     medicamentos.add(productData)
 
-                }*/
+                }*//*
         //Luego para cargar los datos desde la base de datos SQLite con la lista de medicamentos:
 
 //        Obtenemos los datos de los medicamentos de la base de datos SQLite
@@ -333,7 +396,7 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
     //   La fun saveMeds() se usa para guardar los datos desde la lista local medicamentos hacia la base de datos SQLite.
 //    Esta fun se invoca desde la fun onDestroy() del MainActivity y desde la fun addProduct() del AddProductViewModel:
     fun saveMeds(context: Context) {
-        /*        val json = Gson().toJson(medicamentos)
+        *//*        val json = Gson().toJson(medicamentos)
                 val json = JSONObject()
                 try  {
                     context.openFileOutput("medicamentos.json", Context.MODE_PRIVATE).use {
@@ -352,7 +415,7 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
                     medicamento.put("categoria", med.categoria)
                     medArray.put(medicamento)
                     }
-                json.put("medicamentos", medArray)*/
+                json.put("medicamentos", medArray)*//*
         //Para guardar los datos en la base de datos SQLite:
         //Recorremos los medicamentos de la lista local medicamentos:
         for (medicamento: ProductData in medicamentos) {
@@ -372,7 +435,7 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
         }
 
 
-    }
+    }*/
 
 
 }

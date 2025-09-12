@@ -55,6 +55,11 @@ fun AddMedicamentoForm(
     //productVM: AddProductViewModel = viewModel()) {
     viewModel: AddMedicamentoViewModel = viewModel()
 ) {
+    var selected by remember { mutableStateOf(false) }
+    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+    if (savedStateHandle != null) {
+        viewModel.addProductFromHandler(savedStateHandle)
+    }
 
     //Lista expandible:
     //La sgte lista tb deberia pasar al viewModel o al ProductData:

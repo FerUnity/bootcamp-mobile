@@ -2,7 +2,8 @@ package com.example.proyectopersonal.model
 
 import android.content.ContentValues
 
-class AddMedicamentoDAOHelper(var dbHelper: AddMedicamentoDBHelper) : MedShoppingListDAO {
+//NO LA USAMOS CON ROOM
+/*class AddMedicamentoDAOHelper(var dbHelper: AddMedicamentoDBHelper) : MedShoppingListDAO {
     override fun createList(list: MedsListData): Long {
         TODO("Not yet implemented")
     }
@@ -143,7 +144,7 @@ class AddMedicamentoDAOHelper(var dbHelper: AddMedicamentoDBHelper) : MedShoppin
         return medicamentos
     }
 
-    /* override fun getMedicamentos(): List<ProductData> {
+    *//* override fun getMedicamentos(): List<ProductData> {
          val medicamentos = mutableListOf<ProductData>()
          val db = dbHelper.readableDatabase
          val cursor = db.query(
@@ -176,7 +177,7 @@ class AddMedicamentoDAOHelper(var dbHelper: AddMedicamentoDBHelper) : MedShoppin
          db.close()
          return medicamentos
 
-     }*/
+     }*//*
 
     override fun updateMedicamento(medicamento: ProductData): Long {
         val db = dbHelper.writableDatabase
@@ -210,7 +211,7 @@ class AddMedicamentoDAOHelper(var dbHelper: AddMedicamentoDBHelper) : MedShoppin
         return response
     }
 
-}
+}*/
 
 
 

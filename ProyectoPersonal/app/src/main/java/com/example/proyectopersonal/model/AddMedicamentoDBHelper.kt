@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper
 
 //Se crea esta clase para usar DB SQlite,
 // por tanto esta clase hereda de la clase SQLiteOpenHelper:
+
+//NO LA USAMOS CON ROOM
 class AddMedicamentoDBHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {
