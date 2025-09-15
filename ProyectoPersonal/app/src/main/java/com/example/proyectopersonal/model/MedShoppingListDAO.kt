@@ -20,7 +20,7 @@ interface MedShoppingListDAO {
 
 //    Actualizar una lista de compras de medicamentos (list: MedsListData) en la tabla meds_list de la BD:
     @Update
-    suspend fun updateList(list: MedsListData): Long
+    suspend fun updateList(list: MedsListData): Int
 
 //    Esta fun se carga desde la fun loadMedsList() en AddMedicamentoViewModel.kt,
     @Query("SELECT * FROM meds_list")

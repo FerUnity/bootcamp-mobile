@@ -319,7 +319,7 @@ fun AddMedicamentoForm(
         TextField(
             //Delegamos a la clase AddProductViewModel los valores de value y onValueChange,
             // para que estos no se borran por ej al rotar la pantalla:
-            value = viewModel.index,
+            value = viewModel.productPrice,
             onValueChange = {viewModel.getMedPrice()},
             readOnly = true,
             label = { Text("Precio") },

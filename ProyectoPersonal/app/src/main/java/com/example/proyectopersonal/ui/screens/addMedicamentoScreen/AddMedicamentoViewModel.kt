@@ -37,24 +37,24 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
         private var db: AppDatabase? = null
 
         //    Obtenemos una instancia de la BD para que sea sigleton:
-        fun getInstance(context: Context): AppDatabase {
-            if (db == null) {
-                db = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    //Aca ponemos el nombre de la BD:
-                    "meds_list.db"
-                ).build()
-            }
-            return db!!
-
-        }
+//        fun getInstance(context: Context): AppDatabase {
+//            if (db == null) {
+//                db = Room.databaseBuilder(
+//                    context.applicationContext,
+//                    AppDatabase::class.java,
+//                    //Aca ponemos el nombre de la BD:
+//                    "meds_list.db"
+//                ).build()
+//            }
+//            return db!!
+//
+//        }
     }
 
 //    Cargar la lista de medicamentos ya guardados en la BD:
     fun loadMeds(medListId: Int, context: Context) {
         //Obtenemos una instancia de la BD
-        val db = DatabaseBuilder.getInstance(context)
+        val db = AppDatabase.getInstance(context)
 //     Obtenemos su productDao
         val productDao = db.productDao()
         CoroutineScope(Dispatchers.IO).launch {
@@ -67,7 +67,7 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
 //    Cargar la lista de compras de medicamentos ya guardados en la BD:
     fun loadMedsList(context: Context) {
         //Obtenemos una instancia de la BD
-        val db = DatabaseBuilder.getInstance(context)
+        val db = AppDatabase.getInstance(context)
 //     Obtenemos su productDao
         val medShoppingListDao = db.medShoppingListDao()
         CoroutineScope(Dispatchers.IO).launch {
@@ -92,7 +92,7 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
             categoria = savedStateHandle?.get<String>("productCategory") ?: "",
             medListId = 0
         )
-        val db = DatabaseBuilder.getInstance(savedStateHandle!!.get<Context>("context")!!)
+        val db = AppDatabase.getInstance(savedStateHandle!!.get<Context>("context")!!)
         val productDao = db.productDao()
         CoroutineScope(Dispatchers.IO).launch {
             productDao.insertMedicamento(medicamento)

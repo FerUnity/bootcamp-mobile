@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kapt)
 }
 
 android {
@@ -40,6 +41,15 @@ android {
 }
 
 dependencies {
+//    val room_version = "2.6.1" // Use the latest version
+//    annotationProcessor(libs.androidx.room.compiler)
+//    annotationProcessor ("androidx.room:room-compiler:$room_version")
+//
+//
+//
+//    implementation("androidx.room:room-runtime:$room_version")
+//    implementation("androidx.room:room-ktx:$room_version") // Optional for Kotlin extensions
+//    ksp("androidx.room:room-compiler:$room_version")
     //Para usar viewModel:
     //implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.2")
 
@@ -59,8 +69,12 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+    kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.gson)
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
 //    implementation(libs.androidx.compiler)
     //Splashscreen:
 //    implementation(libs.androidx.splashscreen)
@@ -80,6 +94,7 @@ dependencies {
     implementation(libs.transport.api)
     implementation(libs.androidx.room.common.jvm)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.runtime)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -12,8 +12,8 @@ import android.database.sqlite.SQLiteOpenHelper
 class AddMedicamentoDBHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {
-        private const val DATABASE_NAME = "medicamentos.db"
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_NAME = "meds_list.db"
+        private const val DATABASE_VERSION = 1
 
     }
 

@@ -35,11 +35,11 @@ interface ProductDAO {
 
 //    Actualizar un medicamento (medicamento: ProductData) de la tabla medicamentos de la BD:
     @Update
-    suspend fun updateMedicamento(medicamento: ProductData): Long
+    suspend fun updateMedicamento(medicamento: ProductData): Unit
 
     //    Eliminar un medicamento (medicamento: ProductData) de la tabla medicamentos de la BD:
     @Delete
-    suspend fun removeMedicamento(medicamento: ProductData): Long
+    suspend fun removeMedicamento(medicamento: ProductData): Unit
 
 
 }
