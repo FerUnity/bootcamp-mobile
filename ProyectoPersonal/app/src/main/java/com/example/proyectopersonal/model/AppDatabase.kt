@@ -13,19 +13,19 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         const val DATABASE_NAME = "meds_list.db"
 
-        @Volatile
-        private var db: AppDatabase? = null
-        fun getInstance(context: Context): AppDatabase {
-            if (db == null) {
-                db = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    DATABASE_NAME
-                )
-                    .build()
-            }
-            return db!!
-        }
+//        @Volatile
+//        private var db: AppDatabase? = null
+//        fun getInstance(context: Context): AppDatabase {
+//            if (db == null) {
+//                db = Room.databaseBuilder(
+//                    context.applicationContext,
+//                    AppDatabase::class.java,
+//                    DATABASE_NAME
+//                )
+//                    .build()
+//            }
+//            return db!!
+//        }
 
     }
 

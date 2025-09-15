@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoViewModel
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -305,6 +306,38 @@ fun IndexForm(
         }
 
 
+//        BOTON PARA IR AL MEDLISTSCREEN:
+        Button(
+            onClick = {
+                //OJO: Con la sgte indicacion:
+                // navController.navigate("index_detail/${indexModel.index }"),
+                // le decimos a este btn onClick,
+                // que nos lleve a la pantalla secundaria IndexDetailScreen.kt:
+                //Fijarse que se pasan el param del formulario asi,
+                // ${indexModel.index }, asi:
+                navController.navigate("med_list")
+
+                //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
+                val text = "Detalle de la opcion"
+                val duration: Int = Toast.LENGTH_LONG
+                Toast.makeText(navController.context, text, duration).show()
+
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                // en Color.kt y al tema en Theme.kt:
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.surface
+            ),
+        ) {
+            //TExto sobre el btn: "Formulario de medicamentos"
+            Text(stringResource(R.string.med_list))
+
+        }
+
+
 //        ACA CREAMOS UN BTN PARA ACCEDER AL FORMULARIO PARA SOLICITAR MEDICAMENTOS:
         Button(
             onClick = {
@@ -314,7 +347,7 @@ fun IndexForm(
                 // que nos lleve a la pantalla secundaria IndexDetailScreen.kt:
                 //Fijarse que se pasan el param del formulario asi,
                 // ${indexModel.index }, asi:
-                navController.navigate("add_medicamento")
+                navController.navigate("add_med")
 
                 //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
                 val text = "Detalle de la opcion"

@@ -5,10 +5,12 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 //    SI SE USA CON ROOM:
 //    Luego tiene que haber 1 @Dao por data class o Entidad,
-//    esta interface SOLO ADMINISTRA LA TABLA DE MEDICAMENTOS CON ProductData.kt.
+//    esta interface DAO define las operaciones de CRUD (Create, Read, Update, Delete) que se pueden realizar en la tabla de medicamentos.
+//    SOLO ADMINISTRA LA TABLA DE MEDICAMENTOS CON ProductData.kt.
 //    Room automaticamente implementa la comunicacion con la BD. Usando
 //    las anotaciones @Query, @Inser, @Update, @Delete le indican a Room que hacer con cada funcion que sigue abajo.
 //    Ojo ademas cada fun debe funcionar como asincrona con corrutina(suspend) para que no bloquee la interfaz con el usuario:
@@ -18,6 +20,9 @@ interface ProductDAO {
 //    Agregar un medicamento (product: ProductData) a la tabla medicamentos de la BD:
     @Insert
     suspend fun insertMedicamento(medicamento: ProductData): Long
+
+    @Query("SELECT * FROM medicamentos")
+    fun getAll(): Flow<List<ProductData>>
 
 //    Obtener una lista de medicamentos (medListId: Int) desde una lista de compras de medicamentos de la BD,
     //    que tenga como valor de id = medListId:

@@ -19,6 +19,7 @@ import androidx.navigation.NavHostController
 import com.example.proyectopersonal.model.UserSettingsViewModel
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoScreen
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoViewModel
+import com.example.proyectopersonal.ui.screens.medlist.MedListScreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -51,10 +52,11 @@ class MainActivity : ComponentActivity() {
 
 //        Cargar la lista de medicamewntos ya guardados:
         addMedicamentoViewModel = AddMedicamentoViewModel(this)
-        addMedicamentoViewModel.loadMedsList(applicationContext)
+        addMedicamentoViewModel.loadMeds( this)
 
 
         enableEdgeToEdge()
+//        addMedicamentoViewModel.loadMeds( this)
         setContent {
             ProyectoPersonalTheme(userSettingsViewModel.theme) {
                 AppNavigation()
@@ -83,6 +85,10 @@ fun AppNavigation() {
         composable("home") {
             IndexScreen(navController)
         }
+        composable("med_list") {
+            MedListScreen(navController)
+        }
+
         composable("index_detail/{index}") { backStackEntry ->
             //val id = backStackEntry.arguments?.getString("id")
             val index = backStackEntry.arguments?.getString("index")
@@ -91,7 +97,7 @@ fun AppNavigation() {
         }
 
         //Aca otro composable para formulario de medicamentos seleccionado:
-        composable("add_medicamento") {
+        composable("add_med"){
             AddMedicamentoScreen(navController)
         }
 

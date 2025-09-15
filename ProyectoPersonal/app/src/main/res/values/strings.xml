@@ -13,4 +13,10 @@
     <string name="button_back">back_button</string>
     <string name="selection">selection</string>
     <string name="form_meds">meds_form</string>
+    <string name="name_label" translatable="false">nombre del medicamento:</string>
+    <string name="brand_label" translatable="false">marca del medicamento:</string>
+    <string name="description_label" translatable="false">descripcion del medicamento:</string>
+    <string name="category_label" translatable="false">categoria del medicamento:</string>
+    <string name="medlist_label" translatable="false">lista del medicamento:</string>
+    <string name="med_list" translatable="false">Lista de medicamentos</string>
 </resources>

@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.proyectopersonal.R
+import com.example.proyectopersonal.model.ProductData
 import com.example.proyectopersonal.ui.components.PrimaryButton
 import com.example.proyectopersonal.ui.components.SecondaryButton
 import kotlinx.coroutines.CoroutineScope
@@ -320,11 +321,11 @@ fun AddMedicamentoForm(
             //Delegamos a la clase AddProductViewModel los valores de value y onValueChange,
             // para que estos no se borran por ej al rotar la pantalla:
             value = viewModel.productPrice,
-            onValueChange = {viewModel.getMedPrice()},
-            readOnly = true,
+            onValueChange = {viewModel.onProductPriceChange(it) },
+//            readOnly = true,
             label = { Text("Precio") },
-//            placeholder = { Text("Precio del Producto") },
-            isError = viewModel.productPriceError != null,
+            placeholder = { Text("Precio del Producto") },
+//            isError = viewModel.productPriceError != null,
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
@@ -360,8 +361,20 @@ fun AddMedicamentoForm(
                     if (viewModel.isFormValid) {
                         //Despues de presionar el btn agregar el producto la idea es volver a la pantalla anterior
                         // recuperando el total del contenido que se acaba de agregar y enviar, asi:
-                        viewModel.addProduct(navController.context,
-                            navController.previousBackStackEntry?.savedStateHandle)
+                        viewModel.addMedicamento(
+                            ProductData(
+                                id = 0,
+                                nombre = viewModel.productName,
+                                marca = viewModel.productBrand,
+                                descripcion = viewModel.productDescription,
+                                precio = viewModel.productPrice.toDouble(),
+                                categoria = viewModel.medsType,
+                                medListId = 0
+
+                            ),
+                            navController.context
+                        )
+//                        navController.popBackStack()
 
                         //Aqui va el toast o snackbar:
 

@@ -1,6 +1,7 @@
 package com.example.proyectopersonal.ui.screens.addMedicamentoScreen
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -23,8 +24,8 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
     }*/
 
     //    ROOM:
-    var medicamentos = mutableListOf<ProductData>()
-        private set //Para que tenga gettter y setter y sea propio de esta clase
+    private var medicamentos = mutableListOf<ProductData>()
+//        private set //Para que tenga gettter y setter y sea propio de esta clase
 
     var medsList = mutableListOf<MedsListData>()
     private set
@@ -37,37 +38,39 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
         private var db: AppDatabase? = null
 
         //    Obtenemos una instancia de la BD para que sea sigleton:
-//        fun getInstance(context: Context): AppDatabase {
-//            if (db == null) {
-//                db = Room.databaseBuilder(
-//                    context.applicationContext,
-//                    AppDatabase::class.java,
-//                    //Aca ponemos el nombre de la BD:
-//                    "meds_list.db"
-//                ).build()
-//            }
-//            return db!!
-//
-//        }
+        fun getInstance(context: Context): AppDatabase {
+            if (db == null) {
+                db = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    //Aca ponemos el nombre de la BD:
+                    AppDatabase.DATABASE_NAME
+                ).build()
+            }
+            return db!!
+
+        }
     }
 
 //    Cargar la lista de medicamentos ya guardados en la BD:
-    fun loadMeds(medListId: Int, context: Context) {
+    fun     loadMeds(context: Context) {
         //Obtenemos una instancia de la BD
-        val db = AppDatabase.getInstance(context)
+        val db = DatabaseBuilder.getInstance(context)
 //     Obtenemos su productDao
         val productDao = db.productDao()
         CoroutineScope(Dispatchers.IO).launch {
+            Log.d("AddMedicamentoViewModel", "Cargando lista de medicamentos...")
 //            Obtenemos y cargo la lista de medicamentos desder el DAO,
-            //     que tenga como valor de id = medListId
-            medicamentos = productDao.getMedicamentos(medListId).toMutableList()
+            medicamentos = productDao.getMedicamentos(0) as MutableList<ProductData>
+
+
         }
     }
 
 //    Cargar la lista de compras de medicamentos ya guardados en la BD:
     fun loadMedsList(context: Context) {
         //Obtenemos una instancia de la BD
-        val db = AppDatabase.getInstance(context)
+        val db = DatabaseBuilder.getInstance(context)
 //     Obtenemos su productDao
         val medShoppingListDao = db.medShoppingListDao()
         CoroutineScope(Dispatchers.IO).launch {
@@ -76,6 +79,22 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
             medsList = medShoppingListDao.getMedShoppingLists().toMutableList()
 
 
+        }
+    }
+
+    fun getMedicamentos(): List<ProductData> {
+        return medicamentos
+
+    }
+
+    fun addMedicamento(medicamento: ProductData, context: Context) {
+//        Agrega el medicamento a la lista de medicamentos local:
+        medicamentos.add(medicamento)
+//        Y luego agrega el medicamento a la BD:
+        CoroutineScope(Dispatchers.IO).launch {
+            Log.d("AddMedicamentoViewModel", "Agregando medicamento a la BD...: $medicamento")
+            val db = DatabaseBuilder.getInstance(context)
+            db.productDao().insertMedicamento(medicamento)
         }
     }
 
@@ -92,7 +111,7 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
             categoria = savedStateHandle?.get<String>("productCategory") ?: "",
             medListId = 0
         )
-        val db = AppDatabase.getInstance(savedStateHandle!!.get<Context>("context")!!)
+        val db = DatabaseBuilder.getInstance(savedStateHandle!!.get<Context>("context")!!)
         val productDao = db.productDao()
         CoroutineScope(Dispatchers.IO).launch {
             productDao.insertMedicamento(medicamento)
