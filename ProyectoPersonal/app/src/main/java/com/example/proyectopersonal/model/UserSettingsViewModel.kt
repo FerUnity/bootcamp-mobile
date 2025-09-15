@@ -18,9 +18,9 @@ import kotlinx.coroutines.runBlocking
 // usando sharedPreferences, DatStore, Datos locales, etc:
 
 //Que herede de ViewModel:
-class UserSettingsViewModel(private val context: Context) : ViewModel() {
+class UserSettingsViewModel: ViewModel() {
     var theme: String by mutableStateOf("system") //"system" es el valor por def de theme.
-    var languaje: String by mutableStateOf("es-cl") //español-chile valor por def de languaje.
+    var language: String by mutableStateOf("es-cl") //español-chile valor por def de languaje.
 
 //    Creamos una instancia para los syharedPreferences:
 //    val userPreferences: SharedPreferences = getSharedPreferences("user_preferences", Context.MODE_PRIVATE)
@@ -51,7 +51,7 @@ class UserSettingsViewModel(private val context: Context) : ViewModel() {
 //  Veremos ahora el caso de usar DATASTORE para guardar datos de conf de theme y lenguaje:
     //Cramos 2 ctes o val que rep los campos del Data store(en este caso solo 2: theme y languaje)
     val THEME_KEY = stringPreferencesKey("theme")
-    val LANGUAJE_KEY = stringPreferencesKey("languaje")
+    val LANGUAGE_KEY = stringPreferencesKey("language")
 
     // y una tercera cte o val que rep el mismo Datastore:
     val Context.dataStore by preferencesDataStore("userSettings")
@@ -66,8 +66,8 @@ class UserSettingsViewModel(private val context: Context) : ViewModel() {
             if (preferences[THEME_KEY] != null){
                 theme = preferences[THEME_KEY].toString()
             }
-            if (preferences[LANGUAJE_KEY] != null){
-                languaje = preferences[LANGUAJE_KEY].toString()
+            if (preferences[LANGUAGE_KEY] != null){
+                language = preferences[LANGUAGE_KEY].toString()
             }
 
 
@@ -80,9 +80,8 @@ class UserSettingsViewModel(private val context: Context) : ViewModel() {
         runBlocking {
             val dataStore = context.dataStore
             dataStore.edit { preferences ->
-                preferences[THEME_KEY] = theme.toString()
-                preferences[LANGUAJE_KEY] = languaje.toString()
-
+                preferences[THEME_KEY] = theme
+                preferences[LANGUAGE_KEY] = language
             }
         }
     }

@@ -256,8 +256,8 @@ fun ProyectoPersonalTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = when(theme) {
-        "Light" -> LightColorScheme
-        "Dark" -> DarkColorScheme
+        "light" -> LightColorScheme
+        "dark" -> DarkColorScheme
         else ->
             //Si viene otra cosa, que solo puede ser la conf del sistema,
             // hay que preguntar si el sistema esta en modo oscuro y llamamos a ese modo, sino en claro:

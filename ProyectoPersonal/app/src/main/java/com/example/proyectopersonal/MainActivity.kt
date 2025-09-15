@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
     companion object {
         lateinit var userSettingsViewModel: UserSettingsViewModel //Datastore
-         lateinit var addMedicamentoViewModel: AddMedicamentoViewModel //Para usar con JSON
+        lateinit var addMedicamentoViewModel: AddMedicamentoViewModel //Para usar con JSON
     }
 
     //Al abrir la app se muestra el splashScreen,
@@ -47,14 +47,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         //Cargar los ajustes guardados de usuario de la app,Theme y Lenguaje desde el DataStore:
-        userSettingsViewModel = UserSettingsViewModel(applicationContext)
+        userSettingsViewModel = UserSettingsViewModel()
         userSettingsViewModel.getSettings(applicationContext)
 
-//        Cargar la lista de medicamewntos ya guardados:
-        addMedicamentoViewModel = AddMedicamentoViewModel(this)
-        addMedicamentoViewModel.loadMeds( this)
-
-
+//        Cargar la lista de medicamewntos ya guardados, desde la BD:
+//    Lo que hacemos aca, es que invocamos al AddMedicamentoViewModel(context: Context),
+//    desde el onCreate() del MainActivity,
+//    de inmediato se ejecuta esta fun init, que invoca a la fun getMedicamentos() del DAO,
+//    la cual carga la lista de medicamentos desde la BD, y la almacena en la var _medicamentos,
+//    que es la lista de medicamentos local, para tenerla disponible para la vista:
+        addMedicamentoViewModel = AddMedicamentoViewModel(applicationContext)
         enableEdgeToEdge()
 //        addMedicamentoViewModel.loadMeds( this)
         setContent {

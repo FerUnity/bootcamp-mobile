@@ -36,6 +36,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.proyectopersonal.MainActivity
 import com.example.proyectopersonal.R
 import com.example.proyectopersonal.model.ProductData
 import com.example.proyectopersonal.ui.components.PrimaryButton
@@ -54,13 +55,14 @@ fun AddMedicamentoForm(
     //Se crea una var con el nombre que queramos productVM o viewModel,
     // de clase AddProductViewModel, con param viewModel():
     //productVM: AddProductViewModel = viewModel()) {
-    viewModel: AddMedicamentoViewModel = viewModel()
+//    viewModel: AddMedicamentoViewModel = viewModel()
+    viewModel: AddMedicamentoViewModel = MainActivity.addMedicamentoViewModel
 ) {
     var selected by remember { mutableStateOf(false) }
-    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
-    if (savedStateHandle != null) {
-        viewModel.addProductFromHandler(savedStateHandle)
-    }
+//    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+//    if (savedStateHandle != null) {
+//        viewModel.addProductFromHandler(savedStateHandle)
+//    }
 
     //Lista expandible:
     //La sgte lista tb deberia pasar al viewModel o al ProductData:

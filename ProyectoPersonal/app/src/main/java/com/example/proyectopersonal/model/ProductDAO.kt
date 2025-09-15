@@ -21,13 +21,13 @@ interface ProductDAO {
     @Insert
     suspend fun insertMedicamento(medicamento: ProductData): Long
 
-    @Query("SELECT * FROM medicamentos")
-    fun getAll(): Flow<List<ProductData>>
+   /* @Query("SELECT * FROM medicamentos")
+    fun getAll(): Flow<List<ProductData>>*/
 
 //    Obtener una lista de medicamentos (medListId: Int) desde una lista de compras de medicamentos de la BD,
     //    que tenga como valor de id = medListId:
-    @Query("SELECT * FROM medicamentos WHERE medListId = :medListId")
-    suspend fun getMedicamentos(medListId: Int): List<ProductData>
+    @Query("SELECT * FROM medicamentos")
+    suspend fun getMedicamentos(): List<ProductData>
 
 //    Obtener un medicamento(medicamento: ProductData) de la tabla medicamentos de la BD, segun su id:
     @Query("SELECT * FROM medicamentos WHERE id = :id")
