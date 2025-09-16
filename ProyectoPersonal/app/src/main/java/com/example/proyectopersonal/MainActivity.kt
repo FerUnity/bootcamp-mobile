@@ -13,10 +13,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.proyectopersonal.ui.screens.IndexDetailScreen.IndexDetailScreen
 import com.example.proyectopersonal.ui.screens.IndexScreen.IndexScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
+import com.example.proyectopersonal.model.AppDatabase
 import com.example.proyectopersonal.model.UserSettingsViewModel
+import com.example.proyectopersonal.room.MedRepository
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoScreen
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoViewModel
 import com.example.proyectopersonal.ui.screens.medlist.MedListScreen
@@ -27,7 +28,7 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
     companion object {
         lateinit var userSettingsViewModel: UserSettingsViewModel //Datastore
-        lateinit var addMedicamentoViewModel: AddMedicamentoViewModel //Para usar con JSON
+//        lateinit var addMedicamentoViewModel: AddMedicamentoViewModel //Para usar con BD
     }
 
     //Al abrir la app se muestra el splashScreen,
@@ -56,9 +57,16 @@ class MainActivity : ComponentActivity() {
 //    de inmediato se ejecuta esta fun init, que invoca a la fun getMedicamentos() del DAO,
 //    la cual carga la lista de medicamentos desde la BD, y la almacena en la var _medicamentos,
 //    que es la lista de medicamentos local, para tenerla disponible para la vista:
-        addMedicamentoViewModel = AddMedicamentoViewModel(applicationContext)
+
         enableEdgeToEdge()
-//        addMedicamentoViewModel.loadMeds( this)
+//                addMedicamentoViewModel = AddMedicamentoViewModel(
+//                    MedRepository(
+//                        AppDatabase.getDatabase(applicationContext).productDao()
+//
+//                ),
+//                    applicationContext
+//                )
+
         setContent {
             ProyectoPersonalTheme(userSettingsViewModel.theme) {
                 AppNavigation()

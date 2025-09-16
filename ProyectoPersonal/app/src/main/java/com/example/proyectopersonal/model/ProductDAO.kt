@@ -5,7 +5,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import kotlinx.coroutines.flow.Flow
 
 //    SI SE USA CON ROOM:
 //    Luego tiene que haber 1 @Dao por data class o Entidad,
@@ -27,7 +26,7 @@ interface ProductDAO {
 //    Obtener una lista de medicamentos (medListId: Int) desde una lista de compras de medicamentos de la BD,
     //    que tenga como valor de id = medListId:
     @Query("SELECT * FROM medicamentos")
-    suspend fun getMedicamentos(): List<ProductData>
+    fun getAll(): List<ProductData>
 
 //    Obtener un medicamento(medicamento: ProductData) de la tabla medicamentos de la BD, segun su id:
     @Query("SELECT * FROM medicamentos WHERE id = :id")

@@ -1,29 +1,22 @@
 package com.example.proyectopersonal.ui.screens.addMedicamentoScreen
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
-import com.example.proyectopersonal.model.AppDatabase
 import com.example.proyectopersonal.model.MedsListData
 import com.example.proyectopersonal.model.ProductData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.example.proyectopersonal.room.MedRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 //SI LO USAREMOS CON ROOM: CAMBIAMOS VRAIAS COSAS
 
-class AddMedicamentoViewModel(context: Context) : ViewModel() {
+class AddMedicamentoViewModel(private val repository: MedRepository) : ViewModel() {
     /*    companion object {
         lateinit var medDaoHelper: AddMedicamentoDAOHelper
     }*/
@@ -35,15 +28,17 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
     var medicamentos: StateFlow<List<ProductData>> = _medicamentos
 
 //    Al invocarse AddMedicamentoViewModel(context: Context) desde el onCreate() del MainActivity,
-//    de inmediato se ejecuta esta fun init, que invoca a la fun getMedicamentos() del DAO,
+//    de inmediato se ejecuta esta fun init, que invoca a la fun getAll() del ProductDAO,
 //    la cual carga la lista de medicamentos desde la BD, y la almacena en la var _medicamentos,
 //    que es la lista de medicamentos local, para tenerla disponible para la vista:
+
+//    Pero ahora haremos lo mismo que dice arriba (getAll() del ProductDAO) pero ahora desde el repository,
+//    para que sea mas sencillo y modularizado:
     init {
         viewModelScope.launch {
-            val db = DatabaseBuilder.getInstance(context)
-            val productDao = db.productDao()
-//            _medicamentos.value = productDao.getAll() as List<ProductData>
-            _medicamentos.value = productDao.getMedicamentos()
+            repository.medicamentos.collect {
+                _medicamentos.value = it
+            }
 
         }
     }
@@ -54,7 +49,7 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
 
     //    El DatabaseBuilder es un objeto singleton que se utiliza para obtener una instancia de la base de datos,
     //    en tiempo de ejecucion de la app
-    object DatabaseBuilder {
+   /* object DatabaseBuilder {
         //Creamos una var de clase BD que referencia a la clase abstracta AppDatabase, por ende a la BD Sqlite:
         private var db: AppDatabase? = null
 
@@ -71,7 +66,7 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
             return db!!
 
         }
-    }
+    }*/
 
 //    Cargar la lista de medicamentos ya guardados en la BD:
    /* fun loadMeds(context: Context) {
@@ -90,7 +85,7 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
     }*/
 
 //    Cargar la lista de compras de medicamentos ya guardados en la BD:
-    fun loadMedsList(context: Context) {
+    /*fun loadMedsList(context: Context) {
         //Obtenemos una instancia de la BD
         val db = DatabaseBuilder.getInstance(context)
 //     Obtenemos su productDao
@@ -102,7 +97,7 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
 
 
         }
-    }
+    }*/
 
     fun getMedicamentos(): List<ProductData>? {
         return medicamentos.value
@@ -112,17 +107,15 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
     fun addMedicamento(medicamento: ProductData, context: Context) {
 //        Agrega el medicamento a la lista de medicamentos local:
         _medicamentos.value += listOf(medicamento)
-//        Y luego agrega el medicamento a la BD:
-        CoroutineScope(Dispatchers.IO).launch {
-            Log.d("AddMedicamentoViewModel", "Agregando medicamento a la BD...: $medicamento")
-            val db = DatabaseBuilder.getInstance(context)
-            db.productDao().insertMedicamento(medicamento)
+//        Y luego agrega el medicamento a la BD, pero lo haremos desde el repository:
+        viewModelScope.launch {
+            repository.addMedicamento(medicamento)
         }
     }
 
 
 //    Para guardar la lista de medicamentos en la BD al cerrar la app:
-    fun addProductFromHandler(savedStateHandle: SavedStateHandle?) {
+   /* fun addProductFromHandler(savedStateHandle: SavedStateHandle?) {
         val id = savedStateHandle?.get<Int>("id") ?: 0
         val medicamento = ProductData(
             id = id,
@@ -139,7 +132,7 @@ class AddMedicamentoViewModel(context: Context) : ViewModel() {
             productDao.insertMedicamento(medicamento)
         }
 //        medicamentos.add(medicamento)
-    }
+    }*/
 
 
     val medsTypeOptions: List<String> = listOf(

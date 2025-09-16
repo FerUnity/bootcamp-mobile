@@ -13,19 +13,28 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         const val DATABASE_NAME = "meds_list.db"
 
-//        @Volatile
-//        private var db: AppDatabase? = null
-//        fun getInstance(context: Context): AppDatabase {
-//            if (db == null) {
-//                db = Room.databaseBuilder(
-//                    context.applicationContext,
-//                    AppDatabase::class.java,
-//                    DATABASE_NAME
-//                )
-//                    .build()
-//            }
-//            return db!!
+        //    El DatabaseBuilder es un objeto singleton que se utiliza para obtener una instancia de la base de datos,
+        //    en tiempo de ejecucion de la app
+//        object DatabaseBuilder {
+            //Creamos una var de clase BD que referencia a la clase abstracta AppDatabase, por ende a la BD Sqlite:
+            @Volatile private var db: AppDatabase? = null
+
+            //    Obtenemos una instancia de la BD para que sea sigleton:
+            fun getDatabase(context: Context): AppDatabase {
+                if (db == null) {
+                    db = Room.databaseBuilder(
+                        context.applicationContext,
+                        AppDatabase::class.java,
+                        //Aca ponemos el nombre de la BD:
+                        DATABASE_NAME
+                    ).build()
+                }
+                return db!!
+
+            }
 //        }
+
+
 
     }
 
