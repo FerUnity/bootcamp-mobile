@@ -55,8 +55,8 @@ fun AddMedicamentoForm(
     //Se crea una var con el nombre que queramos productVM o viewModel,
     // de clase AddProductViewModel, con param viewModel():
     //productVM: AddProductViewModel = viewModel()) {
-    viewModel: AddMedicamentoViewModel = viewModel()
-//    viewModel: AddMedicamentoViewModel = MainActivity.addMedicamentoViewModel
+//    viewModel: AddMedicamentoViewModel = viewModel()
+    viewModel: AddMedicamentoViewModel = MainActivity.addMedicamentoViewModel
 ) {
     var selected by remember { mutableStateOf(false) }
 //    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle

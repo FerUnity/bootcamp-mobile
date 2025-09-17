@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
     companion object {
         lateinit var userSettingsViewModel: UserSettingsViewModel //Datastore
-//        lateinit var addMedicamentoViewModel: AddMedicamentoViewModel //Para usar con BD
+        lateinit var addMedicamentoViewModel: AddMedicamentoViewModel //Para usar con BD
     }
 
     //Al abrir la app se muestra el splashScreen,
@@ -59,13 +59,7 @@ class MainActivity : ComponentActivity() {
 //    que es la lista de medicamentos local, para tenerla disponible para la vista:
 
         enableEdgeToEdge()
-//                addMedicamentoViewModel = AddMedicamentoViewModel(
-//                    MedRepository(
-//                        AppDatabase.getDatabase(applicationContext).productDao()
-//
-//                ),
-//                    applicationContext
-//                )
+                addMedicamentoViewModel = AddMedicamentoViewModel(applicationContext)
 
         setContent {
             ProyectoPersonalTheme(userSettingsViewModel.theme) {

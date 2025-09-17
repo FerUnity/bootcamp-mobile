@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.proyectopersonal.room.MedRepository
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoViewModel
 
-class AddMedicamentoViewModelFactory(private val repository: MedRepository): ViewModelProvider.Factory {
+/*class AddMedicamentoViewModelFactory(private val repository: MedRepository): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AddMedicamentoViewModel::class.java)) {
            return AddMedicamentoViewModel(repository) as T
@@ -15,4 +15,4 @@ class AddMedicamentoViewModelFactory(private val repository: MedRepository): Vie
     }
 
 
-}
+}*/
