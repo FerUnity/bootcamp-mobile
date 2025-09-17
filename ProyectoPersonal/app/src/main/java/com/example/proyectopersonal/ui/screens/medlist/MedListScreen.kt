@@ -15,9 +15,9 @@ import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun MedListScreen(navController: NavController) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    //El snackBar necesita estos 2 val:
-    val scope: CoroutineScope = rememberCoroutineScope()
+//    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+//    //El snackBar necesita estos 2 val:
+//    val scope: CoroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
           MedListTopBar()

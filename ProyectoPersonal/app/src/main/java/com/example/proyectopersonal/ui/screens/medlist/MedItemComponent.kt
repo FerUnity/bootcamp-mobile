@@ -16,7 +16,9 @@ import androidx.navigation.NavController
 import com.example.proyectopersonal.R
 import com.example.proyectopersonal.model.ProductData
 
-//Esta es solo la vista de una card de presentacion de los medicamentos que se llama desde MedListComponent.kt
+//Esta es solo la vista de una card de presentacion de los medicamentos
+// que mostrara por cada medicamento que encuentre en la lista de medicamentos en el repositorio,
+// Esta fun composable MedItemComponent(), se llama desde MedListComponent.kt
 @Composable
 fun MedItemComponent(medicamento: ProductData, navController: NavController) {
     Card(

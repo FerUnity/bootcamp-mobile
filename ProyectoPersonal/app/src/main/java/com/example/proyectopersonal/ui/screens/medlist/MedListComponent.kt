@@ -40,8 +40,8 @@ fun MedListComponent(modifier: Modifier = Modifier, navController: NavController
             .fillMaxSize())
     {
         items(medicamentos.size) { index ->
-//   Por cada medicamento que encuentre en la lista de medicamentos,
-//   que pinte una card de presentacion como se muestra en el archivo MedItemComponent.kt
+//   Por cada medicamento que encuentre en la lista de medicamentos en el repositorio,
+//   que pinte una card de presentacion como se configura en el archivo MedItemComponent.kt
             val medicamento = medicamentos[index]
             MedItemComponent(medicamento = medicamento, navController = navController)
         }

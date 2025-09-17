@@ -26,5 +26,8 @@
             </intent-filter>
         </activity>
     </application>
+<!--    Le damos permisos a la app para acceder a internet.
+En este caso se necesita para acceder a Firebase desde el repository y apiService:-->
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

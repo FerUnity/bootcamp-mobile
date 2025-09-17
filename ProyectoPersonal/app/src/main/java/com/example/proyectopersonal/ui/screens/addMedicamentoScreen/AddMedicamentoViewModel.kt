@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 //SI LO USAREMOS CON ROOM: CAMBIAMOS VRAIAS COSAS
+//Gestiona el estado de la interfaz de usuario, orquesta la logica de negocio y provee datos a la vista.
+//Ademas decide cuando consultar al Repositorio
 
 class AddMedicamentoViewModel(private val context: Context) : ViewModel() {
     /*    companion object {
@@ -34,8 +36,8 @@ class AddMedicamentoViewModel(private val context: Context) : ViewModel() {
 //    la cual carga la lista de medicamentos desde la BD, y la almacena en la var _medicamentos,
 //    que es la lista de medicamentos local, para tenerla disponible para la vista:
 
-    //    Pero ahora haremos lo mismo que dice arriba (getAll() del ProductDAO) pero ahora desde el repository,
-//    para que sea mas sencillo y modularizado:
+    //    Pero ahora haremos lo mismo que dice arriba (getAll() del ProductDAO)de la BD local,
+//    para que sea mas sencillo y modularizado, con la fun getMedicamentos() def mas abajo(101):
     init {
         getMedicamentos()
     }
