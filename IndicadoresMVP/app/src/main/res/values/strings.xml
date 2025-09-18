@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">IndicadoresMVP</string>
+    <string name="index_type_text">Index Type</string>
+    <string name="business_index_text">Bussiness Index</string>
+    <string name="date_text">Date</string>
+    <string name="date_placeholder">Format dd-mm-yyyy</string>
+    <string name="query_button">Query</string>
+</resources>
