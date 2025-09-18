@@ -1,6 +1,5 @@
 package com.example.indicadoresmvp.model
 
-import androidx.room.Entity
 
 //Este es el dataclass de cada indicador, con sus items o columnas si fuera una BD:
 data class Indicador(

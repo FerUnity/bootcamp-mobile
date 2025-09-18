@@ -1,6 +1,6 @@
 package com.example.indicadoresmvp.ui.screens.indexScreen
 
-import androidx.compose.foundation.layout.Arrangement
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -11,11 +11,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -31,17 +29,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import com.example.indicadoresmvp.R
 import com.example.indicadoresmvp.model.IndexViewModel
-import com.example.indicadoresmvp.model.Indicador
 import com.example.indicadoresmvp.model.IndicadorInternacionalEnumeration
 import com.example.indicadoresmvp.model.IndicadorNacionalEnumeration
 import com.example.indicadoresmvp.ui.components.Destination
-import com.example.indicadoresmvp.ui.components.IndexTopBar
 import kotlinx.coroutines.launch
-import kotlin.collections.get
-
+@SuppressLint("DefaultLocale")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun IndexForm(snackbarHostState: SnackbarHostState,
@@ -52,7 +46,7 @@ fun IndexForm(snackbarHostState: SnackbarHostState,
 ) {
     var expandedIndex by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    val businessIndex: Indicador by indexModel.businessIndex.collectAsState()
+    val businessIndex by indexModel.businessIndex.collectAsState()
     var indexSelected by remember { mutableStateOf("") }
 
     Column(

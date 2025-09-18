@@ -2,8 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kapt)
-
 }
 
 android {
@@ -42,13 +40,7 @@ android {
 }
 
 dependencies {
-    //Para usar viewModel:
-//    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.2")
 
-    //Fin viewModel
-
-    //Splashscreen:
-    implementation(libs.androidx.splashscreen)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -58,22 +50,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.room.compiler)
-    kapt(libs.androidx.room.compiler)
-    implementation(libs.androidx.datastore.preferences)
-    implementation(libs.gson)
-    implementation(libs.androidx.runtime.livedata)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
-//    implementation(libs.androidx.navigation.runtime.android)
-//    implementation(libs.androidx.navigation.compose.jvmstubs)
-    implementation(libs.androidx.ui.text.google.fonts)
-    implementation(libs.transport.api)
-    implementation(libs.androidx.room.common.jvm)
-    implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.sqlite)
-    implementation(libs.androidx.compiler)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
