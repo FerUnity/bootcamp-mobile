@@ -1,6 +1,6 @@
 package com.example.indicadoresmvp.service
 
-import com.example.indicadoresmvp.model.Indicador
+import com.example.indicadoresmvp.room.Indicador
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

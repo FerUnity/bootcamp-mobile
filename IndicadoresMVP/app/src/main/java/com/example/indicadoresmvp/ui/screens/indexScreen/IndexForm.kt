@@ -128,6 +128,7 @@ fun IndexForm(snackbarHostState: SnackbarHostState,
             )
         }
 
+//        FECHA: DEBERIA SER FIJO CON LA FECHA DE HOY?
         TextField(
             value = indexModel.date,
             onValueChange = { indexModel.onDateChange(it) },
@@ -148,10 +149,20 @@ fun IndexForm(snackbarHostState: SnackbarHostState,
             )
         }
 
+
+//        ACA DEBE IR UN SEGUNDO TEXTFIELD PARA INGRESAR LA CONVERSION a la moneda SOLICITADA:
+
+//        Y CREO QUE UN TERCER TEXTFIELD PARA INGRESAR EL MONTO A CONVERTIR DE UNA MONEDA A OTRA:
+
+//        OJO SE DEBE obtener el valor actual de cada moneda en dólares desde la API dada,
+//        para luego hacer la transformación (la app debe hacer la transformación de la moneda, no el servicio).
+
+//        Boton para obtener los indicadores desde la API con getIndex():
         Button(
             onClick = {
                 val result = indexModel.validateForm()
                 if (result.isSuccess) {
+//                    Creo que debe obtenerse de la BD Local no de la API:
                     indexModel.getIndex()
                 } else {
                     scope.launch {
@@ -163,9 +174,11 @@ fun IndexForm(snackbarHostState: SnackbarHostState,
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text(stringResource(R.string.query_button))
+            Text(stringResource(R.string.query_button)) //Consultar
         }
 
+//        Si se cumplen las condiciones para que la consulta a la API salga bien,
+//        Mostramos un texto con los datos del indicador consultado:
         if (businessIndex.codigo != "" && businessIndex.serie.isNotEmpty()) {
             Row {
                 Text(
@@ -181,6 +194,7 @@ fun IndexForm(snackbarHostState: SnackbarHostState,
                     modifier = Modifier.padding(16.dp)
                 )
             }
+//            Si no se encuentra la info del indicador, mostramos un mensaje de error:
         } else if (businessIndex.codigo != ""){
             Text(
                 text = "Ha ocurrido un error al obtener los datos del servicio. " +

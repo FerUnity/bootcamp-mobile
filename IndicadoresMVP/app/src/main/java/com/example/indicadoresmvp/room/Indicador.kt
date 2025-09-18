@@ -1,8 +1,13 @@
-package com.example.indicadoresmvp.model
+package com.example.indicadoresmvp.room
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 //Este es el dataclass de cada indicador, con sus items o columnas si fuera una BD:
+@Entity(tableName = "indicadores")
 data class Indicador(
+    //    Ademas el id sera una primaryKey:
+    @PrimaryKey(autoGenerate = true) val id: Int?,
     val codigo: String,
     val nombre: String,
     val unidad_medida: String,

@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.indicadoresmvp.room.Indicador
 import com.example.indicadoresmvp.service.IndicadoresApiService
 import com.example.indicadoresmvp.service.IndicadoresRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +13,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class IndexViewModel() : ViewModel() {
+    init {
+        getIndex()
+    }
     //Para el menu desplegable:
     //Lista 1:
 //    val indexTypeOptions: List<String> = listOf("Nacionales", "Internacionales")
@@ -47,9 +51,10 @@ class IndexViewModel() : ViewModel() {
     }
 
 
-    //    La sgte fun getIndex() realizara la parte reativa:
+    //    La sgte fun getIndex() realizara la parte reactiva:
     private var _businessIndex = MutableStateFlow<Indicador>(
         Indicador(
+            id = null,
             codigo = "",
             nombre = "",
             unidad_medida = "",
@@ -57,6 +62,7 @@ class IndexViewModel() : ViewModel() {
         )
     )
 
+//    Fun para obtener los indices desde la API externa y sus valores:
     val businessIndex: StateFlow<Indicador> = _businessIndex
     fun getIndex() {
         viewModelScope.launch {
@@ -64,7 +70,8 @@ class IndexViewModel() : ViewModel() {
                 val result = IndicadoresApiService
                     .ApiInstance
                     .api
-                    .obtenerIndicadorPorFecha(index, date)
+//                    .obtenerIndicadores()
+                   .obtenerIndicadorPorFecha(index, date)
                 _businessIndex.value = result
             }
             catch (e: Exception) {

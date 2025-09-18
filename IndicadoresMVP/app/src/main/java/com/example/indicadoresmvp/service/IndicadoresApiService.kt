@@ -1,13 +1,21 @@
 package com.example.indicadoresmvp.service
 
-import com.example.indicadoresmvp.model.Indicador
+import com.example.indicadoresmvp.room.Indicador
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
-//Como siempre en ApiService SOLO se encarga de hacer las llamadas a la API con servicios externos Rest y Restful,
-// con la URL base que vamos a usar:
+//Esta Interfaz es parecida al DAO, pero en vez de definir las operaciones de CRUD (Create, Read, Update, Delete)
+// que se pueden realizar en la tabla de medicamentos local ROOM, que es lo que hace el DAO,
+
+// el ApiService SOLO se encarga de hacer las llamadas a la API con servicios externos Rest y Restful.
+// En este caso se comunica con la API de Firebase con Retrofit/OkHttp.
+// O SEA:
+// DAO = LOCAL.
+// APISERVICE = REMOTO:
 interface IndicadoresApiService {
     object ApiInstance {
 //        La sgte cte rep la URl comun de todos los servicios de la API:
@@ -26,12 +34,19 @@ interface IndicadoresApiService {
         }
     }
 
-//    olo requerinos de la API, obtener el valor del indicador por fecha
-    @GET("{indicador}/{fecha}")
+//    Solo requerinos de la API, obtener el valor del indicador por fecha:
+
+    @GET("indicador_list.json")
+    suspend fun obtenerIndicadores(): List<Indicador>
+
+    @GET("indicador_list/{indicador}/{fecha}.json")
     suspend fun obtenerIndicadorPorFecha(
         @Path("indicador") indicador: String,
         @Path("fecha") fecha: String
     ): Indicador
+
+    @POST("indicador_list.json")
+    fun addIndicador(@Body indicador: Indicador): Indicador
 
     /*
 //    Obtener el valor del indicador en gral
