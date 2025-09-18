@@ -35,19 +35,27 @@ import com.example.indicadoresmvp.model.IndicadorInternacionalEnumeration
 import com.example.indicadoresmvp.model.IndicadorNacionalEnumeration
 import com.example.indicadoresmvp.ui.components.Destination
 import kotlinx.coroutines.launch
+
 @SuppressLint("DefaultLocale")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IndexForm(snackbarHostState: SnackbarHostState,
-              innerPadding: PaddingValues,
-              destination: Destination,
-              indexModel: IndexViewModel = viewModel()
+fun IndexForm(
+    snackbarHostState: SnackbarHostState,
+    innerPadding: PaddingValues,
+    destination: Destination,
+    indexModel: IndexViewModel = viewModel()
     //Creamos var indexModel de tipo IndexViewModel y el viewModel() es para que sea persistente
 ) {
+//    var indicadoresApiService: IndicadoresApiService = IndicadoresApiService.ApiInstance.api
     var expandedIndex by remember { mutableStateOf(false) }
+    var expandedIndexB by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val businessIndex by indexModel.businessIndex.collectAsState()
+//    Para la primera divisa
     var indexSelected by remember { mutableStateOf("") }
+
+    //    Para la segunda divisa
+    var indexSelectedB by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -71,6 +79,8 @@ fun IndexForm(snackbarHostState: SnackbarHostState,
             )
         }
 
+
+//        PRIMERA DIVISA A CONVERTIR
         ExposedDropdownMenuBox(
             expanded = expandedIndex,
             onExpandedChange = { expandedIndex = !expandedIndex },
@@ -82,7 +92,8 @@ fun IndexForm(snackbarHostState: SnackbarHostState,
                 value = indexSelected,
                 onValueChange = { },
                 readOnly = true,
-                label = { Text(stringResource(R.string.business_index_text)) },
+//                label = { Text(stringResource(R.string.business_index_text)) },
+                label = { Text("Divisa 1: A convertir") },
                 trailingIcon = { TrailingIcon(expanded = expandedIndex) },
                 isError = indexModel.indexErrorMessage != null,
                 modifier = Modifier
@@ -93,6 +104,7 @@ fun IndexForm(snackbarHostState: SnackbarHostState,
                 expanded = expandedIndex,
                 onDismissRequest = { expandedIndex = false }
             ) {
+//                Si selecciono Nacionales me muestra opt de la Lista: IndicadorNacionalEnumeration
                 if (indexModel.indexType == "Nacionales") {
                     IndicadorNacionalEnumeration.entries.forEach { option ->
                         DropdownMenuItem(
@@ -103,7 +115,9 @@ fun IndexForm(snackbarHostState: SnackbarHostState,
                                 indexModel.onIndexChange(option.codigo)
                             }
                         )
+
                     }
+//                      Si selecciono Internacionales me muestra opt de la Lista: IndicadorInternacionalEnumeration
                 } else {
                     IndicadorInternacionalEnumeration.entries.forEach { option ->
                         DropdownMenuItem(
@@ -116,7 +130,100 @@ fun IndexForm(snackbarHostState: SnackbarHostState,
                         )
                     }
                 }
+
             }
+            //           Obtenemos los valores de la API con getIndex() de la primera Divisa
+//            indexModel.getIndex()
+
+        }
+
+
+        //        Para que el mmensaje aparezca de color rojo si hay error y bajo el TextField
+//        a una distancia de 16dp hacia la izq:
+        indexModel.indexErrorMessage?.let {
+            Text(
+                text = it,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(start = 16.dp)
+            )
+        }
+
+
+
+        //UN TEXTFIELD PARA INGRESAR EL MONTO A CONVERTIR DE LA PRIMERA MONEDA A LA SEGUNDA:
+        var monto by remember { mutableStateOf("") }
+        TextField(
+            value = monto,
+//            Es fundamental poner asi el onValueChange sino no se llena el TextField:
+            onValueChange = { monto = it },
+            label = { Text("Monto a convertir") },
+            placeholder = { Text("Ingrese monto a comvertir") },
+//            isError = indexModel.dateErrorMessage != null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
+//        Para que el mmensaje aparezca de color rojo si hay error y bajo el TextField
+//        a una distancia de 16dp hacia la izq:
+//        indexModel.dateErrorMessage?.let {
+//            Text(
+//                text = it,
+//                color = MaterialTheme.colorScheme.error,
+//                modifier = Modifier.padding(start = 16.dp)
+//            )
+//        }
+
+
+        //ACA DEBE IR UN SEGUNDO TEXTFIELD PARA INGRESAR LA DIVISA A LA QUE SE QUIERE CONVERTIR la moneda ORIGINAL:
+        ExposedDropdownMenuBox(
+            expanded = expandedIndexB,
+            onExpandedChange = { expandedIndexB = !expandedIndexB },
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+        ) {
+            TextField(
+                value = indexSelectedB,
+                onValueChange = { },
+                readOnly = true,
+//                label = { Text(stringResource(R.string.business_index_text)) },
+                label = { Text("Divisa 2: A la que se requiere convertir") },
+                trailingIcon = { TrailingIcon(expanded = expandedIndexB) },
+                isError = indexModel.indexErrorMessage != null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .menuAnchor(MenuAnchorType.PrimaryEditable, true)
+            )
+            ExposedDropdownMenu(
+                expanded = expandedIndexB,
+                onDismissRequest = { expandedIndexB = false }
+            ) {
+                if (indexModel.indexType == "Nacionales") {
+                    IndicadorNacionalEnumeration.entries.forEach { option ->
+                        DropdownMenuItem(
+                            text = { Text(option.nombre) },
+                            onClick = {
+                                expandedIndexB = false
+                                indexSelectedB = option.nombre
+                                indexModel.onIndexChange(option.codigo)
+                            }
+                        )
+                    }
+                } else {
+                    IndicadorInternacionalEnumeration.entries.forEach { option ->
+                        DropdownMenuItem(
+                            text = { Text(option.nombre) },
+                            onClick = {
+                                expandedIndexB = false
+                                indexSelectedB = option.nombre
+                                indexModel.onIndexChange(option.codigo)
+                            }
+                        )
+                    }
+                }
+            }
+//            Obtenemos los valores de la API con getIndex() de la segunda Divisa
+//            indexModel.getIndex()
         }
         //        Para que el mmensaje aparezca de color rojo si hay error y bajo el TextField
 //        a una distancia de 16dp hacia la izq:
@@ -128,7 +235,7 @@ fun IndexForm(snackbarHostState: SnackbarHostState,
             )
         }
 
-//        FECHA: DEBERIA SER FIJO CON LA FECHA DE HOY?
+//        FECHA: DEBERIA SER FIJO CON LA FECHA DE HOY:
         TextField(
             value = indexModel.date,
             onValueChange = { indexModel.onDateChange(it) },
@@ -150,62 +257,133 @@ fun IndexForm(snackbarHostState: SnackbarHostState,
         }
 
 
-//        ACA DEBE IR UN SEGUNDO TEXTFIELD PARA INGRESAR LA CONVERSION a la moneda SOLICITADA:
+        /*
+        //Mostramos un textfield con el valor resultante de la conversion:
+        //        Valor en pesos de la divisa1 a convertir:
+                var valor_obtenido: Double = businessIndex.serie[0].valor
 
-//        Y CREO QUE UN TERCER TEXTFIELD PARA INGRESAR EL MONTO A CONVERTIR DE UNA MONEDA A OTRA:
+        //        Valor buscado en pesos:
+                var valor_conversion_pesos: Double = valor_obtenido * montoA.toDouble()
+
+        //        Valor buscado en dolares:
+                var valor_conversion_dolares: Double = valor_conversion_pesos / valor_obtenido
+
+                var textValue by remember { mutableStateOf("This is a read-only text.") }
+                textValue = valor_conversion_dolares.toString()
+
+        //        TEXTFIELD QUE MUESTRA EL VALOR BUSCADO EN DOLARES:
+                TextField(
+                    value =  textValue,
+                    onValueChange = { },
+                    label = { Text("Monto Obtenido en Dolares") },
+        //            isReadOnly = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                )
+        */
+
 
 //        OJO SE DEBE obtener el valor actual de cada moneda en dólares desde la API dada,
 //        para luego hacer la transformación (la app debe hacer la transformación de la moneda, no el servicio).
 
-//        Boton para obtener los indicadores desde la API con getIndex():
+//        CALCULAMOS LOS VALORES Y HACEMOS LA CONVERSION ENTRE DIVISAS:
+        var valor_total_div1_div2: Double = 0.0
         Button(
             onClick = {
                 val result = indexModel.validateForm()
-                if (result.isSuccess) {
-//                    Creo que debe obtenerse de la BD Local no de la API:
-                    indexModel.getIndex()
-                } else {
-                    scope.launch {
-                        snackbarHostState.showSnackbar("El formulario presenta errores")
-                    }
-                }
+               if (result.isSuccess) {
+//             Se obtiene el valor de la divisa1 ingresada segun fecha. Creo que debe obtenerse Local no de la API.
+                   //             Con la fun getIndex() que devuelve como resultado: businessIndex: StateFlow<Indicador>:
+                   indexModel.getIndex()
+
+               } else {
+                   scope.launch {
+                       snackbarHostState.showSnackbar("El formulario presenta errores")
+                   }
+               }
+//        Valor en pesos de LA UNIDAD de la divisa1 a convertir:
+                var valor_obtenido: Double = businessIndex.serie[0].valor
+
+//        Valor total del monto buscado de la divisa 1 en pesos:
+                var valor_total_div1_pesos: Double = valor_obtenido * monto.toDouble()
+
+//        Valor actual del dolar en pesos: ValDolar.
+//        Obtener de API:
+                var ValDolar: Double = businessIndex.serie[0].valor
+
+//        Valor total del monto buscado en la divisa 1 en dolares:
+                var valor_total_div1_dolares: Double = valor_total_div1_pesos / ValDolar
+
+//        Valor de la Unidad de la Divisa 2 en pesos por API: valor_obtenido2_pesos
+                var valor_obtenido2: Double = businessIndex.serie[0].valor
+
+//        Valor de la Unidad de la Divisa 2 en dolares: valor_obtenido2_dolares = valor_obtenido2_pesos / ValDolar
+                var valor_obtenido2_dolares: Double = valor_obtenido2 / ValDolar
+
+//        Valor del monto total buscado en la divisa 1, en terminos de la divisa 2 =
+//        valor_total_div1_dolares / valor_obtenido2_dolares
+
+                valor_total_div1_div2 = valor_total_div1_dolares / valor_obtenido2_dolares
+
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text(stringResource(R.string.query_button)) //Consultar
+            Text("Calcular")
+//            Text(stringResource(R.string.query_button)) //Consultar
         }
 
 //        Si se cumplen las condiciones para que la consulta a la API salga bien,
 //        Mostramos un texto con los datos del indicador consultado:
         if (businessIndex.codigo != "" && businessIndex.serie.isNotEmpty()) {
             Row {
+                //Nombre de la divisa solicitada
                 Text(
                     text = businessIndex.nombre,
                     modifier = Modifier.padding(16.dp)
                 )
+                //Valor numerico en Double, en pesos obtenido de la API de la divisa 1 a convertir
+//                var valor_obtenido: Double = businessIndex.serie[0].valor
                 Text(
                     text = String.format("%,.2f", businessIndex.serie[0].valor),
                     modifier = Modifier.padding(16.dp)
                 )
+                //Unidad de medida de la divisa solicitada: Pesos
                 Text(
                     text = businessIndex.unidad_medida,
                     modifier = Modifier.padding(16.dp)
                 )
             }
 //            Si no se encuentra la info del indicador, mostramos un mensaje de error:
-        } else if (businessIndex.codigo != ""){
+        } else if (businessIndex.codigo != "") {
             Text(
                 text = "Ha ocurrido un error al obtener los datos del servicio. " +
                         "Pruebe ingresando una fecha diferente o intente más tarde.",
                 modifier = Modifier.padding(16.dp)
             )
         }
+
+
+        var ValFinalDolaresDiv2 by remember { mutableStateOf("") }
+        ValFinalDolaresDiv2 = valor_total_div1_div2.toString()
+
+
+//        TEXTFIELD QUE MUESTRA EL VALOR TOTAL DE LA DIVISA 1 EN TERMINOS DE LA DIV2:
+        TextField(
+            value = ValFinalDolaresDiv2,
+            onValueChange = { },
+            label = { Text("Valor total en terminos de la Div 2") },
+//            isReadOnly = true,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
+
+
     }
 }
-
-
 
 
 //    Column(

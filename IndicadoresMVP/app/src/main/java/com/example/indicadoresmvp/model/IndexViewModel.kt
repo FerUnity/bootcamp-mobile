@@ -62,7 +62,7 @@ class IndexViewModel() : ViewModel() {
         )
     )
 
-//    Fun para obtener los indices desde la API externa y sus valores:
+//    Fun para obtener los valores de todos los indices desde la API externa y sus valores:
     val businessIndex: StateFlow<Indicador> = _businessIndex
     fun getIndex() {
         viewModelScope.launch {

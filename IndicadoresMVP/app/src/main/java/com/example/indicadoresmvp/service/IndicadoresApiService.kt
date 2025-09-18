@@ -36,9 +36,12 @@ interface IndicadoresApiService {
 
 //    Solo requerinos de la API, obtener el valor del indicador por fecha:
 
+//    Obtener los valores de todos los indicadores
     @GET("indicador_list.json")
     suspend fun obtenerIndicadores(): List<Indicador>
 
+
+    //    Obtener el valor de un indicador en especifico: segun la fecha:
     @GET("indicador_list/{indicador}/{fecha}.json")
     suspend fun obtenerIndicadorPorFecha(
         @Path("indicador") indicador: String,
