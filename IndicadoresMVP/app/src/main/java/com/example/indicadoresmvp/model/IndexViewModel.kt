@@ -1,30 +1,70 @@
 package com.example.indicadoresmvp.model
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.indicadoresmvp.room.AppDatabase
 import com.example.indicadoresmvp.room.Indicador
 import com.example.indicadoresmvp.service.IndicadoresApiService
 import com.example.indicadoresmvp.service.IndicadoresRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class IndexViewModel() : ViewModel() {
+class IndexViewModel(private val context: Context) : ViewModel() {
+    private var _indicadores = MutableStateFlow<List<Indicador>>(emptyList())
+//    val indicadores se usa para almacenar la lista de indicadores desde la API:
+    val indicadores: StateFlow<List<Indicador>> = _indicadores
+
     init {
-        getIndex()
+        getIndicadoresDesdeApi()
     }
+
+//    Fun que obtiene la lista completa de indicadores desde la Api:
+    private fun getIndicadoresDesdeApi() {
+        viewModelScope.launch {
+            try {
+                val result = IndicadoresApiService
+                    .ApiInstance
+                    .api
+                    .obtenerIndicadores()
+                _indicadores.value = result
+            } catch (e: Exception) {
+                val errorMessage = e.message ?: "Error desconocido"
+            }
+        }
+    }
+
+    //    fun que obtiene la lista completa de indicadores desde la BD local,
+//    la fun se invoca en el init del model. Y este viewModel se llama desde el MainActivity:
+/*    fun getIndicadores(): List<Indicador>? {
+        viewModelScope.launch {
+            try {
+                val db = AppDatabase.getDatabase(context)
+                _indicadores.value = db.indicadorDao().getAll().stateIn(this).value
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+        }
+        return _indicadores.value
+
+    }*/
     //Para el menu desplegable:
     //Lista 1:
 //    val indexTypeOptions: List<String> = listOf("Nacionales", "Internacionales")
 
     //Lista 2, de indices economicos disponibles nacionales, esto es del negocio no de la pantalla, por ende va al viewModel::
-    val indexNationalOptions: List<String> = listOf("uf", "ivp", "ipc", "utm", "imacec", "tpm", "libra_cobre", "tasa_desempleo")
+    val indexNationalOptions: List<String> =
+        listOf("uf", "ivp", "ipc", "utm", "imacec", "tpm", "libra_cobre", "tasa_desempleo")
 
     //Lista 3 de indices economicos disponibles internacionales, esto es del negocio no de la pantalla, por ende va al viewModel::
-    val indexInternationalOptions: List<String> = listOf("Dolar", "dolar_intercambio", "euro", "bitcoin")
+    val indexInternationalOptions: List<String> =
+        listOf("Dolar", "dolar_intercambio", "euro", "bitcoin")
 
     //Var que recorren  cada lista de indices y la de tipo de indice:, tb es del negocio por ende tb va al viewModel:
     //El viewModel es persistente asi que no requiere by remember:
@@ -39,12 +79,12 @@ class IndexViewModel() : ViewModel() {
         indexType = newIndexType
     }
 
-//    Indice a consultar: Dolar, uf, etc
+    //    Indice a consultar: Dolar, uf, etc
     fun onIndexChange(newIndex: String) {
         index = newIndex
     }
 
-//    Fecha de la consulta:
+    //    Fecha de la consulta:
     fun onDateChange(newDate: String) {
         date = newDate
 
@@ -62,7 +102,7 @@ class IndexViewModel() : ViewModel() {
         )
     )
 
-//    Fun para obtener los valores de todos los indices desde la API externa y sus valores:
+    //    Fun para obtener los valores de un indice segun su nombre y fecha, desde la API externa:
     val businessIndex: StateFlow<Indicador> = _businessIndex
     fun getIndex() {
         viewModelScope.launch {
@@ -71,16 +111,30 @@ class IndexViewModel() : ViewModel() {
                     .ApiInstance
                     .api
 //                    .obtenerIndicadores()
-                   .obtenerIndicadorPorFecha(index, date)
+                    .obtenerIndicadorPorFecha(index, date)
                 _businessIndex.value = result
-            }
-            catch (e: Exception) {
+            } catch (e: Exception) {
                 val errorMessage = e.message ?: "Error desconocido"
             }
         }
     }
 
-    fun getIndexOptions(): List<String> {
+//    Fun que agrega indicadores a la BD local, se invoca desde la vista AddIndicadorScreen:
+    fun addIndicador(indicador: Indicador, context: Context) {
+        viewModelScope.launch {
+            try {
+                val db = AppDatabase.getDatabase(context)
+                viewModelScope.launch {
+                    db.indicadorDao().insertIndicador(indicador)
+
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    /*fun getIndexOptions(): List<String> {
         return when (indexType) {
             "Nacionales" -> indexNationalOptions
             //Si selecciono Nacionales me muestra opt de la Lista indexNationalOptions
@@ -93,7 +147,7 @@ class IndexViewModel() : ViewModel() {
         }
 
 
-    }
+    }*/
 
     //Mensajes de error, y los pasamos a la fun validateForm():
     var indexErrorMessage: String? by mutableStateOf(null)
@@ -121,33 +175,33 @@ class IndexViewModel() : ViewModel() {
         return Result.success(Unit)
     }
 
-//    fun validateForm(): Result<Unit> {
-//        //Para borrar los mensajes de error de alguna consulta anterior:
-//        indexErrorMessage = null
-//        dateErrorMessage = null
-//        //Validamos que el indice y la fecha no esten vacios:
-//        if (index.isEmpty()) {
-//            indexErrorMessage = "Por favor seleccione un indice"
-//            return Result.failure(Exception(indexErrorMessage))
-//        }
-//
-//        if (date.isEmpty()) {
-//            dateErrorMessage = "Por favor ingrese una fecha"
-//            return Result.failure(Exception(dateErrorMessage))
-//        }
-//        //Ademas validamos el formato de la fecha dd/mm/aaaa,
-//        // en dia y mes deben tener 2 digitos y año 4 digitos:
-//        else {
-//            val dateRegex = Regex("""^\d{2}/\d{2}/\d{4}$""")
-//            if (!date.matches(dateRegex)) {
-//                dateErrorMessage = "Por favor ingrese una fecha valida"
-//                return Result.failure(Exception(dateErrorMessage))
-//            }
-//
-//        }
-//        //Si no hay errores retornamos success:
-//        return Result.success(Unit)
-//    }
+/*    fun validateForm(): Result<Unit> {
+        //Para borrar los mensajes de error de alguna consulta anterior:
+        indexErrorMessage = null
+        dateErrorMessage = null
+        //Validamos que el indice y la fecha no esten vacios:
+        if (index.isEmpty()) {
+            indexErrorMessage = "Por favor seleccione un indice"
+            return Result.failure(Exception(indexErrorMessage))
+        }
+
+        if (date.isEmpty()) {
+            dateErrorMessage = "Por favor ingrese una fecha"
+            return Result.failure(Exception(dateErrorMessage))
+        }
+        //Ademas validamos el formato de la fecha dd/mm/aaaa,
+        // en dia y mes deben tener 2 digitos y año 4 digitos:
+        else {
+            val dateRegex = Regex("""^\d{2}/\d{2}/\d{4}$""")
+            if (!date.matches(dateRegex)) {
+                dateErrorMessage = "Por favor ingrese una fecha valida"
+                return Result.failure(Exception(dateErrorMessage))
+            }
+
+        }
+        //Si no hay errores retornamos success:
+        return Result.success(Unit)
+    }*/
 
 
 }

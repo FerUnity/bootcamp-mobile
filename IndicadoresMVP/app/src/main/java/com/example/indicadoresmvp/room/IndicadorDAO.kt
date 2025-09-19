@@ -16,12 +16,15 @@ import kotlinx.coroutines.flow.Flow
 //    Ojo ademas cada fun debe funcionar como asincrona con corrutina(suspend) para que no bloquee la interfaz con el usuario:
 @Dao
 interface IndicadorDAO {
-    //    Agregar un medicamento (product: ProductData) a la tabla medicamentos de la BD:
+
+    //    Agregar un indicador (product: ProductData) a la tabla medicamentos de la BD:
     @Insert
     suspend fun insertIndicador(indicador: Indicador): Long
 
     //    Obtener una lista de medicamentos (medListId: Int) desde una lista de compras de medicamentos de la BD,
     //    que tenga como valor de id = medListId:
+
+//    Fun que obtiene la lista de todos los indicadores desde la BD local:
     @Query("SELECT * FROM indicadores")
     fun getAll(): Flow<List<Indicador>>
 

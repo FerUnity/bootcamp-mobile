@@ -35,7 +35,12 @@ fun IndexScreen(navController: NavHostController, destination: Destination) {
     { //Conten del Scaffold:
         innerPadding ->
         //Llamamos a la fun IndexForm() del archivo IndexForm.kt que arma el formulario:
-        IndexForm(snackbarHostState, innerPadding, destination)
+        IndexForm(
+            navController,
+            snackbarHostState,
+            innerPadding,
+            destination
+        )
 
 
     }   //Cierre cont Scaffold()

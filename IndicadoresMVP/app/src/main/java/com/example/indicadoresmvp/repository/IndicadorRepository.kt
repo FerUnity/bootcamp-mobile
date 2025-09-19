@@ -28,8 +28,8 @@ class IndicadorRepository(private val dao: IndicadorDAO, private val apiService:
         dao.updateIndicador(indicador)
 
     }
-    // Funciones que solo interactúan con la API Service externa FireBase
-//    Esta fun fetchMeds, recibe todos los medicamentod pero desde la Nube (FireBase)
+    // Funciones que solo interactúan con la API Service externa.
+//    Esta fun fetchMeds, recibe todos los indicadores pero desde la Nube
     fun fetchIndicadores(): Flow<List<Indicador>> = flow {
         val indicadores = apiService.obtenerIndicadores()
         //Con emit se liberan los datos:

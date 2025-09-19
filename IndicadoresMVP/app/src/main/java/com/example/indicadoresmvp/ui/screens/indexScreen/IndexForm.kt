@@ -1,6 +1,7 @@
 package com.example.indicadoresmvp.ui.screens.indexScreen
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -29,6 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import com.example.indicadoresmvp.MainActivity
 import com.example.indicadoresmvp.R
 import com.example.indicadoresmvp.model.IndexViewModel
 import com.example.indicadoresmvp.model.IndicadorInternacionalEnumeration
@@ -40,10 +43,12 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun IndexForm(
+    navController: NavHostController,
     snackbarHostState: SnackbarHostState,
     innerPadding: PaddingValues,
     destination: Destination,
-    indexModel: IndexViewModel = viewModel()
+//    indexModel: IndexViewModel = viewModel()
+    indexModel: IndexViewModel = MainActivity.indexViewModel
     //Creamos var indexModel de tipo IndexViewModel y el viewModel() es para que sea persistente
 ) {
 //    var indicadoresApiService: IndicadoresApiService = IndicadoresApiService.ApiInstance.api
@@ -147,7 +152,6 @@ fun IndexForm(
                 modifier = Modifier.padding(start = 16.dp)
             )
         }
-
 
 
         //UN TEXTFIELD PARA INGRESAR EL MONTO A CONVERTIR DE LA PRIMERA MONEDA A LA SEGUNDA:
@@ -287,56 +291,51 @@ fun IndexForm(
 //        OJO SE DEBE obtener el valor actual de cada moneda en dólares desde la API dada,
 //        para luego hacer la transformación (la app debe hacer la transformación de la moneda, no el servicio).
 
-//        CALCULAMOS LOS VALORES Y HACEMOS LA CONVERSION ENTRE DIVISAS:
-        var valor_total_div1_div2: Double = 0.0
-        Button(
-            onClick = {
-                val result = indexModel.validateForm()
-               if (result.isSuccess) {
-//             Se obtiene el valor de la divisa1 ingresada segun fecha. Creo que debe obtenerse Local no de la API.
-                   //             Con la fun getIndex() que devuelve como resultado: businessIndex: StateFlow<Indicador>:
-                   indexModel.getIndex()
 
-               } else {
-                   scope.launch {
-                       snackbarHostState.showSnackbar("El formulario presenta errores")
-                   }
-               }
-//        Valor en pesos de LA UNIDAD de la divisa1 a convertir:
-                var valor_obtenido: Double = businessIndex.serie[0].valor
 
-//        Valor total del monto buscado de la divisa 1 en pesos:
-                var valor_total_div1_pesos: Double = valor_obtenido * monto.toDouble()
+            Button(
+                onClick = {
+                    val result = indexModel.validateForm()
+                    if (result.isSuccess) {
+//             Se obtiene el valor de la divisa1 ingresada segun fecha, desde la API externa:
+                        // Con la fun getIndex() que devuelve como resultado: businessIndex: StateFlow<Indicador>:
+                        indexModel.getIndex()
 
-//        Valor actual del dolar en pesos: ValDolar.
-//        Obtener de API:
-                var ValDolar: Double = businessIndex.serie[0].valor
-
-//        Valor total del monto buscado en la divisa 1 en dolares:
-                var valor_total_div1_dolares: Double = valor_total_div1_pesos / ValDolar
-
-//        Valor de la Unidad de la Divisa 2 en pesos por API: valor_obtenido2_pesos
-                var valor_obtenido2: Double = businessIndex.serie[0].valor
-
-//        Valor de la Unidad de la Divisa 2 en dolares: valor_obtenido2_dolares = valor_obtenido2_pesos / ValDolar
-                var valor_obtenido2_dolares: Double = valor_obtenido2 / ValDolar
-
-//        Valor del monto total buscado en la divisa 1, en terminos de la divisa 2 =
-//        valor_total_div1_dolares / valor_obtenido2_dolares
-
-                valor_total_div1_div2 = valor_total_div1_dolares / valor_obtenido2_dolares
-
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text("Calcular")
+                    } else {
+                        scope.launch {
+                            snackbarHostState.showSnackbar("El formulario presenta errores")
+                        }
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text("Calcular")
 //            Text(stringResource(R.string.query_button)) //Consultar
-        }
+            }
+//            Boton 2: SE CAE REVISAR:
+            //        Boton para mostrtar la lisa de indicadores obtenidas desde la API:
+            Button(
+                onClick = {
+                    navController.navigate("indicador_Api_list")
+                    //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
+                    val text = "Obteniendo indicadores desde la API"
+                    val duration: Int = Toast.LENGTH_LONG
+                    Toast.makeText(navController.context, text, duration).show()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text("Listado de indicadores de API")
+            }
 
 //        Si se cumplen las condiciones para que la consulta a la API salga bien,
 //        Mostramos un texto con los datos del indicador consultado:
+        //        CALCULAMOS LOS VALORES Y HACEMOS LA CONVERSION ENTRE DIVISAS:
+        var valor_total_div1_div2: Double = 1.0
+
         if (businessIndex.codigo != "" && businessIndex.serie.isNotEmpty()) {
             Row {
                 //Nombre de la divisa solicitada
@@ -356,6 +355,33 @@ fun IndexForm(
                     modifier = Modifier.padding(16.dp)
                 )
             }
+
+            //        Valor en pesos de LA UNIDAD de la divisa1 a convertir:
+            var valor_obtenido: Double = businessIndex.serie[0].valor
+
+//        Valor total del monto buscado de la divisa 1 en pesos:
+            var valor_total_div1_pesos: Double = valor_obtenido * monto.toDouble()
+
+//        Valor actual del dolar en pesos: ValDolar.
+//        Obtener de API:
+            var ValDolar: Double = 990.0
+
+//        Valor total del monto buscado en la divisa 1 en dolares:
+            var valor_total_div1_dolares: Double = valor_total_div1_pesos / ValDolar
+
+//        Valor de la Unidad de la Divisa 2 en pesos por API: valor_obtenido2_pesos
+            var valor_obtenido2: Double = businessIndex.serie[0].valor
+
+//        Valor de la Unidad de la Divisa 2 en dolares: valor_obtenido2_dolares = valor_obtenido2_pesos / ValDolar
+            var valor_obtenido2_dolares: Double = valor_obtenido2 / ValDolar
+
+//        Valor del monto total buscado en la divisa 1, en terminos de la divisa 2 =
+//        valor_total_div1_dolares / valor_obtenido2_dolares
+
+            valor_total_div1_div2 = valor_total_div1_dolares / valor_obtenido2_dolares
+//            valor_total_div1_div2 = String.format("%.2f", valor_total_div1_div2).toDouble()
+
+
 //            Si no se encuentra la info del indicador, mostramos un mensaje de error:
         } else if (businessIndex.codigo != "") {
             Text(
@@ -365,21 +391,36 @@ fun IndexForm(
             )
         }
 
-
+        //        TEXTFIELD QUE MUESTRA EL VALOR TOTAL DE LA DIVISA 1 EN TERMINOS DE LA DIV2:
         var ValFinalDolaresDiv2 by remember { mutableStateOf("") }
         ValFinalDolaresDiv2 = valor_total_div1_div2.toString()
 
-
-//        TEXTFIELD QUE MUESTRA EL VALOR TOTAL DE LA DIVISA 1 EN TERMINOS DE LA DIV2:
         TextField(
             value = ValFinalDolaresDiv2,
-            onValueChange = { },
+            onValueChange = { ValFinalDolaresDiv2 = it },
             label = { Text("Valor total en terminos de la Div 2") },
 //            isReadOnly = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         )
+
+
+//        Boton para mostrtar la lisa de indicadores obtenidas desde la API:
+       /* Button(
+            onClick = {
+                navController.navigate("indicador_Api_list")
+                //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
+                val text = "Obteniendo indicadores desde la API"
+                val duration: Int = Toast.LENGTH_LONG
+                Toast.makeText(navController.context, text, duration).show()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text("Listado de indicadores de API")
+        }*/
 
 
     }

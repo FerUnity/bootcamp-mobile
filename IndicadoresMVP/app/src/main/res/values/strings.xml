@@ -5,4 +5,14 @@
     <string name="date_text">Date</string>
     <string name="date_placeholder">Format dd-mm-yyyy</string>
     <string name="query_button">Query</string>
+    <string name="add_indicador_description">Agregar Indicador</string>
+    <string name="add_indicador">Agregar</string>
+    <string name="codigo_field">Codigo</string>
+    <string name="nombre_field">Nombre</string>
+    <string name="unidad_medida_field">Unidad de Medida</string>
+    <string name="serie_field">Serie</string>
+    <string name="valor_field">Valor</string>
+    <string name="fecha_field">Fecha</string>
+    <string name="add_indicador_title">Crear Indicador</string>
+    <string name="back_description">Volver</string>
 </resources>
