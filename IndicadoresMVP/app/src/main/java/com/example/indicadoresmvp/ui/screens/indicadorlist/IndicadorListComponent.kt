@@ -1,6 +1,7 @@
 package com.example.indicadoresmvp.ui.screens.indicadorlist
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,28 +33,35 @@ fun IndicadorListComponent(modifier: Modifier = Modifier, navController: NavCont
 //    el val indicadores se usa desde el viewModel para almacenar la lista de indicadores desde la API:
     val indicadores by indexViewModel.indicadores.collectAsState()
 
-//    Luego recorremos la lista de indicadores(API) y usamos el LazyColumn para mostrar la lista de indicadores,
-//    usando el recurso grafico CARD, que implementa el componente IndicadorItemComponent:
-    LazyColumn(
+    Column(
         modifier = modifier
             .fillMaxSize()
-    ) {
-        items(indicadores.size) { index ->
-            val indicador = indicadores[index]
-            IndicadorItemComponent(indicador = indicador, navController)
-        }
-    }
-
-//    Boton para volver a la pantalla anterior:
-    Button(
-        onClick = {
-            navController.popBackStack()
-        },
-        modifier = Modifier
-            .fillMaxWidth()
             .padding(16.dp)
     ) {
-        Text("VOLVER")
+        //    Luego recorremos la lista de indicadores(API) y usamos el LazyColumn para mostrar la lista de indicadores,
+//    usando el recurso grafico CARD, que implementa el componente IndicadorItemComponent:
+        LazyColumn(
+            modifier = modifier
+                .fillMaxSize()
+        ) {
+            items(indicadores.size) { index ->
+                val indicador = indicadores[index]
+                IndicadorItemComponent(indicador = indicador, navController)
+            }
+        }
+
+//    Boton para volver a la pantalla anterior:
+        Button(
+            onClick = {
+                navController.popBackStack()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text("VOLVER")
+        }
+
     }
 
 }

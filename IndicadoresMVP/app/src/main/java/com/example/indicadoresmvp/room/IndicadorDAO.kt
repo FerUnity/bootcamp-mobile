@@ -32,6 +32,10 @@ interface IndicadorDAO {
     @Query("SELECT * FROM indicadores WHERE id = :id")
     suspend fun getIndicadoresById(id: Int): Indicador?
 
+    //    Obtener un medicamento(medicamento: ProductData) de la tabla medicamentos de la BD, segun su nombre:
+    @Query("SELECT * FROM indicadores WHERE nombre = :nombre")
+    suspend fun getIndicadorByName(nombre: String): Indicador
+
     //    Obtener una lista de medicamentos (medListId: Int) de una lista de compras de medicamentos de la BD,
     //    que tenga como valor de id = medListId y segun su categoria:
 //    @Query("SELECT * FROM indicadores WHERE  = :medListId AND categoria = :category")

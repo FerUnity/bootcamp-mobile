@@ -1,6 +1,7 @@
 package com.example.indicadoresmvp.model
 
 import android.content.Context
+import android.util.Log.e
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,10 +10,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.indicadoresmvp.room.AppDatabase
 import com.example.indicadoresmvp.room.Indicador
 import com.example.indicadoresmvp.service.IndicadoresApiService
-import com.example.indicadoresmvp.service.IndicadoresRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class IndexViewModel(private val context: Context) : ViewModel() {
@@ -25,7 +24,7 @@ class IndexViewModel(private val context: Context) : ViewModel() {
     }
 
 //    Fun que obtiene la lista completa de indicadores desde la Api:
-    private fun getIndicadoresDesdeApi() {
+    private fun getIndicadoresDesdeApi(): List<Indicador>? {
         viewModelScope.launch {
             try {
                 val result = IndicadoresApiService
@@ -37,6 +36,8 @@ class IndexViewModel(private val context: Context) : ViewModel() {
                 val errorMessage = e.message ?: "Error desconocido"
             }
         }
+        return _indicadores.value
+
     }
 
     //    fun que obtiene la lista completa de indicadores desde la BD local,
@@ -92,9 +93,9 @@ class IndexViewModel(private val context: Context) : ViewModel() {
 
 
     //    La sgte fun getIndex() realizara la parte reactiva:
-    private var _businessIndex = MutableStateFlow<Indicador>(
+    private var _businessIndexA = MutableStateFlow<Indicador>(
         Indicador(
-            id = null,
+            id = 0,
             codigo = "",
             nombre = "",
             unidad_medida = "",
@@ -103,21 +104,56 @@ class IndexViewModel(private val context: Context) : ViewModel() {
     )
 
     //    Fun para obtener los valores de un indice segun su nombre y fecha, desde la API externa:
-    val businessIndex: StateFlow<Indicador> = _businessIndex
-    fun getIndex() {
+    val businessIndexA: StateFlow<Indicador> = _businessIndexA
+    fun getIndex(index: String, date: String) {
+        viewModelScope.launch {
+            try {
+//                val db = AppDatabase.getDatabase(context)
+//                db.indicadorDao().getIndicadorByName(index)
+                val result = IndicadoresApiService
+                    .ApiInstance
+                    .api
+                    .obtenerIndicadorPorFecha(index, date)
+                _businessIndexA.value = result
+            } catch (e: Exception) {
+                val errorMessage = e.message ?: "Error desconocido"
+            }
+
+        }
+    }
+
+    private var _businessIndexB = MutableStateFlow<Indicador>(
+        Indicador(
+            id = 0,
+            codigo = "",
+            nombre = "",
+            unidad_medida = "",
+            serie = emptyList()
+        )
+    )
+
+    //    Fun para obtener los valores de un indice segun su nombre y fecha, desde la API externa:
+    val businessIndexB: StateFlow<Indicador> = _businessIndexB
+
+    //    fun que obtiene un indicador desde la BD local segujn nombre, se invoca desde la vista IndexForm:
+    fun getIndicador(index: String, date: String) {
         viewModelScope.launch {
             try {
                 val result = IndicadoresApiService
                     .ApiInstance
                     .api
-//                    .obtenerIndicadores()
                     .obtenerIndicadorPorFecha(index, date)
-                _businessIndex.value = result
+                _businessIndexB.value = result
             } catch (e: Exception) {
                 val errorMessage = e.message ?: "Error desconocido"
             }
         }
+
     }
+
+
+
+
 
 //    Fun que agrega indicadores a la BD local, se invoca desde la vista AddIndicadorScreen:
     fun addIndicador(indicador: Indicador, context: Context) {
@@ -133,6 +169,8 @@ class IndexViewModel(private val context: Context) : ViewModel() {
             }
         }
     }
+
+
 
     /*fun getIndexOptions(): List<String> {
         return when (indexType) {
