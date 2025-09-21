@@ -34,10 +34,11 @@ interface IndicadoresApiService {
         }
     }
 
-//    Solo requerinos de la API, obtener el valor del indicador por fecha:
+//    Solo requerinos desde la API, obtener el valor del indicador por fecha:
 
-//    Obtener los valores de todos los indicadores
-    @GET("indicador")
+//    Obtener todos los valores de todos un indicador:
+//    https://mindicador.cl/api/indicador
+    @GET("")
     suspend fun obtenerIndicadores(): List<Indicador>
 
 

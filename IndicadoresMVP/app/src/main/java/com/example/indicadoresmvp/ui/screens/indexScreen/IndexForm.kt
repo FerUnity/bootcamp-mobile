@@ -120,6 +120,8 @@ fun IndexForm(
                             text = { Text(option.nombre) },
                             onClick = {
                                 expandedIndex = false
+//                                Le asignamos a la var indexSelectedA el nombre de la opcion seleccionada,
+//                                por eso queda en el value del TextField arriba:
                                 indexSelectedA = option.nombre
                                 indexModel.onIndexChange(option.codigo)
                             }

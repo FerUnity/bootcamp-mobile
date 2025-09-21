@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.PrimaryKey
 import com.example.indicadoresmvp.room.AppDatabase
 import com.example.indicadoresmvp.room.Indicador
 import com.example.indicadoresmvp.service.IndicadoresApiService
@@ -135,7 +136,7 @@ class IndexViewModel(private val context: Context) : ViewModel() {
     //    Fun para obtener los valores de un indice segun su nombre y fecha, desde la API externa:
     val businessIndexB: StateFlow<Indicador> = _businessIndexB
 
-    //    fun que obtiene un indicador desde la BD local segujn nombre, se invoca desde la vista IndexForm:
+    //    fun que obtiene un indicador desde la API segun nombre y fecha, se invoca desde la vista IndexForm:
     fun getIndicador(index: String, date: String) {
         viewModelScope.launch {
             try {
