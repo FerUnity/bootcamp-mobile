@@ -7,6 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,12 +21,24 @@ import com.example.indicadoresmvp.ui.screens.indexScreen.IndexScreen
 import com.example.indicadoresmvp.ui.screens.indicadorlist.IndicadorListScreen
 import com.example.indicadoresmvp.ui.screens.indicadornew.AddIndicadorScreen
 import com.example.indicadoresmvp.ui.theme.IndicadoresMVPTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     companion object {
         lateinit var indexViewModel: IndexViewModel
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Splash Screen
+        val splash = installSplashScreen()
+        var keepSplash = true
+        splash.setKeepOnScreenCondition { keepSplash }
+
+        // Simula carga
+        lifecycleScope.launch {
+            delay(1000)
+            keepSplash = false
+        }
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 //        Cargar la lista de indicadores ya guardados, desde la BD:

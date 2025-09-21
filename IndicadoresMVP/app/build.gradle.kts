@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.paging)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.splashscreen)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
