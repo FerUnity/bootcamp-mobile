@@ -1,6 +1,7 @@
 package com.example.indicadoresmvp.ui.screens.indexScreen
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -276,9 +277,9 @@ fun IndexForm(
                 if (result.isSuccess) {
 //             Se obtiene el valor de la divisa1 ingresada segun fecha, desde la API externa:
                     // Con la fun getIndex() que devuelve como resultado: businessIndex: StateFlow<Indicador>:
-                    indexModel.getIndex(indexSelectedA, indexModel.date)
+                    indexModel.getIndex(indexSelectedA)
 //                        Se obtiene el valor del indicador divisa2, desde la BD local:
-                    indexModel.getIndicador(indexSelectedB, indexModel.date)
+                    indexModel.getIndicador(indexSelectedB)
 
                 } else {
                     scope.launch {
@@ -389,7 +390,7 @@ fun IndexForm(
 
 
 //        Boton para mostrtar la lisa de indicadores obtenidas desde la API:
-        /* Button(
+         Button(
              onClick = {
                  navController.navigate("indicador_Api_list")
                  //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
@@ -402,7 +403,7 @@ fun IndexForm(
                  .padding(16.dp)
          ) {
              Text("Listado de indicadores de API")
-         }*/
+         }
 
 
     } //Fin columna

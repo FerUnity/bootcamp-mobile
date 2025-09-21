@@ -38,8 +38,10 @@ interface IndicadoresApiService {
 
 //    Obtener todos los valores de todos un indicador:
 //    https://mindicador.cl/api/indicador
-    @GET("")
-    suspend fun obtenerIndicadores(): List<Indicador>
+    @GET("indicador")
+    suspend fun obtenerIndicadores(
+        @Path("indicador") indicador: String
+    ): List<Indicador>
 
 
     //    Obtener el valor de un indicador en especifico: segun la fecha:

@@ -5,12 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.indicadoresmvp.model.IndexViewModel
+import com.example.indicadoresmvp.repository.IndicadorRepository
 import com.example.indicadoresmvp.ui.components.Destination
 import com.example.indicadoresmvp.ui.screens.indexDetailScreen.IndexDetailScreen
 import com.example.indicadoresmvp.ui.screens.indexScreen.IndexScreen
@@ -31,6 +33,7 @@ class MainActivity : ComponentActivity() {
 //    de inmediato se ejecuta esta fun init, que invoca a la fun getIndicadores() del DAO,
 //    la cual carga la lista de medicamentos desde la BD, y la almacena en la var _indicadores,
 //    que es la lista de indicadores local, para tenerla disponible para la vista:
+
         indexViewModel = IndexViewModel(applicationContext)
         setContent {
             IndicadoresMVPTheme {

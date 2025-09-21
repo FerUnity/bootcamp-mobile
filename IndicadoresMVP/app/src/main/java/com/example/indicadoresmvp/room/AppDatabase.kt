@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 
 //Esta es la BD de datos LOCAL
 // Luego la clase abstracta RoomDatabase, usando @Database, represernta a la BD SQLite LOCAL:
 //Aca unimos todas las clases: entidades + Dao:
 @Database(entities = [Indicador::class], version = 1, exportSchema = false)
+@TypeConverters(SerieListConverter::class)
 abstract class AppDatabase: RoomDatabase()  {
     companion object {
         const val DATABASE_NAME = "indicadores_list.db"

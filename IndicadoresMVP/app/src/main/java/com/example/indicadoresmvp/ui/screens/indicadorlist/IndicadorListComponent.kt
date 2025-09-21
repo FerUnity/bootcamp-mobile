@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,9 +37,21 @@ fun IndicadorListComponent(modifier: Modifier = Modifier, navController: NavCont
 
     Column(
         modifier = modifier
+//            .verticalScroll(rememberScrollState())
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        //    Boton para volver a la pantalla anterior:
+        Button(
+            onClick = {
+                navController.popBackStack()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text("VOLVER")
+        }
         //    Luego recorremos la lista de indicadores(API) y usamos el LazyColumn para mostrar la lista de indicadores,
 //    usando el recurso grafico CARD, que implementa el componente IndicadorItemComponent:
         LazyColumn(
@@ -50,17 +64,6 @@ fun IndicadorListComponent(modifier: Modifier = Modifier, navController: NavCont
             }
         }
 
-//    Boton para volver a la pantalla anterior:
-        Button(
-            onClick = {
-                navController.popBackStack()
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text("VOLVER")
-        }
 
     }
 

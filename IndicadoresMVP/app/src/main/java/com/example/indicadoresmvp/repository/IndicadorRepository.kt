@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 //Es un cjto o piscina de datos que puedo administrar.
+// Se encarga bde traspasasr los datos desde la API a la BD local ROOM.
 // Actua como mediador, unificando AL MISMO TIEMPO,
 // el acceso a APIs remotas como Firebase desde el IndicadoresApiService.kt
 // y tambien a la BD local ROOM desde el IndicadorDAO.kt:
@@ -29,11 +30,23 @@ class IndicadorRepository(private val dao: IndicadorDAO, private val apiService:
 
     }
     // Funciones que solo interactúan con la API Service externa.
-//    Esta fun fetchMeds, recibe todos los indicadores pero desde la Nube
+//    Esta fun fetchMeds, recibe todos los indicadores desde la Nube y con el Dao los inserta a la BD Local.
+//    Esta fun se llama desde el ViewModel:
     fun fetchIndicadores(): Flow<List<Indicador>> = flow {
-        val indicadores = apiService.obtenerIndicadores()
-        //Con emit se liberan los datos:
+        val indicadores = apiService.obtenerIndicadores( "indicador")
+        indicadores.forEach { indicador ->
+            val index = Indicador(
+                id = indicador.id,
+                codigo = indicador.codigo,
+                nombre = indicador.nombre,
+                unidad_medida = indicador.unidad_medida,
+                serie = indicador.serie
+                )
+            dao.insertIndicador(index)
+        }
         emit(indicadores)
+        //Con emit se liberan los datos:
+
     }
 
     //    fun para enviar un medicamento a la nube que se obtienen de recorrer la lista de medicamentos local:
