@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kapt)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -55,11 +56,23 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.firebase.database.ktx)
+    implementation(libs.androidx.firebase.database)
+    implementation(platform(libs.androidx.firebase.bom))
+    implementation(libs.androidx.firebase.database)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.firebase.auth)
+    implementation(libs.androidx.firebase.storage)
+    implementation(libs.coil.compose)
+    implementation(libs.kotlinx.coroutines.play.services)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.paging)
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.splashscreen)
+    implementation(platform(libs.androidx.firebase.bom))
+
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

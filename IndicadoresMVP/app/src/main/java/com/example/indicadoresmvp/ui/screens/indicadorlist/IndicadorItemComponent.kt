@@ -73,6 +73,16 @@ fun IndicadorItemComponent(indicador: Indicador, navController: NavController) {
             }
             Row() {
                 Text(
+                    "Imagen URL",
+                    modifier = Modifier.weight(1f)
+                )
+                Text(
+                    indicador.imagenUrl,
+                    modifier = Modifier.weight(2f)
+                )
+            }
+            Row() {
+                Text(
                     "Valor",
                     modifier = Modifier.weight(1f)
                 )
