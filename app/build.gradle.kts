@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.indicadoresmvp"
+    namespace = "com.example.micatalogo"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.indicadoresmvp"
+        applicationId = "com.example.micatalogo"
         minSdk = 26
         targetSdk = 36
         versionCode = 1
@@ -47,17 +47,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.room.common.jvm)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.gson)
-    implementation(libs.androidx.room.ktx)
-    implementation(libs.firebase.database.ktx)
-    implementation(libs.androidx.firebase.database)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
     implementation(platform(libs.androidx.firebase.bom))
     implementation(libs.androidx.firebase.database)
     implementation(libs.firebase.firestore.ktx)
@@ -65,20 +58,18 @@ dependencies {
     implementation(libs.androidx.firebase.storage)
     implementation(libs.coil.compose)
     implementation(libs.kotlinx.coroutines.play.services)
-    kapt(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.paging)
-    implementation(libs.androidx.runtime.livedata)
-    implementation(libs.androidx.splashscreen)
-    implementation(platform(libs.androidx.firebase.bom))
-
+    implementation(libs.androidx.navigation.compose)
 
 
     testImplementation(libs.junit)
+
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+
+
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

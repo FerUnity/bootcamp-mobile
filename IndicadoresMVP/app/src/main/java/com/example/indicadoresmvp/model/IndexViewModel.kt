@@ -117,10 +117,12 @@ class IndexViewModel(private val context: Context) : ViewModel() {
     private var _businessIndexA = MutableStateFlow<Indicador>(
         Indicador(
             id = 0,
+            id_indicador = "",
             codigo = "",
             nombre = "",
             unidad_medida = "",
-            serie = emptyList()
+            serie = emptyList(),
+            imagenUrl = ""
         )
     )
 
@@ -146,10 +148,12 @@ class IndexViewModel(private val context: Context) : ViewModel() {
     private var _businessIndexB = MutableStateFlow<Indicador>(
         Indicador(
             id = 0,
+            id_indicador = "",
             codigo = "",
             nombre = "",
             unidad_medida = "",
-            serie = emptyList()
+            serie = emptyList(),
+            imagenUrl = ""
         )
     )
 

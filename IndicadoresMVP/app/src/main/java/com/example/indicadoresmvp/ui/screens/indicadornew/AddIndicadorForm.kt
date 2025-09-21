@@ -122,7 +122,8 @@ fun AddIndicadorForm(modifier: Modifier = Modifier, navController: NavController
                         codigo = indicadorCodigo,
                         nombre = indicadorNombre,
                         unidad_medida = indicadorUnidadMedida,
-                        serie = listOf(Indicador.Serie(indicadorValor.toDouble(), indicadorFecha))
+                        serie = listOf(Indicador.Serie(indicadorValor.toDouble(), indicadorFecha),),
+                        imagenUrl = ""
                     ),
                     navController.context
                 )
