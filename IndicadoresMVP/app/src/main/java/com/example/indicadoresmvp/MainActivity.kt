@@ -39,6 +39,7 @@ class MainActivity : ComponentActivity() {
             delay(1000)
             keepSplash = false
         }
+//        Proy Malo
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 //        Cargar la lista de indicadores ya guardados, desde la BD:
