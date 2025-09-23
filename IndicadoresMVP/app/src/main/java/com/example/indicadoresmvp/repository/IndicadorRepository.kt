@@ -50,20 +50,20 @@ class IndicadorRepository(private val dao: IndicadorDAO, private val apiService:
     }
 
     //    fun para enviar un medicamento a la nube que se obtienen de recorrer la lista de medicamentos local:
-    fun pushIndicador(indicador: Indicador): Flow<Indicador> = flow {
+    /*fun pushIndicador(indicador: Indicador): Flow<Indicador> = flow {
 //        Subimos el med a la nube con apiService.addMedicamento():
         val newIndicador = apiService.addIndicador(indicador)
         emit(newIndicador)
-    }
+    }*/
 
     //    fun para enviar varios medicamentos a la nube, que se obtienen de recorrer la lista de medicamentos LOCAL:
-    fun pushIndicadores(indicadores: List<Indicador>): Flow<List<Indicador>> = flow {
+    /*fun pushIndicadores(indicadores: List<Indicador>): Flow<List<Indicador>> = flow {
         for (indicador in indicadores) {
 //            Subimos los med a la nube con apiService.addIndicador():
             apiService.addIndicador(indicador)
         }
         emit(indicadores)
-    }
+    }*/
 
 
 

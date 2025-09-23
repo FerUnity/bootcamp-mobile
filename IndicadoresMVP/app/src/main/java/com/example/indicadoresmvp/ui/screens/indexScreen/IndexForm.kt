@@ -296,29 +296,13 @@ fun IndexForm(
         }
 
 
-//            Boton 2: SE CAE REVISAR:
-        //        Boton para mostrtar la lisa de indicadores obtenidas desde la API:
-        /*            Button(
-                        onClick = {
-                            navController.navigate("indicador_Api_list")
-                            //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
-                            val text = "Obteniendo indicadores desde la API"
-                            val duration: Int = Toast.LENGTH_LONG
-                            Toast.makeText(navController.context, text, duration).show()
-                        },
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp)
-                    ) {
-                        Text("Listado de indicadores de API")
-                    }*/
-
 //        Si se cumplen las condiciones para que la consulta a la API salga bien,
 //        Mostramos un texto con los datos del indicador consultado:
 
 
-        if (businessIndexA.codigo != "" && businessIndexA.serie.isNotEmpty()
-            && businessIndexB.codigo != "" && businessIndexB.serie.isNotEmpty()
+        if (
+            (businessIndexA.codigo != "" && businessIndexA.serie.isNotEmpty())
+            && (businessIndexB.codigo != "" && businessIndexB.serie.isNotEmpty())
         ) {
             //        CALCULAMOS LOS VALORES Y HACEMOS LA CONVERSION ENTRE DIVISAS:
             //        Valor en pesos de LA UNIDAD de la divisa1 a convertir:
@@ -376,10 +360,11 @@ fun IndexForm(
                             .padding(16.dp)
                     )
                 }
-            }
+            } //Fin columna
 
 
-//            Si no se encuentra la info del indicador, mostramos un mensaje de error:
+
+            //            Si no se encuentra la info del indicador, mostramos un mensaje de error:
         } else if (businessIndexA.codigo != "" || businessIndexB.codigo != "") {
             Text(
                 text = "Ha ocurrido un error al obtener los datos del servicio. " +
@@ -389,23 +374,25 @@ fun IndexForm(
         }
 
 
+
 //        Boton para mostrtar la lisa de indicadores obtenidas desde la API:
-         Button(
-             onClick = {
-                 navController.navigate("indicador_Api_list")
-                 //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
-                 val text = "Obteniendo indicadores desde la API"
-                 val duration: Int = Toast.LENGTH_LONG
-                 Toast.makeText(navController.context, text, duration).show()
-             },
-             modifier = Modifier
-                 .fillMaxWidth()
-                 .padding(16.dp)
-         ) {
-             Text("Listado de indicadores de API")
-         }
+            Button(
+                onClick = {
+                    navController.navigate("indicador_Api_list")
+                    //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
+                    val text = "Obteniendo indicadores desde la API"
+                    val duration: Int = Toast.LENGTH_LONG
+                    Toast.makeText(navController.context, text, duration).show()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text("Listado de indicadores de API")
+            }
 
 
-    } //Fin columna
+        } //Fin columna
+
 }
 //Fin codigo IndexForm()

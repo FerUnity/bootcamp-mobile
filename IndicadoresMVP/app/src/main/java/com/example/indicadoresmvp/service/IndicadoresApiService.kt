@@ -23,6 +23,7 @@ interface IndicadoresApiService {
 //        Por ej: https://www.mindicador.cl/api/{tipo_indicador}/{dd-mm-yyyy}
 //
         private const val BASE_URL = "https://mindicador.cl/api/"
+//        private const val BASE_URL = "https://api.appnexus.com/"
         val api: IndicadoresApiService by lazy {
 //            Retrofit es como Room, pero en vez de crerar una instancia de la BD local,
             //  crea una instancia de la API que vamos a usar como Singleton:,
