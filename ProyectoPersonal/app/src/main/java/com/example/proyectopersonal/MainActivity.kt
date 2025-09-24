@@ -18,6 +18,7 @@ import androidx.navigation.NavHostController
 import com.example.proyectopersonal.model.AppDatabase
 import com.example.proyectopersonal.model.UserSettingsViewModel
 import com.example.proyectopersonal.room.MedRepository
+import com.example.proyectopersonal.ui.screens.IndexScreen.AppConMapaDesplegable
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoScreen
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoViewModel
 import com.example.proyectopersonal.ui.screens.medlist.MedListScreen
@@ -103,6 +104,11 @@ fun AppNavigation() {
         //Aca otro composable para formulario de medicamentos seleccionado:
         composable("add_med"){
             AddMedicamentoScreen(navController)
+        }
+
+        composable("map"){
+            AppConMapaDesplegable()
+
         }
 
     }

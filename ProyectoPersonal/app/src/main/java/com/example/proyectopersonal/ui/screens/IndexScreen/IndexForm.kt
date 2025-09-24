@@ -1,5 +1,6 @@
 package com.example.proyectopersonal.ui.screens.IndexScreen
 
+import android.location.Location
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import com.example.proyectopersonal.R
@@ -44,6 +45,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoViewModel
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -283,7 +290,7 @@ fun IndexForm(
                     // que nos lleve a la pantalla secundaria IndexDetailScreen.kt:
                     //Fijarse que se pasan el param del formulario asi,
                     // ${indexModel.index }, asi:
-                    navController.navigate("index_detail/${indexModel.index }")
+                    navController.navigate("index_detail/${indexModel.index}")
 
                     //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
                     val text = "Detalle de la opcion"
@@ -370,10 +377,114 @@ fun IndexForm(
         }
 
 
+        Button(
+            onClick = {
+                navController.navigate("map")
+            }
+        )
 
-    }   //Cierre cont Column()
+       {
+            Text("Ir al Mapa")
+        }
+    }
 
-} //Cierre fun IndexForm()
+//        Cierre Column()
+}
+
+        @OptIn(ExperimentalMaterial3Api::class)
+        @Composable
+        fun AppConMapaDesplegable() {
+            /*val locations: List<LatLng> =
+                listOf(LatLng(40.7128, -74.0060), LatLng(34.0522, -118.2437))*/
+            var expandedMenu by remember { mutableStateOf(false) }
+            var selectedLocation by remember { mutableStateOf<LatLng?>(null) } // Para almacenar la ubicación seleccionada
+
+            // Botón para abrir el menú
+            Button(onClick = { expandedMenu = true }) {
+                Text("Mostrar Lugares")
+            }
+            ExposedDropdownMenuBox(
+                expanded = expandedMenu,
+                //Luego para que cambie de estado de abierto a cerrado,
+                // el menu desplegable con onExpandedChange:
+                onExpandedChange = { expandedMenu = !expandedMenu },
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+            )
+            {
+                //Cont del ExposedDropdownMenuBox:
+                TextField(
+                    value = "",
+                    onValueChange = {},
+                    //No se puede escribir, solo aparece la opcion elegida:
+                    readOnly = true,
+                    label = { Text(stringResource(R.string.select_service)) },
+                    //Icono triangulo chico para desplegar el menu:
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedMenu) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .menuAnchor(MenuAnchorType.PrimaryEditable, true)
+                    // Importante para que funcione correctamente
+                )
+
+                ExposedDropdownMenu(
+                    expanded = expandedMenu,
+                    //Si pincho en cualq parte de la antalla que se cierre el menu desplegable:
+                    onDismissRequest = { expandedMenu = false }
+                ) {
+                    // Opciones del menú
+                    DropdownMenuItem(
+                        text = { Text("Nueva York") },
+                        onClick = {
+                            selectedLocation = LatLng(40.7128, -74.0060) // Nueva York
+                            expandedMenu = false
+                        })
+                    DropdownMenuItem(
+                        text = { Text("Los Ángeles") },
+                        onClick = {
+                            selectedLocation = LatLng(34.0522, -118.2437) // Los Ángeles
+                            expandedMenu = false
+                        })
+                }
+
+                //indexOptions es la lista de indices disponibles,
+                // y por cada opcion de la lista hacemos un DropdownMenuItem:
+                /*locations.forEach { option ->
+                        DropdownMenuItem(
+                            text = { Text(option.toString()) },
+                            onClick = {
+                                expandedIndexType = false
+                                //En la var  indexModel.onIndexChange(option), guardamos la opcion elegida:
+                                indexModel.onIndexTypeChange(option.toString())
+
+                            }
+                        )
+                    }*/
+            }
+
+            // Mapa
+            GoogleMap(
+                cameraPositionState = rememberCameraPositionState {
+                    position = CameraPosition.fromLatLngZoom(
+                        selectedLocation ?: LatLng(
+                            0.0,
+                            0.0
+                        ), // Ubicación por defecto o seleccionada
+                        10f // Nivel de zoom
+                    )
+                }
+            ) {
+                if (selectedLocation != null) {
+                    Marker(state = MarkerState(position = selectedLocation!!))
+                }
+            }
+        } //Cierre fun AppConMapaDesplegable()
+
+
+//    }   //Cierre cont Column()
+
+
 
 
 
