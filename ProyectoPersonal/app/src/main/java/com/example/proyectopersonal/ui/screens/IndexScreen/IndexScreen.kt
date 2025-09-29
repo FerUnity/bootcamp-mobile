@@ -36,7 +36,8 @@ fun IndexScreen(navController: NavHostController) {
         //Que el scaffold tenga un topBar
         topBar = {
             //Llamamos a la fun IndexTopBar() del archivo IndexTopBar.kt que arma el topBar:
-            IndexTopBar(drawerState, scope, stringResource(R.string.app_name))
+            IndexTopBar(
+                navController, drawerState, scope, stringResource(R.string.app_name))
         },
         snackbarHost = {
             SnackbarHost(snackbarHostState)

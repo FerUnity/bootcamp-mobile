@@ -2,6 +2,7 @@ package com.example.proyectopersonal
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle.Companion.dark
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,10 +18,13 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import com.example.proyectopersonal.model.UserSettingsViewModel
+import com.example.proyectopersonal.ui.navigation.Routes
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoScreen
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoViewModel
 import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppConMapaScreen
 import com.example.proyectopersonal.ui.screens.medlist.MedListScreen
+import com.example.proyectopersonal.ui.screens.settings.SettingsScreen
+import com.example.proyectopersonal.ui.theme.ThemeOption
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -59,11 +63,27 @@ class MainActivity : ComponentActivity() {
 //    que es la lista de medicamentos local, para tenerla disponible para la vista:
 
         enableEdgeToEdge()
-                addMedicamentoViewModel = AddMedicamentoViewModel(applicationContext)
+        addMedicamentoViewModel = AddMedicamentoViewModel(applicationContext)
 
         setContent {
-            ProyectoPersonalTheme(userSettingsViewModel.theme) {
-                AppNavigation()
+            val dark = userSettingsViewModel.theme == "Dark"
+            ProyectoPersonalTheme(
+                darkTheme = dark,
+                dynamicColor = false
+            )
+            {
+                AppNavigation(
+                    skipLogin = true,
+                    themeOpt = if (dark) ThemeOption.DARK else ThemeOption.LIGHT,
+                    onChangeTheme = { theme ->
+                        userSettingsViewModel.theme = when (theme) {
+                            ThemeOption.SYSTEM -> "System"
+                            ThemeOption.LIGHT -> "Light"
+                            ThemeOption.DARK -> "Dark"
+                        }
+                    }
+
+                )
             }
         }
     }
@@ -80,10 +100,13 @@ class MainActivity : ComponentActivity() {
 }
 
 
-
 // Componente que permite navegar entre pantallas
 @Composable
-fun AppNavigation() {
+fun AppNavigation(
+    skipLogin: Boolean = true,
+    onChangeTheme: (ThemeOption) -> Unit = {},
+    themeOpt: ThemeOption
+) {
     val navController: NavHostController = rememberNavController()
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
@@ -101,13 +124,25 @@ fun AppNavigation() {
         }
 
         //Aca otro composable para formulario de medicamentos seleccionado:
-        composable("add_med"){
+        composable("add_med") {
             AddMedicamentoScreen(navController)
         }
 
-        composable("map"){
-            AppConMapaScreen()
+        composable("map") {
+            AppConMapaScreen(
+                navController,
+                PaddingValues()
+            )
 
+        }
+
+        composable("settings") {
+            SettingsScreen(
+                themeOpt = themeOpt,
+                onChangeTheme = onChangeTheme,
+                onBack = { navController.popBackStack() }
+
+            )
         }
 
     }
@@ -117,5 +152,8 @@ fun AppNavigation() {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    AppNavigation()
+    AppNavigation(
+        themeOpt = ThemeOption.LIGHT
+
+    )
 }

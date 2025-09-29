@@ -26,13 +26,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.proyectopersonal.MainActivity
 import com.example.proyectopersonal.R
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IndexTopBar(drawerState: DrawerState, scope: CoroutineScope, text: String) {
+fun IndexTopBar(
+    navController: NavHostController,
+    drawerState: DrawerState,
+    scope: CoroutineScope,
+    text: String)
+{
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     var expanded by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
@@ -64,9 +70,13 @@ fun IndexTopBar(drawerState: DrawerState, scope: CoroutineScope, text: String) {
             }
         },
         actions = {
-            IconButton(onClick = { expanded = true }) {
+            IconButton(
+                onClick = {
+                    navController.navigate("settings")
+                }
+            ) {
                 Icon(
-                    imageVector = Icons.Filled.MoreVert,
+                    imageVector = Icons.Filled.Settings,
                     contentDescription = "Localized description"
                 )
             }
