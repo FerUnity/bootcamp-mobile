@@ -228,7 +228,7 @@ fun IndexForm(
         ) {
             //Cont del ExposedDropdownMenuBox:
             TextField(
-                value = indexModel.index,
+                value = indexModel.index, //Esta seria la opcion de busqueda de Localizacion en el MAPA
                 onValueChange = {},
                 //No se puede escribir, solo aparece la opcion elegida:
                 readOnly = true,
@@ -277,7 +277,7 @@ fun IndexForm(
 
 
         //Boton para que una vez seleccla opcion elegida, lo ingrese y nos lleve a la pantalla
-        //de consulta del detalle de la opcion seleccionado: indexDetailScreen.kt
+        //de consulta del detalle con MAPA, de la opcion seleccionado: indexDetailScreen.kt
         Button(
             onClick = {
                 //USamos la fun validateForm() del archivo IndexViewModel.kt para validar el llenado del form,
@@ -377,6 +377,7 @@ fun IndexForm(
         }
 
 
+//        Botn para ir al MAPA:
         Button(
             onClick = {
                 navController.navigate("map")

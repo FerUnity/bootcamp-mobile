@@ -13,4 +13,5 @@
     <string name="button_back">Volver</string>
     <string name="selection">Selección</string>
     <string name="form_meds">Formulario de medicamentos</string>
+    <string name="localization_label">Localizacion</string>
 </resources>

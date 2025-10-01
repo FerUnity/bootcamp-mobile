@@ -80,9 +80,11 @@ dependencies {
 //    implementation(libs.androidx.splashscreen)
     implementation("androidx.core:core-splashscreen:1.0.1")
 //Dependencias de Google maps:
-    implementation("com.google.android.gms:play-services-auth:20.5.0")
-    implementation("com.google.maps.android:maps-compose:2.11.4")
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
+//    implementation("com.google.android.gms:play-services-auth:20.5.0")
+//    implementation("com.google.maps.android:maps-compose:2.11.4")
+//    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation(libs.maps.compose)
+    implementation(libs.play.services.maps)
     //Fin maps
 //OTROS:
     implementation("io.coil-kt:coil-compose:2.6.0")

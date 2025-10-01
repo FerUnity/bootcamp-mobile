@@ -43,7 +43,8 @@ fun AppConMapaDesplegable(
     /*val locations: List<LatLng> =
         listOf(LatLng(40.7128, -74.0060), LatLng(34.0522, -118.2437))*/
     var expandedMenu by remember { mutableStateOf(false) }
-    var selectedLocation by remember { mutableStateOf<LatLng?>(null) } // Para almacenar la ubicación seleccionada
+    var selectedLocation by remember { mutableStateOf<LatLng?>(null) }
+    // Para almacenar la ubicación seleccionada a mostrar en el MAPA
 
     Column(
         modifier = Modifier
@@ -78,12 +79,13 @@ fun AppConMapaDesplegable(
             )
             {
                 //Cont del ExposedDropdownMenuBox:
+                // Aca ira la Localizacion elegida enn el MAPA (Hospital):
                 TextField(
                     value = "",
                     onValueChange = {},
                     //No se puede escribir, solo aparece la opcion elegida:
                     readOnly = true,
-                    label = { Text(stringResource(R.string.select_service)) },
+                    label = { Text(stringResource(R.string.localization_label)) },
                     //Icono triangulo chico para desplegar el menu:
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedMenu) },
                     modifier = Modifier
@@ -92,6 +94,8 @@ fun AppConMapaDesplegable(
                     // Importante para que funcione correctamente
                 )
 
+//                ESTE MENU DESPLEGABLE TENDRIA QUE CONTENER LOS HOSPITALES CON SUS
+//                LOCALIZACIONES EN EL MAPA: LatLng():
                 ExposedDropdownMenu(
                     expanded = expandedMenu,
                     //Si pincho en cualq parte de la antalla que se cierre el menu desplegable:
@@ -136,16 +140,18 @@ fun AppConMapaDesplegable(
                 .weight(3f),
             cameraPositionState = rememberCameraPositionState {
                 position = CameraPosition.fromLatLngZoom(
-                    selectedLocation ?: LatLng(
-                        0.0,
-                        0.0
-                    ), // Ubicación por defecto o seleccionada
-                    10f // Nivel de zoom
-                )
+                    selectedLocation ?: LatLng(0.0,0.0), 10f)
+                    // Ubicación por defecto o seleccionada, Nivel de zoom
+
             }
         ) {
             if (selectedLocation != null) {
-                Marker(state = MarkerState(position = selectedLocation!!))
+//                Marker(state = MarkerState(position = selectedLocation!!))
+                Marker(
+                    state = MarkerState(position = selectedLocation!!),
+                    title = "Ubicación seleccionada",
+                    snippet = "Presiona para cerrar"
+                )
             }
         }
     } //Cierre column
