@@ -19,6 +19,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -34,7 +35,11 @@ import androidx.compose.ui.unit.dp
 import com.example.proyectopersonal.R
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapType
+import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -48,10 +53,24 @@ fun AppMapaDesplegableLista(
     /*val locations: List<LatLng> =
         listOf(LatLng(40.7128, -74.0060), LatLng(34.0522, -118.2437))*/
     var expandedMenu by remember { mutableStateOf(false) }
-    var selectedLocation by remember { mutableStateOf<LatLng>(LatLng(0.0,0.0)) }
+    var selectedLocation by remember { mutableStateOf<LatLng>(LatLng(0.0, 0.0)) }
     var hospitalSeleccionado: Hospital? by remember { mutableStateOf(null) }
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(selectedLocation, 15f)}
+        position = CameraPosition.fromLatLngZoom(selectedLocation, 15f)
+    }
+    val uiSettings by remember { mutableStateOf(
+        MapUiSettings(
+            zoomControlsEnabled = true, //Botones + y -
+            zoomGesturesEnabled = true,
+            rotationGesturesEnabled = true,
+            scrollGesturesEnabled = true,
+            scrollGesturesEnabledDuringRotateOrZoom = true,
+            tiltGesturesEnabled = true,
+            compassEnabled = true,
+            mapToolbarEnabled = true,
+            myLocationButtonEnabled = true
+        )
+    ) }
     // Para almacenar la ubicación seleccionada a mostrar en el MAPA
 
     Column(
@@ -90,7 +109,7 @@ fun AppMapaDesplegableLista(
                 // Aca ira la Localizacion elegida enn el MAPA (Hospital):
                 TextField(
                     value = hospitalSeleccionado?.name ?: "",
-                    onValueChange = { hospitalSeleccionado?.name = it},
+                    onValueChange = { hospitalSeleccionado?.name = it },
                     //No se puede escribir, solo aparece la opcion elegida:
                     readOnly = true,
                     label = { Text(stringResource(R.string.localization_label)) },
@@ -126,20 +145,57 @@ fun AppMapaDesplegableLista(
             }
         }
 
-
-        // Mapa
+        var markerState by remember { mutableStateOf<MarkerState?>(MarkerState(position = selectedLocation)) }
+        // Para mostrar el mapa con la ubicación seleccionada:
         GoogleMap(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(3f),
-            cameraPositionState = cameraPositionState
+            uiSettings = uiSettings,
+            cameraPositionState = cameraPositionState,
+            properties = MapProperties(
+//                mapType = MapType.HYBRID
+//                mapType = MapType.SATELLITE
+//                mapType = MapType.TERRAIN
+                mapType = MapType.NORMAL
+            ),
+//            Si hacemos click sobre cualq punto de mapa se mueve el marcador markerState que contiene la ubicacion seleccionada,
+//            a esa ubicacion:
+            onMapClick = {latLng ->
+//                Probar con una de las 2 formas:
+//                selectedLocation = latLng
+                markerState = MarkerState(position = latLng)
+                hospitalSeleccionado = null
+            },
+
+//            Quiero que al hacer un click largo sobre un punto, se imprima esa ubicacion en el LogCat
+            onMapLongClick = {latLng ->
+                println("Lat: ${latLng.latitude}, Lng: ${latLng.longitude}")
+            }
+
         ) {
             if (selectedLocation != null) {
 //                Marker(state = MarkerState(position = selectedLocation!!))
                 Marker(
                     state = MarkerState(position = selectedLocation!!),
-                    title = "Ubicación seleccionada",
-                    snippet = "Presiona para cerrar"
+                    title = hospitalSeleccionado?.name ?: "Ubicacion seleccionada",
+                    snippet = "Presiona para cerrar",
+                    draggable = true, //Que el marcador sea arrastrable
+                    onClick = {
+                        println("Hola 1")
+                        true
+                    },
+                    onInfoWindowClick = {
+                        println("Hola 2")
+                        true
+                    }
+                )
+                Circle(
+                    center = selectedLocation,
+                    radius = 500.0,
+                    fillColor = MaterialTheme.colorScheme.onPrimary,//Color del area de circulo
+                    strokeColor = MaterialTheme.colorScheme.primary,// Color del borde del circulo
+                    strokeWidth = 5f
                 )
             }
         }
