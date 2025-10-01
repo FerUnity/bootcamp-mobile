@@ -26,7 +26,8 @@ fun AppConMapaScreen(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     //El snackBar necesita estos 2 val:
     val scope: CoroutineScope = rememberCoroutineScope()
-    val snackbarHostState: SnackbarHostState = remember { SnackbarHostState()
+    val snackbarHostState: SnackbarHostState = remember {
+        SnackbarHostState()
     }
     //Scaffold es un componente que permite construir pantallas organizadas,
     // incorporando áreas predefinidas como:
@@ -41,7 +42,8 @@ fun AppConMapaScreen(
         topBar = {
             //Llamamos a la fun IndexTopBar() del archivo IndexTopBar.kt que arma el topBar:
             IndexTopBar(
-                navController, drawerState, scope, stringResource(R.string.app_name))
+                navController, drawerState, scope, stringResource(R.string.app_name)
+            )
         },
         snackbarHost = {
             SnackbarHost(snackbarHostState)
@@ -56,9 +58,9 @@ fun AppConMapaScreen(
         modifier = Modifier.fillMaxSize()
         //Conten del Scaffold:
     )
-    {
-        innerPadding ->
-        AppConMapaDesplegable(innerPadding)
+    { innerPadding ->
+        AppMapaDesplegableLista(innerPadding)
+
 
     }   //Cierre cont Scaffold()
 

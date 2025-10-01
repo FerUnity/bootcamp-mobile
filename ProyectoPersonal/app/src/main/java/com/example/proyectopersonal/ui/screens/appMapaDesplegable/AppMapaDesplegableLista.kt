@@ -1,5 +1,9 @@
 package com.example.proyectopersonal.ui.screens.appMapaDesplegable
 
+
+import android.Manifest
+import android.annotation.SuppressLint
+import androidx.annotation.RequiresPermission
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,15 +39,19 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
+@SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppConMapaDesplegable(
+fun AppMapaDesplegableLista(
     innerPadding: PaddingValues
 ) {
     /*val locations: List<LatLng> =
         listOf(LatLng(40.7128, -74.0060), LatLng(34.0522, -118.2437))*/
     var expandedMenu by remember { mutableStateOf(false) }
-    var selectedLocation by remember { mutableStateOf<LatLng?>(null) }
+    var selectedLocation by remember { mutableStateOf<LatLng>(LatLng(0.0,0.0)) }
+    var hospitalSeleccionado: Hospital? by remember { mutableStateOf(null) }
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(selectedLocation, 15f)}
     // Para almacenar la ubicación seleccionada a mostrar en el MAPA
 
     Column(
@@ -81,8 +89,8 @@ fun AppConMapaDesplegable(
                 //Cont del ExposedDropdownMenuBox:
                 // Aca ira la Localizacion elegida enn el MAPA (Hospital):
                 TextField(
-                    value = "",
-                    onValueChange = {},
+                    value = hospitalSeleccionado?.name ?: "",
+                    onValueChange = { hospitalSeleccionado?.name = it},
                     //No se puede escribir, solo aparece la opcion elegida:
                     readOnly = true,
                     label = { Text(stringResource(R.string.localization_label)) },
@@ -102,57 +110,19 @@ fun AppConMapaDesplegable(
                     onDismissRequest = { expandedMenu = false }
                 ) {
                     // Opciones del menú
-                    DropdownMenuItem(
-                        text = { Text("Nueva York") },
-                        onClick = {
-                            selectedLocation = LatLng(40.7128, -74.0060) // Nueva York
-                            expandedMenu = false
-                        })
-                    DropdownMenuItem(
-                        text = { Text("Los Ángeles") },
-                        onClick = {
-                            selectedLocation = LatLng(34.0522, -118.2437) // Los Ángeles
-                            expandedMenu = false
-                        })
-                    DropdownMenuItem(
-                        text = { Text("Mutual") },
-                        onClick = {
-                            selectedLocation = LatLng(-33.45679824546918, -70.70086389231263) // Mutual
-                            expandedMenu = false
-                        })
-                    DropdownMenuItem(
-                        text = { Text("San Borja") },
-                        onClick = {
-                            selectedLocation = LatLng(-33.46089576352979, -70.64177607116393) // San Borja
-                            expandedMenu = false
-                        })
-                    DropdownMenuItem(
-                        text = { Text("J J Aguirre") },
-                        onClick = {
-                            selectedLocation = LatLng(-33.41995001119858, -70.65311040388185) // J J Aguirre
-                            expandedMenu = false
-                        })
-                    DropdownMenuItem(
-                        text = { Text("San Juan De Dios") },
-                        onClick = {
-                            selectedLocation = LatLng(-33.44193957960366, -70.6790216576723) // San Juan De Dios
-                            expandedMenu = false
-                        })
-                }
-
-                //indexOptions es la lista de indices disponibles,
-                // y por cada opcion de la lista hacemos un DropdownMenuItem:
-                /*locations.forEach { option ->
+                    hospitales.forEach { hospital ->
                         DropdownMenuItem(
-                            text = { Text(option.toString()) },
+                            text = { Text(hospital.name) },
                             onClick = {
-                                expandedIndexType = false
-                                //En la var  indexModel.onIndexChange(option), guardamos la opcion elegida:
-                                indexModel.onIndexTypeChange(option.toString())
-
+                                expandedMenu = false
+                                selectedLocation = LatLng(hospital.lat, hospital.lon)
+                                hospitalSeleccionado = hospital
                             }
                         )
-                    }*/
+                    }
+
+                }
+
             }
         }
 
@@ -162,12 +132,7 @@ fun AppConMapaDesplegable(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(3f),
-            cameraPositionState = rememberCameraPositionState {
-                position = CameraPosition.fromLatLngZoom(
-                    selectedLocation ?: LatLng(0.0,0.0), 10f)
-                    // Ubicación por defecto o seleccionada, Nivel de zoom
-
-            }
+            cameraPositionState = cameraPositionState
         ) {
             if (selectedLocation != null) {
 //                Marker(state = MarkerState(position = selectedLocation!!))

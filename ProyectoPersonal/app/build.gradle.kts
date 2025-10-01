@@ -85,6 +85,7 @@ dependencies {
 //    implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation(libs.maps.compose)
     implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
     //Fin maps
 //OTROS:
     implementation("io.coil-kt:coil-compose:2.6.0")
