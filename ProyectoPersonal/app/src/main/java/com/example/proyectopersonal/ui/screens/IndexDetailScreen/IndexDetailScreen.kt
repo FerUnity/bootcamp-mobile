@@ -53,7 +53,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(innerPadding),
             cameraPositionState = cameraPositionState,
-//            SI QUEREMOS QUE AL HACER TAP EN UN PTO CAMBIE LA POSICION DEL MARCADOR que contene la posicion sanBorja:
+//            SI QUEREMOS QUE AL HACER TAP EN UN PTO CAMBIE LA POSICION EL MARCADOR que contene la posicion sanBorja:
             onMapClick = {latLng ->
 //                Con una de las 2 siguientes formas podemos cambiar la posicion del marcador:
                 markerState = MarkerState(position = latLng)
@@ -63,8 +63,8 @@ fun MapScreen(modifier: Modifier = Modifier) {
         ) {
             Marker(
                 state = markerState!!,
-                title = "San Borja",
-                snippet = "Marker in San Borja",
+                title = markerState!!.position?.toString()?: "Ubicacion seleccionada",
+                snippet = markerState!!.position?.toString()?: "Marker en Ubicacion",
                 draggable = true, //Marker arrastrable
 
                 onInfoWindowClick = {
@@ -95,12 +95,12 @@ fun MapScreen(modifier: Modifier = Modifier) {
 
 
             )
-            Circle(
+           /* Circle(
                 center = sanBorja,
                 radius = 50000.0,
                 fillColor = MaterialTheme.colorScheme.onPrimary,//Color del area de circulo
                 strokeColor = MaterialTheme.colorScheme.primary,// Color del borde del circulo
-            )
+            )*/
 
             Polygon(
                 points = listOf(

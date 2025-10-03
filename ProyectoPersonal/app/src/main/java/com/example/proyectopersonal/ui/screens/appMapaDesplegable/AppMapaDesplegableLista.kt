@@ -53,7 +53,7 @@ fun AppMapaDesplegableLista(
     /*val locations: List<LatLng> =
         listOf(LatLng(40.7128, -74.0060), LatLng(34.0522, -118.2437))*/
     var expandedMenu by remember { mutableStateOf(false) }
-    var selectedLocation by remember { mutableStateOf<LatLng>(LatLng(0.0, 0.0)) }
+    var selectedLocation by remember { mutableStateOf<LatLng>(LatLng(-33.45679824546918, -70.70086389231263)) }
     var hospitalSeleccionado: Hospital? by remember { mutableStateOf(null) }
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(selectedLocation, 15f)
@@ -135,6 +135,7 @@ fun AppMapaDesplegableLista(
                             onClick = {
                                 expandedMenu = false
                                 selectedLocation = LatLng(hospital.lat, hospital.lon)
+                                cameraPositionState.position = CameraPosition.fromLatLngZoom(selectedLocation, 15f)
                                 hospitalSeleccionado = hospital
                             }
                         )
@@ -145,13 +146,13 @@ fun AppMapaDesplegableLista(
             }
         }
 
-        var markerState by remember { mutableStateOf<MarkerState?>(MarkerState(position = selectedLocation)) }
+//        var markerState by remember { mutableStateOf<MarkerState?>(MarkerState(position = selectedLocation)) }
         // Para mostrar el mapa con la ubicación seleccionada:
         GoogleMap(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(3f),
-            uiSettings = uiSettings,
+            uiSettings = uiSettings, //Setteo de habiltar o deshabilitar func del mapa: zoom, mover, etc
             cameraPositionState = cameraPositionState,
             properties = MapProperties(
 //                mapType = MapType.HYBRID
@@ -161,12 +162,14 @@ fun AppMapaDesplegableLista(
             ),
 //            Si hacemos click sobre cualq punto de mapa se mueve el marcador markerState que contiene la ubicacion seleccionada,
 //            a esa ubicacion:
-            onMapClick = {latLng ->
+
+            /*onMapClick = {latLng ->
 //                Probar con una de las 2 formas:
 //                selectedLocation = latLng
-                markerState = MarkerState(position = latLng)
-                hospitalSeleccionado = null
-            },
+//                markerState = MarkerState(position = latLng)
+                selectedLocation = latLng
+//                hospitalSeleccionado = null
+            },*/
 
 //            Quiero que al hacer un click largo sobre un punto, se imprima esa ubicacion en el LogCat
             onMapLongClick = {latLng ->
@@ -178,27 +181,29 @@ fun AppMapaDesplegableLista(
 //                Marker(state = MarkerState(position = selectedLocation!!))
                 Marker(
                     state = MarkerState(position = selectedLocation!!),
-                    title = hospitalSeleccionado?.name ?: "Ubicacion seleccionada",
-                    snippet = "Presiona para cerrar",
-                    draggable = true, //Que el marcador sea arrastrable
-                    onClick = {
+                    title = MarkerState(position = selectedLocation!!).position.toString(),
+//                    title = markerState?.position?.toString()?: "Ubicacion seleccionada",
+                    snippet = hospitalSeleccionado?.name ?: "Hospital",
+                    draggable = true //Que el marcador sea arrastrable
+                  /*  onClick = {
                         println("Hola 1")
                         true
                     },
                     onInfoWindowClick = {
                         println("Hola 2")
                         true
-                    }
+                    }*/
                 )
-                Circle(
+               /* Circle(
                     center = selectedLocation,
                     radius = 500.0,
                     fillColor = MaterialTheme.colorScheme.onPrimary,//Color del area de circulo
                     strokeColor = MaterialTheme.colorScheme.primary,// Color del borde del circulo
                     strokeWidth = 5f
-                )
+                )*/
             }
-        }
+        } //Cierre del GoogleMap
+
     } //Cierre column
 
 } //Cierre fun AppConMapaDesplegable()
