@@ -3,6 +3,8 @@ package com.example.proyectopersonal.ui.screens.appMapaDesplegable
 
 import android.Manifest
 import android.annotation.SuppressLint
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresPermission
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -53,24 +55,59 @@ fun AppMapaDesplegableLista(
     /*val locations: List<LatLng> =
         listOf(LatLng(40.7128, -74.0060), LatLng(34.0522, -118.2437))*/
     var expandedMenu by remember { mutableStateOf(false) }
-    var selectedLocation by remember { mutableStateOf<LatLng>(LatLng(-33.45679824546918, -70.70086389231263)) }
+    var selectedLocation by remember {
+        mutableStateOf<LatLng>(
+            LatLng(
+                -33.45679824546918,
+                -70.70086389231263
+            )
+        )
+    }
     var hospitalSeleccionado: Hospital? by remember { mutableStateOf(null) }
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(selectedLocation, 15f)
     }
-    val uiSettings by remember { mutableStateOf(
-        MapUiSettings(
-            zoomControlsEnabled = true, //Botones + y -
-            zoomGesturesEnabled = true,
-            rotationGesturesEnabled = true,
-            scrollGesturesEnabled = true,
-            scrollGesturesEnabledDuringRotateOrZoom = true,
-            tiltGesturesEnabled = true,
-            compassEnabled = true,
-            mapToolbarEnabled = true,
-            myLocationButtonEnabled = true
+    val uiSettings by remember {
+        mutableStateOf(
+            MapUiSettings(
+                zoomControlsEnabled = true, //Botones + y -
+                zoomGesturesEnabled = true,
+                rotationGesturesEnabled = true,
+                scrollGesturesEnabled = true,
+                scrollGesturesEnabledDuringRotateOrZoom = true,
+                tiltGesturesEnabled = true,
+                compassEnabled = true,
+                mapToolbarEnabled = true,
+                myLocationButtonEnabled = true
+            )
         )
-    ) }
+    }
+//    Codigo para pedir permisos de geolacalizacion al usuario
+    var showDialog: Boolean by remember { mutableStateOf(true) }
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // Permission is granted. Continue the action or workflow in your
+            // app.
+            showDialog = false
+
+        } else {
+            showDialog = true
+        }
+    }
+    if (showDialog) {
+        LocationPermissionDialog(
+            onRequestPermission = {
+                showDialog = false
+                requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            },
+            onDismiss = { showDialog = true } //Si presiono fuera del cuadro de dialogo, que se cierre el cuadro de dialogo
+        )
+    }
+//    Fin ncodigo para pedir permisos de geolacalizacion al usuario.
+
+
     // Para almacenar la ubicación seleccionada a mostrar en el MAPA
 
     Column(
@@ -135,7 +172,8 @@ fun AppMapaDesplegableLista(
                             onClick = {
                                 expandedMenu = false
                                 selectedLocation = LatLng(hospital.lat, hospital.lon)
-                                cameraPositionState.position = CameraPosition.fromLatLngZoom(selectedLocation, 15f)
+                                cameraPositionState.position =
+                                    CameraPosition.fromLatLngZoom(selectedLocation, 15f)
                                 hospitalSeleccionado = hospital
                             }
                         )
@@ -172,7 +210,7 @@ fun AppMapaDesplegableLista(
             },*/
 
 //            Quiero que al hacer un click largo sobre un punto, se imprima esa ubicacion en el LogCat
-            onMapLongClick = {latLng ->
+            onMapLongClick = { latLng ->
                 println("Lat: ${latLng.latitude}, Lng: ${latLng.longitude}")
             }
 
@@ -185,22 +223,22 @@ fun AppMapaDesplegableLista(
 //                    title = markerState?.position?.toString()?: "Ubicacion seleccionada",
                     snippet = hospitalSeleccionado?.name ?: "Hospital",
                     draggable = true //Que el marcador sea arrastrable
-                  /*  onClick = {
-                        println("Hola 1")
-                        true
-                    },
-                    onInfoWindowClick = {
-                        println("Hola 2")
-                        true
-                    }*/
+                    /*  onClick = {
+                          println("Hola 1")
+                          true
+                      },
+                      onInfoWindowClick = {
+                          println("Hola 2")
+                          true
+                      }*/
                 )
-               /* Circle(
-                    center = selectedLocation,
-                    radius = 500.0,
-                    fillColor = MaterialTheme.colorScheme.onPrimary,//Color del area de circulo
-                    strokeColor = MaterialTheme.colorScheme.primary,// Color del borde del circulo
-                    strokeWidth = 5f
-                )*/
+                /* Circle(
+                     center = selectedLocation,
+                     radius = 500.0,
+                     fillColor = MaterialTheme.colorScheme.onPrimary,//Color del area de circulo
+                     strokeColor = MaterialTheme.colorScheme.primary,// Color del borde del circulo
+                     strokeWidth = 5f
+                 )*/
             }
         } //Cierre del GoogleMap
 
