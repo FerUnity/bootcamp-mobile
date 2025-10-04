@@ -58,12 +58,14 @@ fun AppConMapaScreen(
         modifier = Modifier.fillMaxSize()
         //Conten del Scaffold:
     )
-    { innerPadding ->
-        AppMapaDesplegableLista(innerPadding)
+    {
+        innerPadding ->
+//        AppMapaDesplegableLista(innerPadding)
+          AppMapaDesplegableLista(innerPadding)
 
 
     }   //Cierre cont Scaffold()
 
 
 }
-//Cierre fun IndexScreen()
+//Cierre fun AppConMapaScreen()
