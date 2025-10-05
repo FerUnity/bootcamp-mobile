@@ -60,8 +60,11 @@ fun AppConMapaScreen(
     )
     {
         innerPadding ->
-//        AppMapaDesplegableLista(innerPadding)
-          AppMapaDesplegableLista(innerPadding)
+        AppMapaDesplegableLista(
+            navController,
+            innerPadding
+        )
+//          AppMapaListaConMVVM(innerPadding)
 
 
     }   //Cierre cont Scaffold()

@@ -1,8 +1,11 @@
 package com.example.proyectopersonal.model
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
+import android.util.Log
+import androidx.annotation.RequiresPermission
 import com.google.android.gms.location.LocationServices
 
 //Esta clase va a permitir interactuar con el cliente FusedLocationProviderClient(), que permite obtener la Geolocalizacion.
@@ -11,17 +14,22 @@ import com.google.android.gms.location.LocationServices
 class LocationRepository(private val context: Context) {
     private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
-    @SuppressLint("MissingPermission") //Nos libera de pedir un permiso especial para la geolocalizacion
+    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
     fun getLastKnownLocation(
-        onSuccess: (Location?) -> Unit, //Si se devuelve la ubicacion actual del dispositivo, sera exitoso
-        onError: (Exception) -> Unit //Si no se logra obtener la ubicacion actual del dispositivo,
-    //por falta de conexion, wifi o cualq motivo, se lanza una excepcion
+        onSuccess: (Location?) -> Unit,
+        onError: (Exception) -> Unit
     ) {
+        Log.println(Log.INFO, "LocationRepository", "Getting Last Known Location")
         fusedLocationClient.lastLocation
-            .addOnSuccessListener { location -> onSuccess(location)}
-            .addOnFailureListener { error -> onError(error) }
+            .addOnSuccessListener { location ->
+                Log.println(Log.INFO, "LocationRepository", "Location: $location")
+                onSuccess(location)
+            }
+            .addOnFailureListener { error ->
+                Log.println(Log.ERROR, "LocationRepository", "Error: $error")
+                onError(error)
+            }
     }
-
 
 
 }

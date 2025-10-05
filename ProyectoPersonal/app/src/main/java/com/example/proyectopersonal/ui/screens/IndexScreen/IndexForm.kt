@@ -369,7 +369,7 @@ fun IndexForm(
                 // en Color.kt y al tema en Theme.kt:
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.surface
-            ),
+            )
         ) {
             //TExto sobre el btn: "Formulario de medicamentos"
             Text(stringResource(R.string.form_meds))

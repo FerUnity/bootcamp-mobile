@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -40,6 +41,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.proyectopersonal.R
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
@@ -56,11 +59,14 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
-//Este archivo rep la vista o view de la pantalla que muestra el Mapa
+//Este archivo sirve para buscar en el Mapa los hospitales registrados en la red Hospitalaria
+// rep la vista o view de la pantalla que muestra el Mapa
+//Falta vincularlo al ViewModel como fuente de datos. O sea como intermediario entre la vista y el modelo.
 @SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppMapaDesplegableLista(
+    navController: NavHostController,
     innerPadding: PaddingValues
 ) {
     //    Codigo para pedir permisos de geolacalizacion al usuario
@@ -290,6 +296,30 @@ fun AppMapaDesplegableLista(
                  )*/
             }
         } //Cierre del GoogleMap
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp, start = 12.dp, end = 12.dp)
+                .weight(1f)
+        ){
+            Button(
+                onClick = {
+                    navController.navigate("map_search")
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    // en Color.kt y al tema en Theme.kt:
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.surface
+                )
+            ) {
+                Text(text = "Buscar direccion en Mapa")
+            }
+
+        }
 
     } //Cierre column
 

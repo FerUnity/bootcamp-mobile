@@ -22,6 +22,7 @@ import com.example.proyectopersonal.ui.navigation.Routes
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoScreen
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoViewModel
 import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppConMapaScreen
+import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppMapaListaConMVVM
 import com.example.proyectopersonal.ui.screens.medlist.MedListScreen
 import com.example.proyectopersonal.ui.screens.settings.SettingsScreen
 import com.example.proyectopersonal.ui.theme.ThemeOption
@@ -143,6 +144,13 @@ fun AppNavigation(
                 onBack = { navController.popBackStack() }
 
             )
+        }
+
+        composable("map_search") {
+            AppMapaListaConMVVM(
+                innerPadding = PaddingValues()
+            )
+
         }
 
     }
