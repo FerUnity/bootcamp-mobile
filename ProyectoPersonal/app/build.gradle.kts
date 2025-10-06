@@ -98,6 +98,9 @@ dependencies {
     implementation(libs.androidx.room.common.jvm)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
+    implementation(libs.coil.compose)
+    // implementation(libs.glide.compose)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

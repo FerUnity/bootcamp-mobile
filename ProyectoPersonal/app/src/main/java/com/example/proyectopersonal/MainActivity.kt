@@ -23,6 +23,7 @@ import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamen
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoViewModel
 import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppConMapaScreen
 import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppMapaListaConMVVM
+import com.example.proyectopersonal.ui.screens.cameraScreen.CameraScreen
 import com.example.proyectopersonal.ui.screens.medlist.MedListScreen
 import com.example.proyectopersonal.ui.screens.settings.SettingsScreen
 import com.example.proyectopersonal.ui.theme.ThemeOption
@@ -149,6 +150,14 @@ fun AppNavigation(
         composable("map_search") {
             AppMapaListaConMVVM(
                 innerPadding = PaddingValues()
+            )
+
+        }
+
+        composable("camera") {
+            CameraScreen(
+                navController,
+                PaddingValues()
             )
 
         }

@@ -387,8 +387,23 @@ fun IndexForm(
        {
             Text("Ir al Mapa")
         }
-    }
 
+
+//        Funciones de Camara:
+        Button(
+            onClick = {
+                navController.navigate("camera")
+            }
+        )
+
+        {
+            Text("Funciones de Camara")
+        }
+
+
+
+
+    }
 //        Cierre Column()
 }
 
