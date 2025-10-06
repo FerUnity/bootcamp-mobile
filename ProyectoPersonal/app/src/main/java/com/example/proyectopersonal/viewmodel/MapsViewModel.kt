@@ -78,6 +78,12 @@ class MapsViewModel(
 
     }
 
+    fun getCoordinatesFromAddress2(address: String): LatLng {
+        val latLng = geocodingRepository.getCoordinatesFromAddress(address)
+        return latLng?: LatLng(0.0,0.0)
+
+    }
+
     fun getAddressFromCoordinates(latLng: LatLng) : String {
         val address = geocodingRepository.getAddressFromCoordinates(latLng.latitude, latLng.longitude)
         return address?: ""
