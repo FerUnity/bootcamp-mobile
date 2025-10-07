@@ -18,6 +18,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import com.example.proyectopersonal.model.UserSettingsViewModel
+import com.example.proyectopersonal.ui.navigation.AppNavigation
 import com.example.proyectopersonal.ui.navigation.Routes
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoScreen
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoViewModel
@@ -102,7 +103,7 @@ class MainActivity : ComponentActivity() {
 }
 
 
-// Componente que permite navegar entre pantallas
+/*// Componente que permite navegar entre pantallas
 @Composable
 fun AppNavigation(
     skipLogin: Boolean = true,
@@ -163,7 +164,7 @@ fun AppNavigation(
         }
 
     }
-}
+}*/
 
 
 @Preview(showBackground = true)
