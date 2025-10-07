@@ -3,6 +3,9 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kapt)
+    alias(libs.plugins.kotlin.serialization)
+
+
 }
 
 android {
@@ -100,6 +103,12 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.coil.compose)
     // implementation(libs.glide.compose)
+
+    // Kotlin Serialization (JSON)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+//    ksp("androidx.room:room-compiler:2.6.1")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
 
     testImplementation(libs.junit)
