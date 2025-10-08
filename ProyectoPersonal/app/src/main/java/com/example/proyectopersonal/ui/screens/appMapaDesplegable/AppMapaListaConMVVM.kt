@@ -3,6 +3,7 @@ package com.example.proyectopersonal.ui.screens.appMapaDesplegable
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -42,6 +43,7 @@ import androidx.core.app.ActivityCompat
 import com.example.proyectopersonal.R
 import com.example.proyectopersonal.model.GeocodingRepository
 import com.example.proyectopersonal.model.LocationRepository
+import com.example.proyectopersonal.model.maps.InfoMarker
 import com.example.proyectopersonal.viewmodel.MapsViewModel
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.CameraPosition
@@ -70,13 +72,12 @@ fun AppMapaListaConMVVM(
 //    Creamos una val de la pos de la camara que va a estar asociada al cameraPosition del ViewModel, asi.
     //    O sea no creamos esa var desde cero:
     val context = LocalContext.current
-    val cameraPosition by mapsViewModel.cameraPosition.collectAsState()
+    val mapState by mapsViewModel.mapState.collectAsState()
+    val userLocation = mapsViewModel.getActualUserLocation().collectAsState()
+
     var address by remember { mutableStateOf("") }
-    var latLng by remember { mutableStateOf(LatLng(0.0, 0.0)) }
-    var markerState by remember { mutableStateOf<MarkerState?>(MarkerState(position = latLng)) }
 
     //    Codigo para pedir permisos de geolacalizacion al usuario
-    var showDialog: Boolean by remember { mutableStateOf(true) }
     val requestPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     )
@@ -158,40 +159,49 @@ fun AppMapaListaConMVVM(
                     Text("Ver")
                 }
             }
-            cameraPosition?.let { camPos ->
-                latLng = camPos.position.target
-                markerState = MarkerState(position = latLng)
+            Log.d("MapsExample", "MapState: $mapState")
+            val cameraPosition = mapsViewModel.getCameraPosition()
+
+            if (cameraPosition != null) {
+                Log.d("MapsExample", "CameraPosition: ${cameraPosition.position}")
                 GoogleMap(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    cameraPositionState = camPos,
+                    modifier = Modifier.fillMaxSize(),
+                    cameraPositionState = cameraPosition,
                     properties = MapProperties(
-                        mapType = MapType.NORMAL
+                        mapType = mapState.mapType
                     ),
-//                    Si hagi click en cualkq punto de mapa que se mueva la camara y se asigne un marker a ese punto:
-                    onMapClick = {
-                        latLng = it
-                        markerState = MarkerState(position = latLng)
+                    onMapClick = { latLng ->
+                        mapState.infoMarker = null
                         mapsViewModel.setCameraPosition(latLng)
+                    },
+                    onMapLongClick = { latLng ->
+                        val address = mapsViewModel.getAddressFromCoordinates(latLng)
+                        mapState.infoMarker = InfoMarker(
+                            position = MarkerState(position = latLng),
+                            title = address,
+                            snippet = "Lat: ${latLng.latitude}, Long: ${latLng.longitude}",
+                            visible = true
+                        )
                     }
                 ) {
-                    markerState?.let { marker ->
+                    if (mapState.infoMarker != null) {
+                        val marker = mapState?.infoMarker!!
+                        Log.d("MapsExample", "Marker: ${marker}")
                         Marker(
-                            state = marker,
-                            title = mapsViewModel.getAddressFromCoordinates(latLng),
-                            snippet = "Lat: ${latLng.latitude}, Lng: ${latLng.longitude}",
-                            draggable = false
+                            state = marker.position,
+                            title = marker.title,
+                            snippet = marker.snippet,
+                            visible = marker.visible
                         )
                     }
                 }
-            } ?: run {
+            } else {
                 Text(
-                    text = "Cargando ubicación...",
+                    text = stringResource(R.string.loading_map),
                     modifier = Modifier
                         .fillMaxWidth(1f)
                 )
             }
         }
     }
-
 } //Cierre fun AppConMapaDesplegable()

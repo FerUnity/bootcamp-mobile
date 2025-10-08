@@ -20,4 +20,5 @@
     <string name="medlist_label" translatable="false">lista del medicamento:</string>
     <string name="med_list" translatable="false">Lista de medicamentos</string>
     <string name="localization_label">Localizacion</string>
+    <string name="loading_map" translatable="false">Cargando Mapa..</string>
 </resources>
