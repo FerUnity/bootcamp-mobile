@@ -13,6 +13,7 @@ import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppConMapaScre
 import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppMapaListaConMVVM
 import com.example.proyectopersonal.ui.screens.cameraScreen.CameraScreen
 import com.example.proyectopersonal.ui.screens.medlist.MedListScreen
+import com.example.proyectopersonal.ui.screens.sensorScreen.SensorView
 import com.example.proyectopersonal.ui.screens.settings.SettingsScreen
 import com.example.proyectopersonal.ui.theme.ThemeOption
 
@@ -74,6 +75,10 @@ fun AppNavigation(
                 PaddingValues()
             )
 
+        }
+
+        composable("sensorView"){
+            SensorView()
         }
 
     }

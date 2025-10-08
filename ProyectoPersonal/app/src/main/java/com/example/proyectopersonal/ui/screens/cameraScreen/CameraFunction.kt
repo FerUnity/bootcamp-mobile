@@ -39,7 +39,8 @@ fun CameraFunction(
     val mediaViewModel: MediaViewModel = MediaViewModel()
 
 //    La sgte val es reactiva se basa en los 4 estrados que se presentan en la clase MediaUIState,
-//    idle, loading, success, error:
+//    idle, loading, success, error.
+//    Accedemos a los 4 estados UI desde la clase MediaViewModel:
     val uiState by mediaViewModel.mediaUIState.collectAsState()
     var tempUri by remember { mutableStateOf<Uri?>(null) }
 

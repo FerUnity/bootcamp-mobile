@@ -56,11 +56,11 @@ import kotlinx.coroutines.CoroutineScope
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun IndexForm(
-        navController: NavHostController,
-        innerPadding: PaddingValues,
-        snackbarHostState: SnackbarHostState,
-        scope: CoroutineScope,
-        indexModel: IndexViewModel = viewModel()
+    navController: NavHostController,
+    innerPadding: PaddingValues,
+    snackbarHostState: SnackbarHostState,
+    scope: CoroutineScope,
+    indexModel: IndexViewModel = viewModel()
     //Creamos var indexModel de tipo IndexViewModel y el viewModel() es para que sea persistente
 ) {
     // Declaramos las 2 estructuras de datos a utilizar en la Screen
@@ -384,12 +384,12 @@ fun IndexForm(
             }
         )
 
-       {
+        {
             Text("Ir al Mapa")
         }
 
 
-//        Funciones de Camara:
+//       Boton para Funciones de Camara:
         Button(
             onClick = {
                 navController.navigate("camera")
@@ -400,7 +400,15 @@ fun IndexForm(
             Text("Funciones de Camara")
         }
 
-
+//Boton para ir a la pantalla de sensores:
+        Button(
+            onClick = {
+                navController.navigate("sensorView")
+            }
+        )
+        {
+            Text("Funciones de Sensores")
+        }
 
 
     }
