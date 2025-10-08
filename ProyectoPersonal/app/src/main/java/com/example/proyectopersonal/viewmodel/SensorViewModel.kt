@@ -95,6 +95,9 @@ class SensorViewModel(application: Application): AndroidViewModel(application), 
     //    En la sgte funcion: fun stopListening(), desregistramos todos los sensores de interes para escuchar:
     fun stopListening() {
         sensorManager.unregisterListener(this)
+//        Solo con weste unregister se detienen los sensores,
+    //        porque el registerListener del startListening() es el mismo para tpodos los sensores
+
     }
 
     //    Las 2 sgtes fun son propias del sensorManager.registerListener(). Pero hay que redifinir su comportasmiento a nuestra necesidad,
@@ -104,10 +107,11 @@ class SensorViewModel(application: Application): AndroidViewModel(application), 
     }
 
     //    La fun onSensorChanged() es la que detecta y captura los cambios en los sensores registrados,
-//    esos cambios se capturan las variables _motionSensor, _proximitySensor, etc...
-//    que son las variables de la data class MotionSensorUIState()
+//    esos cambios se capturan en las variables _motionSensor, _proximitySensor, etc...
+//    que son las variables de la data class UIState() de cada sensor.
 //    y actualiza los estados correspondientes,
 //    creados en la data class MotionSensorUIState(), ProximitySensorUIState(), etc...
+//    Cada sensor se llama con if y no con else if, porque la idea es que sean independientes entre si.
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
             _motionSensor.value = MotionSensorUIState(

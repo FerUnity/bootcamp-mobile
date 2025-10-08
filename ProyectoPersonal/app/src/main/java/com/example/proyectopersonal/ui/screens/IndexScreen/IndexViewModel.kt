@@ -20,7 +20,10 @@ class IndexViewModel: ViewModel() {
     //El viewModel es persistente asi que no requiere by remember:
 
     var indexType by mutableStateOf("")
+        private set
     var index by mutableStateOf("")
+        private set
+
 
 
     //Funciones cuando cambia cada valor de las var de las 3 listas:

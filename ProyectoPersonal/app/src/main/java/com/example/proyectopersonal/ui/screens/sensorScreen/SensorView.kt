@@ -80,6 +80,8 @@ fun SensorView() {
             Row(
                 modifier = Modifier.padding(start = 16.dp)
             ) {
+//                Se hace ref a la var motionSensorUIState del VModel
+                //que aca muestra los valores de acelerometro colectados:
                 Text(
                     text = "X: ${String.format("%.1f", motionSensorUIState.value.x)} m/s2",
                     modifier = Modifier.padding(end = 8.dp)
@@ -163,7 +165,7 @@ fun SensorView() {
             }
             HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
 
-//            Sensor contyador de pasos:
+//            Sensor contador de pasos:
             Text(
                 text = "Step Counter",
                 modifier = Modifier.padding(start = 16.dp)
