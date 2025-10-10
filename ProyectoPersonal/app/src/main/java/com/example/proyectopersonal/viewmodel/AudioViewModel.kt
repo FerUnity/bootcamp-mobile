@@ -2,6 +2,8 @@ package com.example.proyectopersonal.viewmodel
 
 import android.content.Context
 import android.media.MediaRecorder
+import android.os.Environment
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.proyectopersonal.model.AudioUIState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,24 +30,30 @@ class AudioViewModel : ViewModel() {
     private var outputFile: String =
         "" //No como null para que siempre tenga que tener un valor string
 
+
     //    fun que manejaran al microfono:
     fun startRecording(context: Context) {
-//        El archivo de salida tendra formato 3gp.
+//        El archivo se guaradra en la carpeta de MUSICA y tendra formato 3gp.
         // Y su nombre sera fecha y hora actual en milisegundos: System.currentTimeMillis()
-        outputFile = "${context.filesDir.absolutePath}/${System.currentTimeMillis()}.3gp"
+        val outputDir: String = context.filesDir.absolutePath
+//        val outputDir = context.getExternalFilesDir(Environment.DIRECTORY_MUSIC)?.absolutePath
+            outputFile = "${outputDir}/${System.currentTimeMillis()}.3gp"
+        // Para encontrar grabacion en el Logcat. Hay que iniciar grab luego detener y ahi busacr la ruta en el Logcat:
+        Log.d("AudioViewModel", "Output file path: $outputFile")
+
 //    Luego creamos un objeto (recorder) para poder usar el mic y grabar, definiendo:
 //    Micorofono, formato de salida, codificador de audio(AMR_NB) y archivo(nombre y ruta) de salida:
         recorder = MediaRecorder().apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
-            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP) //Formato de salida, hay otros
             setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
             setOutputFile(outputFile)
 //            Luego preparamos el mic e iniciamos la captura en try catch:
             try {
                 prepare()
                 start()
-                _audioUIState.value =
-                    AudioUIState.Recording //Cambiamos el estado del mic a grabando del tipo AudioUIState.
+                setRecording()
+                 //Cambiamos el estado del mic a grabando del tipo AudioUIState.
             } catch (e: Exception) {
                 _audioUIState.value =
                     AudioUIState.Error(e.message ?: "Error al iniciar la grabación")
@@ -72,6 +80,15 @@ class AudioViewModel : ViewModel() {
             _audioUIState.value = AudioUIState.Error(e.message ?: "Error al detener la grabación")
         }
 
+    }
+
+//    Cambia el estado del mic a Idle del tipo AudioUIState:
+    fun setIdle() {
+        _audioUIState.value = AudioUIState.Idle
+    }
+
+    fun setRecording() {
+        _audioUIState.value = AudioUIState.Recording
     }
 
 //    Editamos la fun de sistema que es automatica para limpiar la pantalla,
