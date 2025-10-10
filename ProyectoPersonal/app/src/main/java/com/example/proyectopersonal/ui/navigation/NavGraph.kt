@@ -11,6 +11,7 @@ import com.example.proyectopersonal.ui.screens.IndexScreen.IndexScreen
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoScreen
 import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppConMapaScreen
 import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppMapaListaConMVVM
+import com.example.proyectopersonal.ui.screens.audiorecorder.AudioScreen
 import com.example.proyectopersonal.ui.screens.cameraScreen.CameraScreen
 import com.example.proyectopersonal.ui.screens.medlist.MedListScreen
 import com.example.proyectopersonal.ui.screens.sensorScreen.SensorView
@@ -79,6 +80,13 @@ fun AppNavigation(
 
         composable("sensorView"){
             SensorView()
+        }
+
+        composable("audioScreen"){
+            AudioScreen(
+                navController,
+                PaddingValues()
+            )
         }
 
     }

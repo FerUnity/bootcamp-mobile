@@ -410,6 +410,16 @@ fun IndexForm(
             Text("Funciones de Sensores")
         }
 
+        //Boton para ir funciones de microfono y text speech:
+        Button(
+            onClick = {
+                navController.navigate("audioScreen")
+            }
+        )
+        {
+            Text("Funciones de Microfono y TTS")
+        }
+
 
     }
 //        Cierre Column()
