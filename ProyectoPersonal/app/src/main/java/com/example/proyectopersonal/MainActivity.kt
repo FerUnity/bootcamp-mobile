@@ -1,5 +1,6 @@
 package com.example.proyectopersonal
 
+import android.hardware.biometrics.BiometricPrompt
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle.Companion.dark
@@ -8,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.content.ContextCompat
 import com.example.proyectopersonal.ui.theme.ProyectoPersonalTheme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,16 +28,24 @@ import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppConMapaScre
 import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppMapaListaConMVVM
 import com.example.proyectopersonal.ui.screens.cameraScreen.CameraScreen
 import com.example.proyectopersonal.ui.screens.medlist.MedListScreen
+import com.example.proyectopersonal.ui.screens.notificacionScreen.BiometricScreen
 import com.example.proyectopersonal.ui.screens.settings.SettingsScreen
 import com.example.proyectopersonal.ui.theme.ThemeOption
+import com.example.proyectopersonal.viewmodel.BiometricViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.concurrent.Executor
 
 
 class MainActivity : ComponentActivity() {
     companion object {
         lateinit var userSettingsViewModel: UserSettingsViewModel //Datastore
         lateinit var addMedicamentoViewModel: AddMedicamentoViewModel //Para usar con BD
+
+        private lateinit var biometricPrompt: BiometricPrompt
+//        private lateinit var promptInfo: BiometricPrompt.PromptInfo
+        private lateinit var executor: Executor
+
     }
 
     //Al abrir la app se muestra el splashScreen,
@@ -66,6 +76,41 @@ class MainActivity : ComponentActivity() {
 //    que es la lista de medicamentos local, para tenerla disponible para la vista:
 
         enableEdgeToEdge()
+        /*val biometricViewModel = BiometricViewModel()
+        executor = ContextCompat.getMainExecutor(this) //Ejecuta el biometric
+        biometricPrompt = androidx.biometric.BiometricPrompt(
+            this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(
+                    errorCode: Int,
+                    errString: CharSequence
+                ) {
+                    super.onAuthenticationError(errorCode, errString)
+                    biometricViewModel.setAuthenticated(false)
+                }
+
+                override fun onAuthenticationSucceeded(
+                    result: BiometricPrompt.AuthenticationResult
+                ) {
+                    super.onAuthenticationSucceeded(result)
+                    biometricViewModel.setAuthenticated(true)
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    biometricViewModel.setAuthenticated(false)
+                }
+            })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Autenticación biometrica")
+            .setSubtitle("Autenticate para continuar")
+            .setNegativeButtonText("Cancelar")
+            .build()*/
+
+
+
+
         addMedicamentoViewModel = AddMedicamentoViewModel(applicationContext)
 
         setContent {
@@ -75,6 +120,10 @@ class MainActivity : ComponentActivity() {
                 dynamicColor = false
             )
             {
+//            Lo primero al ejecutar la app es mostrar la pantalla de autenticacion con huella digital://
+//                BiometricScreen(biometricViewModel){ biometricPrompt.authenticate(promptInfo) }
+
+//                Luego las demas pantallas:
                 AppNavigation(
                     skipLogin = true,
                     themeOpt = if (dark) ThemeOption.DARK else ThemeOption.LIGHT,

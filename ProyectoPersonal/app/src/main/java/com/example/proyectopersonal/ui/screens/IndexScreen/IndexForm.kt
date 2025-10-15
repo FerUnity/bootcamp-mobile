@@ -420,6 +420,16 @@ fun IndexForm(
             Text("Funciones de Microfono y TTS")
         }
 
+//        Boton para ir a la pantalla de notificaciones:
+        Button(
+            onClick = {
+                navController.navigate("notificacion")
+            }
+        )
+        {
+            Text("Notificaciones")
+        }
+
 
     }
 //        Cierre Column()

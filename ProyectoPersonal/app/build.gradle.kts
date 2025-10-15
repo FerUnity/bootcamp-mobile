@@ -110,6 +110,11 @@ dependencies {
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
+//    Para Mensajes push desde Firebase y Biometric
+    implementation(libs.firebase.messaging)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.biometric)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

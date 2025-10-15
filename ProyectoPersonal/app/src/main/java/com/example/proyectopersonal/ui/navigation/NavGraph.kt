@@ -14,6 +14,7 @@ import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppMapaListaCo
 import com.example.proyectopersonal.ui.screens.audiorecorder.AudioScreen
 import com.example.proyectopersonal.ui.screens.cameraScreen.CameraScreen
 import com.example.proyectopersonal.ui.screens.medlist.MedListScreen
+import com.example.proyectopersonal.ui.screens.notificacionScreen.ExamplesScreen
 import com.example.proyectopersonal.ui.screens.sensorScreen.SensorView
 import com.example.proyectopersonal.ui.screens.settings.SettingsScreen
 import com.example.proyectopersonal.ui.theme.ThemeOption
@@ -44,6 +45,11 @@ fun AppNavigation(
         //Aca otro composable para formulario de medicamentos seleccionado:
         composable("add_med") {
             AddMedicamentoScreen(navController)
+        }
+
+//        Se llama de boton en indexForm
+        composable("notificacion") {
+            ExamplesScreen()
         }
 
         composable("map") {
