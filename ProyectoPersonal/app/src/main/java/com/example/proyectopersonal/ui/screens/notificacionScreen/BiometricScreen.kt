@@ -13,10 +13,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.proyectopersonal.viewmodel.BiometricViewModel
 
 @Composable
 fun BiometricScreen(
+    navController: NavController,
     biometricViewModel: BiometricViewModel,
     onAuthenticate: () -> Unit = {}
 ){
@@ -33,8 +35,8 @@ fun BiometricScreen(
         ) {
 //            Si es que se autentifico con biometria se activan todos los campos:
             if (state.authenticated) {
-
-                //Acceder a la pantalla inicial de la app:
+                //Acceder a la pantalla HOME de la app:
+                navController.navigate("home")
             /* composable("home") {
                             IndexScreen(navController)
                         }*/

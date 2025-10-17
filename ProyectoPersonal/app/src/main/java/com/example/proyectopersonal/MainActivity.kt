@@ -43,7 +43,8 @@ class MainActivity : ComponentActivity() {
         lateinit var addMedicamentoViewModel: AddMedicamentoViewModel //Para usar con BD
 
         private lateinit var biometricPrompt: BiometricPrompt
-//        private lateinit var promptInfo: BiometricPrompt.PromptInfo
+
+        //        private lateinit var promptInfo: BiometricPrompt.PromptInfo
         private lateinit var executor: Executor
 
     }
@@ -120,10 +121,21 @@ class MainActivity : ComponentActivity() {
                 dynamicColor = false
             )
             {
-//            Lo primero al ejecutar la app es mostrar la pantalla de autenticacion con huella digital://
-//                BiometricScreen(biometricViewModel){ biometricPrompt.authenticate(promptInfo) }
+//            Lo primero llamar a valoidacion BIOMETRICA:
+                //Al ejecutar la app se mostrara la pantalla de autenticacion con huella digital://
+//               Version 1: Mala:
+                //             BiometricScreen(biometricViewModel){ biometricPrompt.authenticate(promptInfo) }
 
-//                Luego las demas pantallas:
+                /* Version 2: Correcta:
+                BiometricScreen(
+                    navController = rememberNavController(),
+                    biometricViewModel = BiometricViewModel(),
+                    onAuthenticate = {
+                        biometricPrompt.authenticate(promptInfo)
+                    }
+                  )*/
+
+//                Luego de pasar la val BIOMETRICA se podran ver las demas pantallas:
                 AppNavigation(
                     skipLogin = true,
                     themeOpt = if (dark) ThemeOption.DARK else ThemeOption.LIGHT,
