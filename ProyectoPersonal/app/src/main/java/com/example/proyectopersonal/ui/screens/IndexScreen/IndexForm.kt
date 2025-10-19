@@ -417,7 +417,7 @@ fun IndexForm(
             }
         )
         {
-            Text("Funciones de Microfono y TTS")
+            Text("Microfono, TTS y STT")
         }
 
 //        Boton para ir a la pantalla de notificaciones:
