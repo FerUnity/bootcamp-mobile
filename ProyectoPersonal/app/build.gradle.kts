@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kapt)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.google.services)
 
 
 }
@@ -114,6 +115,17 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.biometric)
+
+    implementation(platform(libs.firebase.bom))
+
+    implementation(libs.firebase.storge)
+    implementation(libs.firebase.auth)
+    implementation(libs.kotlin.coroutines.play.services)
+
+    implementation(libs.firestore.ktx)
+    implementation(libs.firebase.ktx)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
 
 
     testImplementation(libs.junit)

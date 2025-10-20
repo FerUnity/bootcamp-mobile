@@ -13,21 +13,55 @@ import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppConMapaScre
 import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppMapaListaConMVVM
 import com.example.proyectopersonal.ui.screens.audiorecorder.AudioScreen
 import com.example.proyectopersonal.ui.screens.cameraScreen.CameraScreen
+import com.example.proyectopersonal.ui.screens.home.HomeScreen
+import com.example.proyectopersonal.ui.screens.home.RtdbScreen
+import com.example.proyectopersonal.ui.screens.initialscreen.InitialScreen
+import com.example.proyectopersonal.ui.screens.login.LoginScreen
 import com.example.proyectopersonal.ui.screens.medlist.MedListScreen
 import com.example.proyectopersonal.ui.screens.notificacionScreen.ExamplesScreen
 import com.example.proyectopersonal.ui.screens.sensorScreen.SensorView
 import com.example.proyectopersonal.ui.screens.settings.SettingsScreen
+import com.example.proyectopersonal.ui.screens.signup.SignUpScreen
 import com.example.proyectopersonal.ui.theme.ThemeOption
+import com.google.firebase.auth.FirebaseAuth
 
 // Componente que permite navegar entre pantallas
 @Composable
 fun AppNavigation(
+    auth: FirebaseAuth,
+    navController: NavHostController,
     skipLogin: Boolean = true,
     onChangeTheme: (ThemeOption) -> Unit = {},
     themeOpt: ThemeOption
 ) {
-    val navController: NavHostController = rememberNavController()
-    NavHost(navController = navController, startDestination = "home") {
+//    val navController: NavHostController = rememberNavController()
+//    NavHost(navController = navController, startDestination = "home") {
+    NavHost(navController = navController, startDestination = "initial") {
+        composable("initial") {
+            InitialScreen(
+                navigateToLogin = { navController.navigate("logIn") },
+                navigateToSignUp = { navController.navigate("signUp") }
+            )
+        }
+        composable("logIn") {
+            LoginScreen(
+                auth,
+                navigateToHome = { navController.navigate("main") }
+            )
+        }
+        composable("signUp") {
+            SignUpScreen(auth)
+        }
+
+        composable("main") {
+            HomeScreen(navcontroller = navController)
+        }
+
+        composable("rtdbScreen") {
+            RtdbScreen(navController = navController)
+        }
+
+
         composable("home") {
             IndexScreen(navController)
         }

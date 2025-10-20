@@ -29,10 +29,23 @@ mapsCompose = "6.12.1"
 playStoreMaps = "19.2.0"
 playStoreLocation = "21.3.0"
 coilCompose = "2.7.0"
+
 #Para Mensajes push desde Firebase
 firebaseMessaging = "25.0.1"
 workRuntimeKtx = "2.10.5"
 biometric = "1.1.0"
+
+firebaseBom = "34.4.0"
+
+#pARA fIREBASE fIRESTORE, AUTH Y STORAGE:
+firebaseStorage = "21.0.2"
+firebaseAuth = "23.2.1"
+googleServices = "4.4.4"
+kotlinCoroutines = "1.10.2"
+
+firebaseDatabase = "21.0.0"
+firebaseFirestore = "25.1.4"
+navigationRuntimeKtx = "2.9.5"
 
 
 [libraries]
@@ -82,6 +95,17 @@ firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
 androidx-biometric = { group = "androidx.biometric", name = "biometric", version.ref = "biometric" }
 
+#PARA FIREBASE FIRESTORE, AUTH Y STORAGE:
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+
+firebase-storge = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorage" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuth" }
+kotlin-coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "kotlinCoroutines" }
+
+firebase-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabase" }
+firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestore" }
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
+
 
 
 [plugins]
@@ -90,4 +114,5 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kapt = { id = "org.jetbrains.kotlin.kapt" }
 kotlin-serialization  = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 

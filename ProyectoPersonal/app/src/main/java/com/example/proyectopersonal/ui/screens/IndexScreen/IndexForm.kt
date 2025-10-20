@@ -53,6 +53,7 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.CoroutineScope
 
+//Este es el Home
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun IndexForm(

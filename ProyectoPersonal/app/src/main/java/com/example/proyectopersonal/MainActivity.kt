@@ -3,35 +3,22 @@ package com.example.proyectopersonal
 import android.hardware.biometrics.BiometricPrompt
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.SystemBarStyle.Companion.dark
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.content.ContextCompat
 import com.example.proyectopersonal.ui.theme.ProyectoPersonalTheme
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.proyectopersonal.ui.screens.IndexDetailScreen.IndexDetailScreen
-import com.example.proyectopersonal.ui.screens.IndexScreen.IndexScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import com.example.proyectopersonal.model.UserSettingsViewModel
 import com.example.proyectopersonal.ui.navigation.AppNavigation
-import com.example.proyectopersonal.ui.navigation.Routes
-import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoScreen
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoViewModel
-import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppConMapaScreen
-import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppMapaListaConMVVM
-import com.example.proyectopersonal.ui.screens.cameraScreen.CameraScreen
-import com.example.proyectopersonal.ui.screens.medlist.MedListScreen
-import com.example.proyectopersonal.ui.screens.notificacionScreen.BiometricScreen
-import com.example.proyectopersonal.ui.screens.settings.SettingsScreen
 import com.example.proyectopersonal.ui.theme.ThemeOption
-import com.example.proyectopersonal.viewmodel.BiometricViewModel
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executor
@@ -46,6 +33,10 @@ class MainActivity : ComponentActivity() {
 
         //        private lateinit var promptInfo: BiometricPrompt.PromptInfo
         private lateinit var executor: Executor
+
+        private lateinit var navHostController: NavHostController //Para redirigir a dif pantallas
+
+        private lateinit var auth: FirebaseAuth //Para autenticar
 
     }
 
@@ -109,12 +100,15 @@ class MainActivity : ComponentActivity() {
             .setNegativeButtonText("Cancelar")
             .build()*/
 
-
+//        Inicializamos las lateinit var (para db y auth(autenticacion)):
+//        db = Firebase.firestore
+        auth = Firebase.auth //Al inicio de la app se inicializa el auth (autenticacion)
 
 
         addMedicamentoViewModel = AddMedicamentoViewModel(applicationContext)
 
         setContent {
+            navHostController = rememberNavController()
             val dark = userSettingsViewModel.theme == "Dark"
             ProyectoPersonalTheme(
                 darkTheme = dark,
@@ -137,6 +131,8 @@ class MainActivity : ComponentActivity() {
 
 //                Luego de pasar la val BIOMETRICA se podran ver las demas pantallas:
                 AppNavigation(
+                    navController = navHostController,
+                    auth = auth,
                     skipLogin = true,
                     themeOpt = if (dark) ThemeOption.DARK else ThemeOption.LIGHT,
                     onChangeTheme = { theme ->
@@ -150,6 +146,19 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    //    Despues del onCreate() llamamos al met onStart()que permitira que una vez logeado,
+//    no pida de nuevo credenciales ni claves:
+    override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser //User logeado
+//        Si ya esta logeado se redirige a la pantalla de inicio:
+        if (currentUser != null) {
+//            navHostController.navigate("initial")
+            auth.signOut() //Para desloguearse. SI NO SE CAE
+        }
+
     }
 
     //Y antes de cerrar la app, fun onDestroy(), se almacena los datos de conf en el DATASTORE,
@@ -228,11 +237,15 @@ fun AppNavigation(
 }*/
 
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     AppNavigation(
+        skipLogin = true,
+        onChangeTheme = {},
+        auth = FirebaseAuth.getInstance(),
+        navHostController = rememberNavController(),
         themeOpt = ThemeOption.LIGHT
-
     )
-}
+}*/
