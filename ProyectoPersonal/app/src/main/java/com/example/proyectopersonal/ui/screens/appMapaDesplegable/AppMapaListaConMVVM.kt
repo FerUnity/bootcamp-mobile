@@ -54,9 +54,10 @@ import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.rememberCameraPositionState
 
 //Ruta: map_search
-//Este archivo sirve para ubicar una direccion en el Mapa
+//Este archivo sirve para ubicar una direccion especifica en el Mapa
 // Rep la vista o view de la pantalla que muestra el Mapa,
 // pero usando el ViewModel como fuente de datos. O sea como intermediario entre la vista y el modelo.
 @SuppressLint("UnrememberedMutableState")
@@ -75,33 +76,40 @@ fun AppMapaListaConMVVM(
     val mapState by mapsViewModel.mapState.collectAsState()
     val userLocation = mapsViewModel.getActualUserLocation().collectAsState()
 
-    var address by remember { mutableStateOf("") }
+    var miPosicion = "Aldunate 1064"
+    var address by remember { mutableStateOf(miPosicion) }
+//    var latLng by remember { mutableStateOf(LatLng(0.0, 0.0)) }
+    var latLng by remember { mutableStateOf(mapsViewModel.getCoordinatesFromAddress2(address)) }
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(latLng, 15f)
+    }
+
 
     //    Codigo para pedir permisos de geolacalizacion al usuario
     val requestPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     )
-   /* { isGranted: Boolean ->
-        if (isGranted) {
-            // Permission is granted. Continue the action or workflow in your
-            // app.
-            showDialog = false
+    /* { isGranted: Boolean ->
+         if (isGranted) {
+             // Permission is granted. Continue the action or workflow in your
+             // app.
+             showDialog = false
 
-        } else {
-            showDialog = true
-        }
-    }
-    if (showDialog) {
-        LocationPermissionDialog(
-            onRequestPermission = {
-                showDialog = false
-                requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-            },
-            onDismiss = {
-                showDialog = false
-            } //Si presiono fuera del cuadro de dialogo, que se cierre el cuadro de dialogo
-        )
-    }*/
+         } else {
+             showDialog = true
+         }
+     }
+     if (showDialog) {
+         LocationPermissionDialog(
+             onRequestPermission = {
+                 showDialog = false
+                 requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+             },
+             onDismiss = {
+                 showDialog = false
+             } //Si presiono fuera del cuadro de dialogo, que se cierre el cuadro de dialogo
+         )
+     }*/
     { isGranted ->
         if (isGranted) {
             mapsViewModel.loadUserLocation(context)
@@ -112,9 +120,9 @@ fun AppMapaListaConMVVM(
 
 
 //    Luego llamamos ala fun del viewModel que nos permite cargar la ubicacion del usuario, de forma async, asi:
-   /* LaunchedEffect(Unit) {
-        mapsViewModel.loadUserLocation(context)
-    }*/
+    /* LaunchedEffect(Unit) {
+         mapsViewModel.loadUserLocation(context)
+     }*/
     LaunchedEffect(Unit) {
         if (ActivityCompat.checkSelfPermission(
                 context,
@@ -141,66 +149,86 @@ fun AppMapaListaConMVVM(
                     .fillMaxWidth(1f)
             ) {
                 TextField(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .weight(3f),
                     value = address,
                     onValueChange = { address = it },
                     label = { Text("Dirección") },
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .weight(3f),
                 )
                 Button(
                     modifier = Modifier
                         .weight(1f)
                         .padding(8.dp),
                     onClick = {
-                        mapsViewModel.getCoordinatesFromAddress(address)
+//                        Convertimos la direccion ingresada en un LatLng
+                        latLng = mapsViewModel.getCoordinatesFromAddress2(address)
+                        cameraPositionState.position = CameraPosition.fromLatLngZoom(
+                            latLng,
+                            15f
+                        )
                     }
                 ) {
                     Text("Ver")
                 }
             }
             Log.d("MapsExample", "MapState: $mapState")
-            val cameraPosition = mapsViewModel.getCameraPosition()
+//            val cameraPosition = mapsViewModel.getCameraPosition()
+//            var latLng by remember { mutableStateOf(mapsViewModel.getCoordinatesFromAddress2(address)) }
+            /*val cameraPositionState = rememberCameraPositionState {
+                position = CameraPosition.fromLatLngZoom(latLng, 15f)
+            }*/
 
-            if (cameraPosition != null) {
-                Log.d("MapsExample", "CameraPosition: ${cameraPosition.position}")
-                GoogleMap(
-                    modifier = Modifier.fillMaxSize(),
-                    cameraPositionState = cameraPosition,
-                    properties = MapProperties(
-                        mapType = mapState.mapType
-                    ),
-                    onMapClick = { latLng ->
-                        mapState.infoMarker = null
-                        mapsViewModel.setCameraPosition(latLng)
-                    },
-                    onMapLongClick = { latLng ->
-                        val address = mapsViewModel.getAddressFromCoordinates(latLng)
-                        mapState.infoMarker = InfoMarker(
-                            position = MarkerState(position = latLng),
-                            title = address,
-                            snippet = "Lat: ${latLng.latitude}, Long: ${latLng.longitude}",
-                            visible = true
-                        )
-                    }
-                ) {
-                    if (mapState.infoMarker != null) {
-                        val marker = mapState?.infoMarker!!
-                        Log.d("MapsExample", "Marker: ${marker}")
-                        Marker(
-                            state = marker.position,
-                            title = marker.title,
-                            snippet = marker.snippet,
-                            visible = marker.visible
-                        )
-                    }
-                }
-            } else {
-                Text(
-                    text = stringResource(R.string.loading_map),
-                    modifier = Modifier
-                        .fillMaxWidth(1f)
+            /*   cameraPositionState.position = CameraPosition.fromLatLngZoom(
+                   latLng,
+                   15f
+               )*/
+            Log.d("MapsExample", "CameraPosition: ${cameraPositionState.position}")
+            GoogleMap(
+                modifier = Modifier.fillMaxSize(),
+                cameraPositionState = cameraPositionState,
+                properties = MapProperties(
+                    mapType = mapState.mapType
                 )
+                /* onMapClick = { latLng ->
+                     mapState.infoMarker = null
+                     mapsViewModel.setCameraPosition(latLng)
+                 },*/
+                /*onMapLongClick = { latLng ->
+                    val address = mapsViewModel.getAddressFromCoordinates(latLng)
+                    mapState.infoMarker = InfoMarker(
+                        position = MarkerState(position = latLng),
+                        title = address,
+                        snippet = "Lat: ${latLng.latitude}, Long: ${latLng.longitude}",
+                        visible = true
+                    )
+                }*/
+            ) {
+                if (mapState.infoMarker != null) {
+                    val marker = mapState.infoMarker
+                    //    Log.d("MapsExample", "Marker: ${marker}")
+                    /* Marker(
+                         state = marker.position,
+                         title = marker.title,
+                         snippet = marker.snippet,
+                         visible = marker.visible
+                     )*/
+                    Marker(
+                        state = MarkerState(
+                            position = mapsViewModel.getCoordinatesFromAddress2(address)
+                        ),
+                        title = marker?.title ?: "Hospital seleccionado",
+                        snippet = marker?.snippet ?: "Direccion",
+                        visible = marker?.visible ?: true
+                    )
+                }
+                /*Marker(
+                    state = MarkerState(
+                        position = mapsViewModel.getCoordinatesFromAddress2(address)
+                    ),
+                    title = mapState.infoMarker?.title?: "Hospital seleccionado",
+                    snippet =  mapState.infoMarker?.snippet?: "Direccion"
+                )*/
             }
         }
     }

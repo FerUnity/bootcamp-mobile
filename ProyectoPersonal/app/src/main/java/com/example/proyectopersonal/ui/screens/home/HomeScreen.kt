@@ -72,7 +72,9 @@ fun HomeScreen(
             fontWeight = FontWeight.Bold,
             fontSize = 30.sp,
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(top = 8.dp, bottom = 8.dp)
+                .weight(0.2f),
             textAlign = TextAlign.Center
         )
 
@@ -80,7 +82,11 @@ fun HomeScreen(
 //        val artists = emptyList<Artist>()
 
 //        Para mostarr la lista de artistas obtenidas desde la BD (desde el VModel), en filas horizontales, usamos un LazyRow:
-        LazyRow {
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        ) {
 //            Para los items, usamos como param it, la lista de objetos artistas, de clase Artist,
             // colectada de la lista "artists" del FireStore,
             // y obtenida en la clase HomeViewmodel() para usarse localmente.
@@ -99,7 +105,7 @@ fun HomeScreen(
 
         Spacer(
             modifier = Modifier
-                .weight(1f)
+                .weight(0.2f)
         )
         /*if(player != null) {
             val color = if(player!!.play == true) Color.Green else Color.Red
@@ -131,14 +137,16 @@ fun HomeScreen(
         Text(
             text = "RTDB Screen",
             color = Color.White,
+            fontWeight = FontWeight.Bold,
+            fontSize = 25.sp,
+            textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(24.dp)
-                .weight(1f)
+                .fillMaxWidth()
+                .weight(0.5f)
                 //El texto Log In tendra la caract de boton en que al hacer click navega a la pantalla de login:
                 .clickable { navcontroller.navigate("rtdbScreen") },
-            fontWeight = FontWeight.Bold
         )
-
 
     }
 

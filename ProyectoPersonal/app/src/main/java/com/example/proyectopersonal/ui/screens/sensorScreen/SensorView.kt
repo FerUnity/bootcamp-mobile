@@ -1,38 +1,63 @@
 package com.example.proyectopersonal.ui.screens.sensorScreen
 
+import android.annotation.SuppressLint
 import android.app.Application
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import com.example.proyectopersonal.R
 import com.example.proyectopersonal.model.sensores.GyroscopeSensorUIState
 import com.example.proyectopersonal.model.sensores.LuxSensorUIState
 import com.example.proyectopersonal.model.sensores.MagneticSensorUIState
 import com.example.proyectopersonal.model.sensores.MotionSensorUIState
 import com.example.proyectopersonal.model.sensores.ProximitySensorUIState
 import com.example.proyectopersonal.model.sensores.StepSensorUIState
+import com.example.proyectopersonal.ui.components.IndexTopBar
 import com.example.proyectopersonal.viewmodel.SensorViewModel
+import kotlinx.coroutines.CoroutineScope
 
 //ROute: sensorView
 //Este archivo es la Pantalla o Vista(composable) que muestra los cambios de los sensores registrados,
-//para eso se recurre a las funciones del ViewModel
+//para eso se recurre a las funciones del ViewModel:
 @Composable
-fun SensorView() {
+fun SensorView(
+    navController: NavHostController,
+    innerPadding: PaddingValues,
+    sensorViewModel: SensorViewModel = viewModel()
+    //Creamos var sensorViewModel de tipo SensorViewModel y el viewModel() es para que sea persistente
+) {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    //El snackBar necesita estos 2 val:
+    val scope: CoroutineScope = rememberCoroutineScope()
+    val snackbarHostState: SnackbarHostState = remember {
+        SnackbarHostState()
+    }
 //    Creamos una val de clase MotionSensorViewModel, que es el ViewModel de todos los sensores, No hay un VM para cada sensor:
-    val sensorViewModel = SensorViewModel(
+   /* val sensorViewModel = SensorViewModel(
         (LocalContext.current.applicationContext as Application)
-    )
+    )*/
 
 //    Ref a cada variable donde se colectan los cambios de cada sensor, (collectAsState)
 //    segun los estados def en la data class (UIState) de cada sensor:
@@ -63,7 +88,27 @@ fun SensorView() {
         }
     }
 
-    Scaffold {
+    Scaffold(
+        //Que el scaffold tenga un topBar
+        topBar = {
+            //Llamamos a la fun IndexTopBar() del archivo IndexTopBar.kt que arma el topBar:
+            IndexTopBar(
+                navController, drawerState, scope, stringResource(R.string.app_name)
+            )
+        },
+        snackbarHost = {
+            SnackbarHost(snackbarHostState)
+        },
+        //Llamamos a la fun FAButton() del archivo FAButton.kt que arma el FAB:
+        // Boton flotante redondo, rojo con el singo +:
+//        floatingActionButton = {
+//            FAButton()
+//        },
+
+        //Que el scaffold ocupe toda la pantalla
+        modifier = Modifier.fillMaxSize()
+        //Conten del Scaffold:
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

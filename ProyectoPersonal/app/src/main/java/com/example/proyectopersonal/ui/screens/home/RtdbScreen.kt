@@ -3,6 +3,7 @@ package com.example.proyectopersonal.ui.screens.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -38,9 +39,10 @@ import com.example.proyectopersonal.viewmodel.RtdbViewModel
 
 //Composable: "rtdbScreen".Se llama desde un texto clickableen lapantalla HomeScreen.
 @Composable
-fun RtdbScreen(rtdbViewModel: RtdbViewModel = viewModel(),
-                navController: NavController)
-{
+fun RtdbScreen(
+    rtdbViewModel: RtdbViewModel = viewModel(),
+    navController: NavController
+) {
     val player: Player? = rtdbViewModel.player.collectAsState().value as Player?
 //    val player: Player? = rtdbViewModel.player.collectAsState()
     Column(
@@ -56,7 +58,9 @@ fun RtdbScreen(rtdbViewModel: RtdbViewModel = viewModel(),
             fontWeight = FontWeight.Bold,
             fontSize = 30.sp,
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(top = 8.dp, bottom = 8.dp)
+                .weight(1f),
             textAlign = TextAlign.Center
         )
 
@@ -93,36 +97,51 @@ fun RtdbScreen(rtdbViewModel: RtdbViewModel = viewModel(),
            }*/
 
 //        Si existe un player, que siempre deberia haber,
-//        que llame a la fun que trae a la box que cambia de color
-//        al hacer true o false la var play del data class Artist,
-//        ya no la box sino que un btn que camboiara suis eatdo segin sea play o false o stop.
-        player?.let {
-            PlayerComponent(player = it,
-                onPlaySelected = {rtdbViewModel.onPlaySelected()},
-                onCancelSelected = {rtdbViewModel.onCancelSelected()})
+//        que llame a la funcion onPlaySelected() del VModel rtdbViewModel,
+//        que hace cambiar de color al Box cuando hacemos true o false a la var play del data class Artist,
+//        Luego ya no sera la box sino que un btn que cambiara su estado segun sea:
+//        true = play,
+//        false = stop.
+
+//        Llamamos a la fun Rep PlayerComponent(),
+//        que rep la franja donde estara el boton Play/Pause:
+//        Habra un btn que cambiara su estado segun sea:
+//        true = play,
+//        false = stop.
+        Box(modifier = Modifier.weight(1f)) {
+            player?.let {
+                PlayerComponent(
+                    player = it,
+                    onPlaySelected = { rtdbViewModel.onPlaySelected() },
+                    onCancelSelected = { rtdbViewModel.onCancelSelected() })
+            }
         }
 
-    }
+//        Boton para ir a la pagina de opciones de la app:
+        Button(
+            onClick = {
+                navController.navigate("index")
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .padding(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Cyan,
+                contentColor = Color.Black
+            )
+        ) {
+            Text(text = "Opciones de App")
 
-    Button(
-        onClick = {
-           navController.navigate("home")
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.DarkGray,
-            contentColor = Color.White
-        )
-    ) {
-        Text(text = "Opciones de App")
-
+        }
     }
 }
 
+// La funcion PlayerComponent() rep la franja donde estara el boton Play/Pause:
+//        true = play,
+//        false = stop.
 @Composable
-fun PlayerComponent(player: Player, onPlaySelected: () -> Unit, onCancelSelected: () -> Unit){
+fun PlayerComponent(player: Player, onPlaySelected: () -> Unit, onCancelSelected: () -> Unit) {
     val color = if (player.play == true) Color.Green else Color.Red
     Row(
         modifier = Modifier
@@ -131,10 +150,11 @@ fun PlayerComponent(player: Player, onPlaySelected: () -> Unit, onCancelSelected
             .background(Color.Cyan),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = player.artist?.name.orEmpty(), //Es el nombre del artista en el RTDB
+        Text(
+            text = player.artist?.name.orEmpty(), //Es el nombre del artista en el RTDB
             modifier = Modifier
                 .padding(horizontal = 12.dp),
-            color = Color.White
+            color = Color.Black
         )
         Spacer(
             modifier = Modifier
@@ -152,20 +172,20 @@ fun PlayerComponent(player: Player, onPlaySelected: () -> Unit, onCancelSelected
           )*/
         val icon = if (player.play == true) R.drawable.ic_pause else R.drawable.ic_play
 
-        Image(painter = painterResource(icon),
+        Image(
+            painter = painterResource(icon),
             contentDescription = "play/pause",
             modifier = Modifier
                 .size(40.dp)
-                .clickable {onPlaySelected()}
+                .clickable { onPlaySelected() }
         )
-        Image(painter = painterResource(R.drawable.ic_close),
+        Image(
+            painter = painterResource(R.drawable.ic_close),
             contentDescription = "close",
             modifier = Modifier
                 .size(40.dp)
-                .clickable {onCancelSelected()}
+                .clickable { onCancelSelected() }
         )
-
-
 
 
     }

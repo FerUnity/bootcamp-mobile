@@ -13,7 +13,7 @@ class GeocodingRepository(private val context: Context) {
     //    por ej si esta en ingles, hay que poner las direcciones en ingles, etc.
     private val geocoder = Geocoder(context, Locale.getDefault())
 
-    //    fun para obtener las coordebadas desde una direccion:
+    //    fun para obtener las coordenadas LatLng, desde una direccion:
     fun getCoordinatesFromAddress(address: String): LatLng? {
 //        llamamos a la fun de la clase Geocoder que nos devuelve una lista de coordenadas desde una direccion.
         //        el maxRes[1] es para que devuelva solo una coordenada, la mejor de todas las posibles:
@@ -25,7 +25,7 @@ class GeocodingRepository(private val context: Context) {
         }
     }
 
-//    fun para obtener la direccion desde las coordenadas:
+//    fun para obtener la direccion desde las coordenadas LatLng:
     fun getAddressFromCoordinates(lat: Double, lng: Double): String? {
     //        llamamos a la fun de la clase Geocoder que nos devuelve una lista de direcciones:
         val results = geocoder.getFromLocation(lat, lng, 1)

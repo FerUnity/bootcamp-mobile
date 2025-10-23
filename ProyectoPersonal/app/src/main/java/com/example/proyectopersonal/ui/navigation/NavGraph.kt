@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.proyectopersonal.ui.screens.IndexDetailScreen.IndexDetailScreen
+import com.example.proyectopersonal.ui.screens.IndexScreen.ConsultasScreen
 import com.example.proyectopersonal.ui.screens.IndexScreen.IndexScreen
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoScreen
 import com.example.proyectopersonal.ui.screens.appMapaDesplegable.AppConMapaScreen
@@ -46,14 +47,14 @@ fun AppNavigation(
         composable("logIn") {
             LoginScreen(
                 auth,
-                navigateToHome = { navController.navigate("main") }
+                navigateToHome = { navController.navigate("home") }
             )
         }
         composable("signUp") {
             SignUpScreen(auth)
         }
 
-        composable("main") {
+        composable("home") {
             HomeScreen(navcontroller = navController)
         }
 
@@ -62,8 +63,15 @@ fun AppNavigation(
         }
 
 
-        composable("home") {
+        composable("index") {
             IndexScreen(navController)
+        }
+
+        composable("consultas"){
+            ConsultasScreen(
+                navController = navController,
+                innerPadding = PaddingValues()
+            )
         }
         composable("med_list") {
             MedListScreen(navController)
@@ -83,7 +91,9 @@ fun AppNavigation(
 
 //        Se llama de boton en indexForm
         composable("notificacion") {
-            ExamplesScreen()
+            ExamplesScreen(
+                navController = navController
+            )
         }
 
         composable("map") {
@@ -119,7 +129,10 @@ fun AppNavigation(
         }
 
         composable("sensorView"){
-            SensorView()
+            SensorView(
+                navController,
+                PaddingValues()
+            )
         }
 
         composable("audioScreen"){

@@ -88,10 +88,10 @@ class RtdbViewModel: ViewModel() {
 //    Esta fun se llama desde la vista RtdbScreen.kt:
     fun onPlaySelected() {
         if (player.value != null) {
-//            Cuando presiono elñ boton se cambie al valor inv (pause)
+//            Cuando presiono el boton se cambie al valor inv (pause)
             val currentPlayer = _player.value?.copy(play = !player.value?.play!!)
 //    De nuevo llamamos a la RTDB, indicamos que queremos llegar al objeto player, del RTDB,
-////        para eso creamos la var ref que repra ese objeto player:
+////        para eso creamos la var ref que repr ese objeto player:
             val ref = rtDB.reference.child("player")
 //            Y le asignamos el valor de currentPlayer, al objeto player
             ref.setValue(currentPlayer)

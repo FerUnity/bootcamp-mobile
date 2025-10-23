@@ -25,15 +25,12 @@ import com.example.proyectopersonal.R
 import com.example.proyectopersonal.ui.components.IndexTopBar
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
-import com.google.maps.android.compose.MarkerState.Companion.invoke
 import com.google.maps.android.compose.Polygon
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.google.maps.android.compose.rememberMarkerState
 import kotlinx.coroutines.CoroutineScope
 
 // Pantalla que muestra el DETALLE del producto,
@@ -42,11 +39,11 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun MapScreen(modifier: Modifier = Modifier) {
 
-    val sanBorja = LatLng(-33.460859960868305, -70.64187263068847)
-    var markerState by remember { mutableStateOf<MarkerState?>(MarkerState(position = sanBorja)) }
+    val ubicacion = LatLng(-33.460859960868305, -70.64187263068847)
+    var markerState by remember { mutableStateOf<MarkerState?>(MarkerState(position = ubicacion)) }
 //    var markerState = rememberMarkerState(position = sanBorja) ESTA DEPRECADO
    val cameraPositionState = rememberCameraPositionState {
-       position = CameraPosition.fromLatLngZoom(sanBorja, 15f)
+       position = CameraPosition.fromLatLngZoom(ubicacion, 15f)
    }
     Scaffold {innerPadding ->
         GoogleMap(

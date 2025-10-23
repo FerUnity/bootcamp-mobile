@@ -57,7 +57,9 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.MarkerState.Companion.invoke
 import com.google.maps.android.compose.rememberCameraPositionState
-
+//Esta vista muestra un desplegable con las direcciones de los hospitales,
+// y al seleccionar una direccion, se muestra en el mapa.
+//Esta pantalla se abre al presionar el boton "Ir a Mapa" del Index form:
 @SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -195,7 +197,6 @@ fun AppMapaHospitalesMVVM(
         /*    Button(onClick = { expandedMenu = true }) {
                 Text("Mostrar Lugares")
             }*/
-
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -214,7 +215,7 @@ fun AppMapaHospitalesMVVM(
             )
             {
                 //Cont del ExposedDropdownMenuBox:
-                // Aca ira la Localizacion elegida enn el MAPA (Hospital):
+                // Aca ira la Localizacion elegida en el MAPA (Hospital):
                 TextField(
                     value = direccionSeleccionada?.name ?: "",
                     onValueChange = { direccionSeleccionada?.name = it },

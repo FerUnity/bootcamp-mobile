@@ -1,13 +1,10 @@
 package com.example.proyectopersonal.ui.screens.IndexScreen
 
-import android.location.Location
 import android.widget.Toast
 import androidx.compose.foundation.Image
-import com.example.proyectopersonal.R
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import com.example.proyectopersonal.R
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,53 +15,26 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MenuAnchorType
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoViewModel
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerState
-import com.google.maps.android.compose.rememberCameraPositionState
-import kotlinx.coroutines.CoroutineScope
 
 //Este es el Home
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun IndexForm(
     navController: NavHostController,
-    innerPadding: PaddingValues,
-    snackbarHostState: SnackbarHostState,
-    scope: CoroutineScope,
-    indexModel: IndexViewModel = viewModel()
-    //Creamos var indexModel de tipo IndexViewModel y el viewModel() es para que sea persistente
+    innerPadding: PaddingValues
 ) {
-    // Declaramos las 2 estructuras de datos a utilizar en la Screen
+    /*// Declaramos las 2 estructuras de datos a utilizar en la Screen
     //Los 2 sgtes val se usan con el ModalNavDrawer(){}
 //    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 //    val scope = rememberCoroutineScope()
@@ -311,8 +281,80 @@ fun IndexForm(
             //TExto sobre el btn: "Consultar"
             Text(stringResource(R.string.details_button))
 
-        }
+        }*/
+    val scrollState = rememberScrollState()
 
+    //Una imagen de fondo de pantalla:
+    Image(
+        painter = painterResource(R.mipmap.ic_bg_hospitales2_foreground),
+        contentDescription = "Fondo de pantalla",
+        contentScale = ContentScale.Fit,
+        //Se tiene definir el tamaño asi:
+        modifier = Modifier
+            .fillMaxSize()
+    )
+
+    //Otra imagen de fondo de pantalla:
+    //Generar un espacio o Spacer para que el logo de Hospital
+    // pueda ocupar la parte inf de la pantalla,
+    // Para usar weight debe estar dentro de un Column():
+    Column() {
+        Spacer(modifier = Modifier.weight(1f))
+
+        Image(
+            painter = painterResource(R.mipmap.ic_bg_hospitales_foreground),
+            contentDescription = "Fondo de pantalla",
+            contentScale = ContentScale.Fit,
+            //Se tiene definir el tamaño asi:
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f)
+        )
+    }
+
+    // Definimos la estructura general de la aplicación en formato vertical:
+    Column(
+        modifier = Modifier
+            .padding(innerPadding)
+            .fillMaxSize()
+            //Para evitar que el teclado tape los componenetes en la pantalla:
+            .verticalScroll(scrollState)
+            .imePadding(),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+
+
+    ) {
+
+//   BOTON para ir a la pantalla de consultas de medicamentos y hospitales:
+       /* Button(
+            onClick = {
+                //OJO: Con la sgte indicacion:
+                // navController.navigate("index_detail/${indexModel.index }"),
+                // le decimos a este btn onClick,
+                // que nos lleve a la pantalla secundaria IndexDetailScreen.kt:
+                //Fijarse que se pasan el param del formulario asi,
+                // ${indexModel.index }, asi:
+                navController.navigate("consultas")
+
+                //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
+                val text = "Detalle de la opcion"
+                val duration: Int = Toast.LENGTH_LONG
+                Toast.makeText(navController.context, text, duration).show()
+
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                // en Color.kt y al tema en Theme.kt:
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.surface
+            ),
+        ) {
+            //TExto sobre el btn: "Formulario de medicamentos"
+            Text("Hospitales y Medicamentos")
+        }*/
 
 //        BOTON PARA IR AL MEDLISTSCREEN:
         Button(
@@ -361,7 +403,6 @@ fun IndexForm(
                 val text = "Detalle de la opcion"
                 val duration: Int = Toast.LENGTH_LONG
                 Toast.makeText(navController.context, text, duration).show()
-
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -382,21 +423,42 @@ fun IndexForm(
         Button(
             onClick = {
                 navController.navigate("map")
-            }
+                //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
+                val text = "Detalle de la opcion"
+                val duration: Int = Toast.LENGTH_LONG
+                Toast.makeText(navController.context, text, duration).show()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                // en Color.kt y al tema en Theme.kt:
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.surface
+            )
         )
-
         {
             Text("Ir al Mapa")
         }
-
 
 //       Boton para Funciones de Camara:
         Button(
             onClick = {
                 navController.navigate("camera")
-            }
+                //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
+                val text = "Detalle de la opcion"
+                val duration: Int = Toast.LENGTH_LONG
+                Toast.makeText(navController.context, text, duration).show()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                // en Color.kt y al tema en Theme.kt:
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.surface
+            )
         )
-
         {
             Text("Funciones de Camara")
         }
@@ -405,7 +467,19 @@ fun IndexForm(
         Button(
             onClick = {
                 navController.navigate("sensorView")
-            }
+                //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
+                val text = "Detalle de la opcion"
+                val duration: Int = Toast.LENGTH_LONG
+                Toast.makeText(navController.context, text, duration).show()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                // en Color.kt y al tema en Theme.kt:
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.surface
+            )
         )
         {
             Text("Funciones de Sensores")
@@ -415,7 +489,19 @@ fun IndexForm(
         Button(
             onClick = {
                 navController.navigate("audioScreen")
-            }
+                //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
+                val text = "Detalle de la opcion"
+                val duration: Int = Toast.LENGTH_LONG
+                Toast.makeText(navController.context, text, duration).show()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                // en Color.kt y al tema en Theme.kt:
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.surface
+            )
         )
         {
             Text("Microfono, TTS y STT")
@@ -425,14 +511,25 @@ fun IndexForm(
         Button(
             onClick = {
                 navController.navigate("notificacion")
-            }
+                //TOAST: Mensaje corto indep de la activity, que no interactua con el usuario
+                val text = "Detalle de la opcion"
+                val duration: Int = Toast.LENGTH_LONG
+                Toast.makeText(navController.context, text, duration).show()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                // en Color.kt y al tema en Theme.kt:
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.surface
+            )
         )
         {
             Text("Notificaciones")
         }
 
 
-    }
-//        Cierre Column()
+    }//  Cierre Column()
 }
 
