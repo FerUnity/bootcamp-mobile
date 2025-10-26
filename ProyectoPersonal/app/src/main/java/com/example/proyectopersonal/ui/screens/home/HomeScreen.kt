@@ -67,13 +67,24 @@ fun HomeScreen(
     )
     {
         Text(
-            text = "Popular artist",
+            text = "Noticias",
             color = Color.White,
             fontWeight = FontWeight.Bold,
             fontSize = 30.sp,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp, bottom = 8.dp)
+                .padding(top = 24.dp, bottom = 2.dp)
+                .weight(0.2f),
+            textAlign = TextAlign.Center
+        )
+        Text(
+            text = "(Firestore)",
+            color = Color.White,
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp, bottom = 8.dp)
                 .weight(0.2f),
             textAlign = TextAlign.Center
         )
@@ -95,11 +106,6 @@ fun HomeScreen(
             items(artists.value) {
 //                LLamamos a la fun que muestra a los artistas con imagen y nombre de forma vertical:
                 ArtistItem(artist = it)
-//           Llamamos a la fun que crea un nuevo artista en el RTDB
-                /*  ,onItemSelected = {
-                       homeViewModel.addPlayer(it)
-                   } )*/
-
             }
         }
 
@@ -135,7 +141,7 @@ fun HomeScreen(
 //        Podriamos poner un boton o texto clickable aca para acceder a la pantalla de la fun composable
 //        RtdbScreen()
         Text(
-            text = "RTDB Screen",
+            text = "Ir a RTDB",
             color = Color.White,
             fontWeight = FontWeight.Bold,
             fontSize = 25.sp,
@@ -178,10 +184,19 @@ fun ArtistItem(artist: Artist) {
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = artist.name.orEmpty(),//llamamos al nombre del artista desde la data class Artist
+            text = artist.name.orEmpty(),//llamamos al nombre desde la data class Artist
             color = Color.White,
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp
+        )
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        Text(
+            text = artist.description.orEmpty(),//llamamos  a la descripcion desde la data class Artist
+            color = Color.White,
+            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp
         )
 
     }

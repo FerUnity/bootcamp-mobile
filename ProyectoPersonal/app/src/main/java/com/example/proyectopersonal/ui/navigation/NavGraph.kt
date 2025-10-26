@@ -41,17 +41,19 @@ fun AppNavigation(
         composable("initial") {
             InitialScreen(
                 navigateToLogin = { navController.navigate("logIn") },
-                navigateToSignUp = { navController.navigate("signUp") }
+                navigateToSignUp = { navController.navigate("signUp") },
+                navigateToHome = { navController.navigate("home") }
             )
         }
         composable("logIn") {
             LoginScreen(
                 auth,
+                navController,
                 navigateToHome = { navController.navigate("home") }
             )
         }
         composable("signUp") {
-            SignUpScreen(auth)
+            SignUpScreen(auth, navController)
         }
 
         composable("home") {
@@ -67,7 +69,7 @@ fun AppNavigation(
             IndexScreen(navController)
         }
 
-        composable("consultas"){
+        composable("consultas") {
             ConsultasScreen(
                 navController = navController,
                 innerPadding = PaddingValues()
@@ -128,14 +130,14 @@ fun AppNavigation(
 
         }
 
-        composable("sensorView"){
+        composable("sensorView") {
             SensorView(
                 navController,
                 PaddingValues()
             )
         }
 
-        composable("audioScreen"){
+        composable("audioScreen") {
             AudioScreen(
                 navController,
                 PaddingValues()

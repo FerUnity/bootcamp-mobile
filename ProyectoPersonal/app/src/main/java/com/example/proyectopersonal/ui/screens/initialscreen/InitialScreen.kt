@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -37,32 +38,46 @@ import com.example.proyectopersonal.ui.theme.ShapeButton
 
 //Pantalla incial de la app:
 @Composable
-fun InitialScreen(navigateToLogin: () -> Unit = {}, navigateToSignUp: () -> Unit = {}){
+fun InitialScreen(
+    navigateToLogin: () -> Unit = {},
+    navigateToSignUp: () -> Unit = {},
+    navigateToHome: () -> Unit = {}
+) {
 //    La fun tiene como parm 2 fun lambda para establecer la ruta al click botones
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(listOf(Gray, Black), startY = 0f, endY = 600f)),
+            .background(Brush.verticalGradient(listOf(Color.Black,Color.Gray), startY = 0f, endY = 900f)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.weight(1f))
 
         Image(
-            painter = painterResource(id = R.drawable.spotify),
-            contentDescription = "Spotify",
+            painter = painterResource(id = R.mipmap.ic_bg_hospitales_foreground),
+            contentDescription = "Hospital",
+            contentScale = ContentScale.Fit,
+            //Se tiene definir el tamaño asi:
+            modifier = Modifier
+                .fillMaxWidth()
 //            Tecortar la img circularmente para que no se vea el borde cuadrado
-            modifier = Modifier.clip(CircleShape)
+//            modifier = Modifier.clip(CircleShape)
         )
         Spacer(modifier = Modifier.weight(1f))
 
-        Text(text = "Millions of Songs. Free on Spotify",
+        Text(
+            text = "Sistema de Orientación Hospitalaria",
             color = Color.White,
-            fontSize = 38.sp,
-            fontWeight = FontWeight.Bold)
-        Text(text = "Free on Spotify",
+            fontSize = 26.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
+        )
+        Text(
+            text = "Santiago Centro",
             color = Color.White,
-            fontSize = 38.sp,
-            fontWeight = FontWeight.Bold)
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
+        )
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -78,7 +93,8 @@ fun InitialScreen(navigateToLogin: () -> Unit = {}, navigateToSignUp: () -> Unit
             )
         )
         {
-            Text(text = "Sign up free",
+            Text(
+                text = "REGISTRARSE", //Sign up
                 color = Black,
                 fontWeight = FontWeight.Bold
             )
@@ -87,19 +103,39 @@ fun InitialScreen(navigateToLogin: () -> Unit = {}, navigateToSignUp: () -> Unit
         Spacer(modifier = Modifier.height(8.dp))
 
 //        Llamamos a la fun para crear un boton personalizado con la img de google:
-        CustomButton(Modifier.clickable{/*URL que sea*/}, painterResource(id = R.drawable.google), "Log in with Google")
+        CustomButton(
+            Modifier.clickable {/*URL que sea*/ },
+            painterResource(id = R.drawable.google),
+            "Log in with Google"
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
 
 //        Llamamos a la fun para crear un boton personalizado con la img de facebook:
-        CustomButton(Modifier.clickable{/*URL que sea*/}, painterResource(id = R.drawable.facebook), "Log in with Facebook")
+        CustomButton(
+            Modifier.clickable {/*URL que sea*/ },
+            painterResource(id = R.drawable.facebook),
+            "Log in with Facebook"
+        )
 
-        Text(text = "Log In",
+//        TEXTOS CLICKABLE:
+        Text(
+            text = "Log In",
             color = Color.White,
             modifier = Modifier
                 .padding(24.dp)
                 //El texto Log In tendra la caract de boton en que al hacer click navega a la pantalla de login:
                 .clickable { navigateToLogin() },
+            fontWeight = FontWeight.Bold
+        )
+
+        Text(
+            text = "Entrar como Invitado",
+            color = Color.White,
+            modifier = Modifier
+                .padding(24.dp)
+                //El texto Log In tendra la caract de boton en que al hacer click navega a la pantalla de login:
+                .clickable { navigateToHome() },
             fontWeight = FontWeight.Bold
         )
 
@@ -109,7 +145,7 @@ fun InitialScreen(navigateToLogin: () -> Unit = {}, navigateToSignUp: () -> Unit
 
 }
 
-//fun composable para botones personalizados con iconos de google y facebook:
+//fun composable para botones personalizados con iconos de GOOGLE y FACEBOOK:
 @Composable
 fun CustomButton(modifier: Modifier, paint: Painter, title: String) {
     Box(
@@ -117,7 +153,7 @@ fun CustomButton(modifier: Modifier, paint: Painter, title: String) {
             .fillMaxWidth()
             .height(48.dp)
             .padding(horizontal = 32.dp)
-            .background(BackgroundButton) //Color de fondo del boton
+            .background(BackgroundButton, shape = CircleShape) //Color de fondo del boton
             .border(2.dp, ShapeButton, shape = CircleShape) //Borde del boton
         ,
         contentAlignment = Alignment.CenterStart
