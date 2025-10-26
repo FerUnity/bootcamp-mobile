@@ -108,7 +108,6 @@ fun LoginScreen(
                     // con la fun lmbda navigateToHome(),
                     // sino mensaje de error:
                     navigateToHome()
-//                    navController.navigate("home")
                     Log.i("aris", "LOGIN OK")
                 } else {
                     //Error

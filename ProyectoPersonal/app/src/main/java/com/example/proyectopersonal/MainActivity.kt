@@ -1,11 +1,18 @@
 package com.example.proyectopersonal
 
+import android.content.Intent
 import android.hardware.biometrics.BiometricPrompt
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.proyectopersonal.ui.theme.ProyectoPersonalTheme
 import androidx.navigation.compose.rememberNavController
@@ -15,6 +22,9 @@ import androidx.navigation.NavHostController
 import com.example.proyectopersonal.model.UserSettingsViewModel
 import com.example.proyectopersonal.ui.navigation.AppNavigation
 import com.example.proyectopersonal.ui.screens.addMedicamentoScreen.AddMedicamentoViewModel
+import com.example.proyectopersonal.ui.screens.home.WelcomeScreen
+import com.example.proyectopersonal.ui.screens.initialscreen.InitialScreen
+import com.example.proyectopersonal.ui.screens.notificacionScreen.FingerprintLoginScreen
 import com.example.proyectopersonal.ui.theme.ThemeOption
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -24,14 +34,14 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.Executor
 
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     companion object {
         lateinit var userSettingsViewModel: UserSettingsViewModel //Datastore
         lateinit var addMedicamentoViewModel: AddMedicamentoViewModel //Para usar con BD
 
-        private lateinit var biometricPrompt: BiometricPrompt
+//        private lateinit var biometricPrompt: BiometricPrompt
 
-        //        private lateinit var promptInfo: BiometricPrompt.PromptInfo
+        //                private lateinit var promptInfo: BiometricPrompt.PromptInfo
         private lateinit var executor: Executor
 
         private lateinit var navHostController: NavHostController //Para redirigir a dif pantallas
@@ -107,6 +117,8 @@ class MainActivity : ComponentActivity() {
 
         addMedicamentoViewModel = AddMedicamentoViewModel(applicationContext)
 
+        val biometricManager = BiometricManager.from(this)
+
         setContent {
             navHostController = rememberNavController()
             val dark = userSettingsViewModel.theme == "Dark"
@@ -115,7 +127,25 @@ class MainActivity : ComponentActivity() {
                 dynamicColor = false
             )
             {
+                //   BIOMETRIA Version 3:
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    FingerprintLoginScreen(
+                        canAuthenticate = biometricManager.canAuthenticate
+                            (BiometricManager.Authenticators.BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS,
+                        onAuthSuccess = {
+                            startActivity(Intent(this, WelcomeScreen::class.java))
+                            finish()
+                        }
+                    )
+
+                }
+
+
 //            Lo primero llamar a valoidacion BIOMETRICA:
+
                 //Al ejecutar la app se mostrara la pantalla de autenticacion con huella digital://
 //               Version 1: Mala:
                 //             BiometricScreen(biometricViewModel){ biometricPrompt.authenticate(promptInfo) }
@@ -128,6 +158,7 @@ class MainActivity : ComponentActivity() {
                         biometricPrompt.authenticate(promptInfo)
                     }
                   )*/
+
 
 //                Luego de pasar la val BIOMETRICA se podran ver las demas pantallas:
                 AppNavigation(

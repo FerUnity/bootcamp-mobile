@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.ProyectoPersonal" parent="android:Theme.Material.Light.NoActionBar" />
+   <!-- <style name="Theme.ProyectoPersonal" parent="android:Theme.Material.Light.NoActionBar" />-->
+    <style name="Theme.ProyectoPersonal" parent="Theme.AppCompat.DayNight.DarkActionBar" />
     <!--    Creamos el nuevo theme para el splashscreen llamamdo: App.Starting -->
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/black</item>

@@ -46,6 +46,7 @@ kotlinCoroutines = "1.10.2"
 firebaseDatabase = "21.0.0"
 firebaseFirestore = "25.1.4"
 navigationRuntimeKtx = "2.9.5"
+appcompat = "1.7.1"
 
 
 [libraries]
@@ -105,6 +106,7 @@ kotlin-coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kot
 firebase-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabase" }
 firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestore" }
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 
 
