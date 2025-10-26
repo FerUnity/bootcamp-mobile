@@ -22,7 +22,8 @@ fun BiometricScreen(
     biometricViewModel: BiometricViewModel,
     onAuthenticate: () -> Unit = {}
 ){
-    //    Para auth con biometria, huella digital. Colectamos los estados del uiState obtenidos en el biometricViewModel:
+    //    Para auth con biometria, huella digital.
+    //    Colectamos los estados del uiState obtenidos en el biometricViewModel:
     val state by biometricViewModel.uiState.collectAsState()
 
     Scaffold { padding ->
