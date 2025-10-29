@@ -1,4 +1,4 @@
-package com.example.midemo
+package com.example.midemo.model
 
 import android.os.Build
 

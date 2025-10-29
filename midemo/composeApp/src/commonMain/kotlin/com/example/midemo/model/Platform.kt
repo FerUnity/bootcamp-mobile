@@ -1,4 +1,4 @@
-package com.example.midemo
+package com.example.midemo.model
 
 interface Platform {
     val name: String

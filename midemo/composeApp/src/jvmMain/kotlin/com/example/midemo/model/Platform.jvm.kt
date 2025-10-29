@@ -1,4 +1,4 @@
-package com.example.midemo
+package com.example.midemo.model
 
 class JVMPlatform : Platform {
     override val name: String = "Java ${System.getProperty("java.version")}"
