@@ -32,6 +32,8 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+//            La sgte lib es para personalizar el uso de la pantalla sabiendo su tamaño:
+            implementation(libs.material3.adaptative)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
