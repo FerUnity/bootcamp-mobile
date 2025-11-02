@@ -1,0 +1,8 @@
+<!--Este archivo es para establecer los tectos en dif idiomas y en todas las plataformas,
+ porque no tiene un editor como A Studio.
+ Ademas el string que esta en androidMain no sirve para Multiplataforma-->
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="greeting">Hello, world!</string>
+    <string name="welcome_message">Welcome, %1$s!</string>
+</resources>

@@ -10,8 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 
+// Esta fun es la vista en Desktop, por ende se llamara desde el main de JVM:
 //Esta fun sera casi igual a la fun App() de commonMain, solo que tendra un texto arriba.
-// Esta fun se llamara desde el main de JVM:
+// De hecho tambien llama a la fun App() del commonMain.
+
 @Composable
 fun AppDesktop() {
     MaterialTheme {

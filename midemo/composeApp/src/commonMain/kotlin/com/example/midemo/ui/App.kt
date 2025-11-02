@@ -27,7 +27,10 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import midemo.composeapp.generated.resources.Res
 import midemo.composeapp.generated.resources.compose_multiplatform
+import midemo.composeapp.generated.resources.greeting
 import midemo.composeapp.generated.resources.logo_artemayorvertical
+import midemo.composeapp.generated.resources.welcome_message
+import org.jetbrains.compose.resources.stringResource
 
 //Este composable es la vista de este proyecto. La idea es que llamara a la fun greet()
 //del ViewModel Greeting la cual llama a la fun getPlatform() que es distinta en cada SourceSet
@@ -55,7 +58,8 @@ fun App() {
             )
             {
 //                Text("Click me!")
-                Text("Saludame!!")
+//                Text("Saludame!!")
+                Text(stringResource(Res.string.welcome_message)) //Welcome, %1$s!
             }
 
         }
