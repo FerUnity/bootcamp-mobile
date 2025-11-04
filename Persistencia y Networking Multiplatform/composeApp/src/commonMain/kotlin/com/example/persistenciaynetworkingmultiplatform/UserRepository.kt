@@ -11,10 +11,10 @@ class UserRepository(
     private val database: Database
 
 ) {
-    //Funcion para obtener los usuarios desde la API:
+    //Funcion para obtener una lista con los usuarios desde la API:
     suspend fun getUsersFromApi(): List<UserApi> = api.getUsers()
 
-    //Funcion para obtener los usuarios desde la BBDD local:
+    //Funcion para obtener los usuarios una lista con desde la BBDD local:
 //    fun getUsersFromDb() = database.userQueries.selectAllUsers().executeAsList()
     suspend fun getUsersFromDb(): List<UserApi> = api.getUsers()
     //Es como lo mismo que el getUsersFromApi() pero hay que hacer modificaciones.
