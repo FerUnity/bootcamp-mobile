@@ -57,7 +57,7 @@ kotlin {
 sqldelight {
     databases {
         create("AppDatabaseExample") {
-            packageName.set("com.example.persistenciaynetworkingmultiplatform")
+            packageName.set("com.example.persistenciaynetworkingmultiplatform.sqldelight")
         }
     }
 }
