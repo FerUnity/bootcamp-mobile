@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -19,10 +20,6 @@ kotlin {
     jvm()
 
     sourceSets {
-        androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
-        }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -32,26 +29,44 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.sqldelight.runtime)
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
+        androidMain.dependencies {
+            implementation(compose.preview)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.sqldelight.androidDriver)
         }
+
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
+            implementation(libs.sqldelight.sqliteDriver)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+        }
+    }
+}
+
+sqldelight {
+    databases {
+        create ("AppDatabase"){
+            packageName.set("com.example.kmpnativo.sqldelight.data")
+
         }
     }
 }
 
 android {
     namespace = "com.example.kmpnativo"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk = libs.versions.android.compileSdk.get().toInt() //SDK que fue compilado para android
 
     defaultConfig {
-        applicationId = "com.example.kmpnativo"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
+        applicationId = "com.example.kmpnativo" //Este nombre es el ID unico en el mundo
+        minSdk = libs.versions.android.minSdk.get().toInt() //Min SDK para la app
+        targetSdk = libs.versions.android.targetSdk.get().toInt() //Debe coincidir con el compileSdk
+        versionCode = 1 //Debe cambiarse manualmente al hacer canbios en la APP
         versionName = "1.0"
     }
     packaging {
