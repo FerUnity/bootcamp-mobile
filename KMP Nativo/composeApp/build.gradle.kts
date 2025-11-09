@@ -53,10 +53,17 @@ sqldelight {
     databases {
         create ("AppDatabase"){
             packageName.set("com.example.kmpnativo.sqldelight.data")
-
         }
     }
 }
+
+/*sqldelight {
+    databases {
+        create("AppDatabase") {
+            packageName = "com.example.kmpnativo.sqldelight.data"
+        }
+    }
+}*/
 
 android {
     namespace = "com.example.kmpnativo"

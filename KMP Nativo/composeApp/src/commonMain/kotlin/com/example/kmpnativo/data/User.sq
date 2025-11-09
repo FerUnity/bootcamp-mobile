@@ -1,6 +1,14 @@
-CREATE TABLE User(
+-- Archivo que rep la BBDD sqdelight: Es una tabla con 4 campos: id, username, fullname, photo
+CREATE TABLE user(
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL,
-    fullName TEXT NOT NULL,
+    fullname TEXT NOT NULL,
     photo TEXT
 );
+
+inserUser:
+INSERT INTO user(username, fullname, photo) VALUES (?, ?, ?);
+
+selectAllUsers:
+SELECT * FROM user;
+

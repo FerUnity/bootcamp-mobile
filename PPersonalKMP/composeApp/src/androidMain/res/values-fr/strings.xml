@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Système de guidage hospitalier</string>
+    <string name="add_button">Ajouter</string>
+    <string name="save_button">Garder</string>
+    <string name="details_button">Consulter</string>
+    <string name="cancel_button">Annuler</string>
+    <string name="add_product_success">Le produit a été ajouté</string>
+    <string name="price_label">EU %s</string>
+    <string name="deployment_1">Veuillez sélectionner un hôpital ou une spécialité</string>
+    <string name="select_service">Type de service</string>
+    <string name="option_select">Veuillez sélectionner une option</string>
+    <string name="button_back">Retour</string>
+    <string name="selection">sélection</string>
+    <string name="form_meds">Formulaire de médicaments</string>
+</resources>
