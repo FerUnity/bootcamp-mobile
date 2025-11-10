@@ -10,7 +10,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.proyectopersonal.model.AppDatabase
 import com.example.proyectopersonal.model.MedsListData
 import com.example.proyectopersonal.model.ProductData
-import com.example.proyectopersonal.room.MedRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
