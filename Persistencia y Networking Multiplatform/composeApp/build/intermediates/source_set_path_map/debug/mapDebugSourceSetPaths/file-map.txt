@@ -1,0 +1,49 @@
+com.example.persistenciaynetworkingmultiplatform.composeApp-lifecycle-runtime-compose-release-0 C:\Users\T1650\.gradle\caches\8.14.3\transforms\0fb8bd2b5a78774074941c01166125b8\transformed\lifecycle-runtime-compose-release\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-fragment-1.8.9-1 C:\Users\T1650\.gradle\caches\8.14.3\transforms\139ae08fb0d82b1076bb2c8d0769e533\transformed\fragment-1.8.9\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-material3-2 C:\Users\T1650\.gradle\caches\8.14.3\transforms\1918a9abaf0bc9d4f2975f2e52e2d5cd\transformed\material3\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-lifecycle-runtime-release-3 C:\Users\T1650\.gradle\caches\8.14.3\transforms\2218d13725df0ac6c7b8901f2c3b9a46\transformed\lifecycle-runtime-release\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-material-1.0.0-4 C:\Users\T1650\.gradle\caches\8.14.3\transforms\222cdc1e8044f267ccdd837669e3d042\transformed\material-1.0.0\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-material-icons-core-1.0.0-5 C:\Users\T1650\.gradle\caches\8.14.3\transforms\2d66cb235b101dbed65759c2d8893720\transformed\material-icons-core-1.0.0\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-savedstate-ktx-1.3.3-6 C:\Users\T1650\.gradle\caches\8.14.3\transforms\31eb508d39ddc8534f894a75fcfb1d4f\transformed\savedstate-ktx-1.3.3\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-ui-graphics-release-7 C:\Users\T1650\.gradle\caches\8.14.3\transforms\320f61c183ae4dcd637f5f913348bacf\transformed\ui-graphics-release\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-lifecycle-viewmodel-compose-release-8 C:\Users\T1650\.gradle\caches\8.14.3\transforms\33fd83c8f27cfc3dc923bfb8f2e9abbe\transformed\lifecycle-viewmodel-compose-release\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-lifecycle-viewmodel-savedstate-release-9 C:\Users\T1650\.gradle\caches\8.14.3\transforms\39f530d820cea576c30e9c4af7ea5150\transformed\lifecycle-viewmodel-savedstate-release\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-sqlite-release-10 C:\Users\T1650\.gradle\caches\8.14.3\transforms\3fb79826b91e7af1316eaea22acf2b4c\transformed\sqlite-release\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-lifecycle-process-2.9.4-11 C:\Users\T1650\.gradle\caches\8.14.3\transforms\55e4f58aed3196e863318fdedcb8aafd\transformed\lifecycle-process-2.9.4\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-lifecycle-livedata-2.9.4-12 C:\Users\T1650\.gradle\caches\8.14.3\transforms\5fb70f76e270a24e1dede8ebbd25f66c\transformed\lifecycle-livedata-2.9.4\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-emoji2-1.4.0-13 C:\Users\T1650\.gradle\caches\8.14.3\transforms\64ab3dabf97f5b0a044a3cf96920a0b7\transformed\emoji2-1.4.0\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-activity-compose-1.11.0-14 C:\Users\T1650\.gradle\caches\8.14.3\transforms\68ea20667253e0a9ccaa11853070cefc\transformed\activity-compose-1.11.0\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-ui-release-15 C:\Users\T1650\.gradle\caches\8.14.3\transforms\6b74ca1eb68ef779326b19c8c11c0623\transformed\ui-release\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-sqlite-framework-release-16 C:\Users\T1650\.gradle\caches\8.14.3\transforms\6cfe4f1e19a30d91b6604247403122f9\transformed\sqlite-framework-release\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-tracing-1.2.0-17 C:\Users\T1650\.gradle\caches\8.14.3\transforms\703ab19fad5898986191270c92f08bb0\transformed\tracing-1.2.0\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-core-ktx-1.15.0-18 C:\Users\T1650\.gradle\caches\8.14.3\transforms\7134305f673d83a29504b7b6030b4d96\transformed\core-ktx-1.15.0\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-customview-poolingcontainer-1.0.0-19 C:\Users\T1650\.gradle\caches\8.14.3\transforms\782dd9a86ec7f9a638ff95b6a10dcb72\transformed\customview-poolingcontainer-1.0.0\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-profileinstaller-1.4.0-20 C:\Users\T1650\.gradle\caches\8.14.3\transforms\7ac88002cd69a28c2a99b7ba5ecadbc0\transformed\profileinstaller-1.4.0\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-appcompat-resources-1.7.1-21 C:\Users\T1650\.gradle\caches\8.14.3\transforms\879a4ff78dd32deb804bed2b14b51a00\transformed\appcompat-resources-1.7.1\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-fragment-ktx-1.8.9-22 C:\Users\T1650\.gradle\caches\8.14.3\transforms\897916171f3737ad785f444a47dec54a\transformed\fragment-ktx-1.8.9\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-lifecycle-viewmodel-ktx-2.9.4-23 C:\Users\T1650\.gradle\caches\8.14.3\transforms\9b4cf85dcb4391800b4a6e89f6d592cd\transformed\lifecycle-viewmodel-ktx-2.9.4\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-graphics-path-1.0.1-24 C:\Users\T1650\.gradle\caches\8.14.3\transforms\a5893331d3e206cfe1e3650736305689\transformed\graphics-path-1.0.1\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-annotation-experimental-1.4.1-25 C:\Users\T1650\.gradle\caches\8.14.3\transforms\abc9037a83f781b838d9543f51b4b527\transformed\annotation-experimental-1.4.1\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-lifecycle-livedata-core-ktx-2.9.4-26 C:\Users\T1650\.gradle\caches\8.14.3\transforms\b94c7be4393fa90dc68c3ba4757e5f0c\transformed\lifecycle-livedata-core-ktx-2.9.4\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-lifecycle-viewmodel-release-27 C:\Users\T1650\.gradle\caches\8.14.3\transforms\c26ebe13f049c1c2a59e0ad1c06ef9bf\transformed\lifecycle-viewmodel-release\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-ui-backhandler-debug-28 C:\Users\T1650\.gradle\caches\8.14.3\transforms\c2e6968c57caaa06becb1cf91147f23f\transformed\ui-backhandler-debug\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-savedstate-release-29 C:\Users\T1650\.gradle\caches\8.14.3\transforms\c9124c0a69a4717d3209d6561c88ea02\transformed\savedstate-release\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-activity-1.11.0-30 C:\Users\T1650\.gradle\caches\8.14.3\transforms\cd47dae7e1801a9289d9b793b1b3a5dc\transformed\activity-1.11.0\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-core-viewtree-1.0.0-31 C:\Users\T1650\.gradle\caches\8.14.3\transforms\d113b6ffce36d270fa48eef05e5e1641\transformed\core-viewtree-1.0.0\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-foundation-release-32 C:\Users\T1650\.gradle\caches\8.14.3\transforms\d2151513ffd742eb9fb8a15574c16ffc\transformed\foundation-release\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-lifecycle-livedata-core-2.9.4-33 C:\Users\T1650\.gradle\caches\8.14.3\transforms\dcbc4954c13cb11a5f89fc7cacc7327b\transformed\lifecycle-livedata-core-2.9.4\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-startup-runtime-1.2.0-34 C:\Users\T1650\.gradle\caches\8.14.3\transforms\dd22810029aa74d77ee737d0adb57f12\transformed\startup-runtime-1.2.0\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-core-1.15.0-35 C:\Users\T1650\.gradle\caches\8.14.3\transforms\dfb6a7d448962f88a70d8a78c4244fda\transformed\core-1.15.0\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-activity-ktx-1.11.0-36 C:\Users\T1650\.gradle\caches\8.14.3\transforms\e1900bbb43f00f0fdbfe6470c50d3beb\transformed\activity-ktx-1.11.0\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-appcompat-1.7.1-37 C:\Users\T1650\.gradle\caches\8.14.3\transforms\f338dfcfa83d04fe6104dd4376b118e0\transformed\appcompat-1.7.1\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-core-runtime-2.2.0-38 C:\Users\T1650\.gradle\caches\8.14.3\transforms\f5141494a7efb63db4a234232a6eec86\transformed\core-runtime-2.2.0\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-emoji2-views-helper-1.4.0-39 C:\Users\T1650\.gradle\caches\8.14.3\transforms\f7f2dbbbdf5262956ccd8971dfba64f1\transformed\emoji2-views-helper-1.4.0\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-pngs-40 C:\Users\T1650\Documents\repo\Persistencia y Networking Multiplatform\composeApp\build\generated\res\pngs\debug
+com.example.persistenciaynetworkingmultiplatform.composeApp-resValues-41 C:\Users\T1650\Documents\repo\Persistencia y Networking Multiplatform\composeApp\build\generated\res\resValues\debug
+com.example.persistenciaynetworkingmultiplatform.composeApp-packageDebugResources-42 C:\Users\T1650\Documents\repo\Persistencia y Networking Multiplatform\composeApp\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.example.persistenciaynetworkingmultiplatform.composeApp-packageDebugResources-43 C:\Users\T1650\Documents\repo\Persistencia y Networking Multiplatform\composeApp\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.example.persistenciaynetworkingmultiplatform.composeApp-debug-44 C:\Users\T1650\Documents\repo\Persistencia y Networking Multiplatform\composeApp\build\intermediates\merged_res\debug\mergeDebugResources
+com.example.persistenciaynetworkingmultiplatform.composeApp-androidDebug-45 C:\Users\T1650\Documents\repo\Persistencia y Networking Multiplatform\composeApp\src\androidDebug\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-androidMain-46 C:\Users\T1650\Documents\repo\Persistencia y Networking Multiplatform\composeApp\src\androidMain\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-debug-47 C:\Users\T1650\Documents\repo\Persistencia y Networking Multiplatform\composeApp\src\debug\res
+com.example.persistenciaynetworkingmultiplatform.composeApp-main-48 C:\Users\T1650\Documents\repo\Persistencia y Networking Multiplatform\composeApp\src\main\res

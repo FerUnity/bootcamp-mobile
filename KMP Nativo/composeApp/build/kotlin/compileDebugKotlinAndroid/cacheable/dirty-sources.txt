@@ -1,0 +1,15 @@
+C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\build\generated\compose\resourceGenerator\kotlin\commonMainResourceCollectors\kmpnativo\composeapp\generated\resources\ExpectResourceCollectors.kt
+C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\src\commonMain\kotlin\com\example\kmpnativo\model\User.kt
+C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\build\generated\compose\resourceGenerator\kotlin\commonMainResourceAccessors\kmpnativo\composeapp\generated\resources\Drawable0.commonMain.kt
+C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\src\commonMain\kotlin\com\example\kmpnativo\model\Greeting.kt
+C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\src\androidMain\kotlin\com\example\kmpnativo\model\UserPlatform.android.kt
+C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\src\commonMain\kotlin\com\example\kmpnativo\data\UserRepository.kt
+C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\build\generated\compose\resourceGenerator\kotlin\commonResClass\kmpnativo\composeapp\generated\resources\Res.kt
+C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\src\androidMain\kotlin\com\example\kmpnativo\MainActivity.kt
+C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\src\commonMain\kotlin\com\example\kmpnativo\ui\App.kt
+C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\src\androidMain\kotlin\com\example\kmpnativo\model\Platform.android.kt
+C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\src\commonMain\kotlin\com\example\kmpnativo\data\DriverFactory.kt
+C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\src\androidMain\kotlin\com\example\kmpnativo\data\DriverFactory.android.kt
+C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\src\commonMain\kotlin\com\example\kmpnativo\model\UserPlatform.kt
+C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\build\generated\compose\resourceGenerator\kotlin\androidMainResourceCollectors\kmpnativo\composeapp\generated\resources\ActualResourceCollectors.kt
+C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\src\commonMain\kotlin\com\example\kmpnativo\model\Platform.kt

@@ -1,0 +1,40 @@
+com.example.kmpnativo.composeApp-startup-runtime-1.1.1-0 C:\Users\T1650\.gradle\caches\8.14.3\transforms\1589ecfad1d0b0d6e015da787dc0123c\transformed\startup-runtime-1.1.1\res
+com.example.kmpnativo.composeApp-ui-backhandler-release-1 C:\Users\T1650\.gradle\caches\8.14.3\transforms\2298ebaab5033612dd7d20d2b3ddd50c\transformed\ui-backhandler-release\res
+com.example.kmpnativo.composeApp-core-runtime-2.2.0-2 C:\Users\T1650\.gradle\caches\8.14.3\transforms\2e09bfc2c7a82e483af8a8ac117c6320\transformed\core-runtime-2.2.0\res
+com.example.kmpnativo.composeApp-sqlite-framework-release-3 C:\Users\T1650\.gradle\caches\8.14.3\transforms\2f6c78d47f65619516a3b78f90a63384\transformed\sqlite-framework-release\res
+com.example.kmpnativo.composeApp-activity-ktx-1.11.0-4 C:\Users\T1650\.gradle\caches\8.14.3\transforms\32427ee8cac31f38e8519429db33ce97\transformed\activity-ktx-1.11.0\res
+com.example.kmpnativo.composeApp-lifecycle-livedata-core-2.9.4-5 C:\Users\T1650\.gradle\caches\8.14.3\transforms\3327f43155d42e6723686c8b1f8d7b81\transformed\lifecycle-livedata-core-2.9.4\res
+com.example.kmpnativo.composeApp-lifecycle-viewmodel-compose-release-6 C:\Users\T1650\.gradle\caches\8.14.3\transforms\3b6e806dc36dffa702eb48da7d31dd47\transformed\lifecycle-viewmodel-compose-release\res
+com.example.kmpnativo.composeApp-activity-1.11.0-7 C:\Users\T1650\.gradle\caches\8.14.3\transforms\4ac6636a038a6f5ceed196c4d69378f9\transformed\activity-1.11.0\res
+com.example.kmpnativo.composeApp-sqlite-release-8 C:\Users\T1650\.gradle\caches\8.14.3\transforms\4af2fef5e0310a5843793d9c0b7b79dc\transformed\sqlite-release\res
+com.example.kmpnativo.composeApp-ui-graphics-release-9 C:\Users\T1650\.gradle\caches\8.14.3\transforms\507cf806848b8255509718b797e97e16\transformed\ui-graphics-release\res
+com.example.kmpnativo.composeApp-activity-compose-1.11.0-10 C:\Users\T1650\.gradle\caches\8.14.3\transforms\5927be0f81daf10c72ce0c2b9e300412\transformed\activity-compose-1.11.0\res
+com.example.kmpnativo.composeApp-annotation-experimental-1.4.1-11 C:\Users\T1650\.gradle\caches\8.14.3\transforms\5baf9b724bccb7879b0a03663d630587\transformed\annotation-experimental-1.4.1\res
+com.example.kmpnativo.composeApp-lifecycle-runtime-release-12 C:\Users\T1650\.gradle\caches\8.14.3\transforms\5bb5da7befbd23208aa250039ac9e6b0\transformed\lifecycle-runtime-release\res
+com.example.kmpnativo.composeApp-lifecycle-viewmodel-ktx-2.9.4-13 C:\Users\T1650\.gradle\caches\8.14.3\transforms\650bdeee1ccb22396e06330697ab7eb6\transformed\lifecycle-viewmodel-ktx-2.9.4\res
+com.example.kmpnativo.composeApp-core-1.15.0-14 C:\Users\T1650\.gradle\caches\8.14.3\transforms\70c75321a5bf884baf5ef86a0672e2f6\transformed\core-1.15.0\res
+com.example.kmpnativo.composeApp-material3-15 C:\Users\T1650\.gradle\caches\8.14.3\transforms\75fc160f313c6c5a1bb00683abe8ce6d\transformed\material3\res
+com.example.kmpnativo.composeApp-lifecycle-process-2.9.4-16 C:\Users\T1650\.gradle\caches\8.14.3\transforms\78f15f33dc1cb26271038cbc82e669e4\transformed\lifecycle-process-2.9.4\res
+com.example.kmpnativo.composeApp-tracing-1.2.0-17 C:\Users\T1650\.gradle\caches\8.14.3\transforms\7f3fda03356024ad5cabce28dc6b3f4f\transformed\tracing-1.2.0\res
+com.example.kmpnativo.composeApp-lifecycle-runtime-compose-release-18 C:\Users\T1650\.gradle\caches\8.14.3\transforms\95d2cfe5c5e635d4ca89d2601460de09\transformed\lifecycle-runtime-compose-release\res
+com.example.kmpnativo.composeApp-lifecycle-viewmodel-release-19 C:\Users\T1650\.gradle\caches\8.14.3\transforms\b2ecc1c703ca88779379b4547ffad65b\transformed\lifecycle-viewmodel-release\res
+com.example.kmpnativo.composeApp-core-ktx-1.15.0-20 C:\Users\T1650\.gradle\caches\8.14.3\transforms\badaafd6636e5bf30700bd5ac3b99504\transformed\core-ktx-1.15.0\res
+com.example.kmpnativo.composeApp-graphics-path-1.0.1-21 C:\Users\T1650\.gradle\caches\8.14.3\transforms\c2d3bf124f2cf1b8b67e5375c6e38a0b\transformed\graphics-path-1.0.1\res
+com.example.kmpnativo.composeApp-profileinstaller-1.4.0-22 C:\Users\T1650\.gradle\caches\8.14.3\transforms\c2e1b9763a2ed1f510786de6639e8763\transformed\profileinstaller-1.4.0\res
+com.example.kmpnativo.composeApp-savedstate-ktx-1.3.3-23 C:\Users\T1650\.gradle\caches\8.14.3\transforms\cb8f8ba39640dd5e943b94f51eead67f\transformed\savedstate-ktx-1.3.3\res
+com.example.kmpnativo.composeApp-emoji2-1.4.0-24 C:\Users\T1650\.gradle\caches\8.14.3\transforms\cfb81e1a48fd34acc8d53f6b2b95e91f\transformed\emoji2-1.4.0\res
+com.example.kmpnativo.composeApp-core-viewtree-1.0.0-25 C:\Users\T1650\.gradle\caches\8.14.3\transforms\d2505826f03d6f2a3152fd78191c1d2a\transformed\core-viewtree-1.0.0\res
+com.example.kmpnativo.composeApp-savedstate-release-26 C:\Users\T1650\.gradle\caches\8.14.3\transforms\d5897a8ae455063d7e2e93fb2df1073c\transformed\savedstate-release\res
+com.example.kmpnativo.composeApp-foundation-release-27 C:\Users\T1650\.gradle\caches\8.14.3\transforms\d650a02cfb280fbedc36e656112f2b0b\transformed\foundation-release\res
+com.example.kmpnativo.composeApp-lifecycle-viewmodel-savedstate-release-28 C:\Users\T1650\.gradle\caches\8.14.3\transforms\df42ad79dc563825c2b971bcec4f2b87\transformed\lifecycle-viewmodel-savedstate-release\res
+com.example.kmpnativo.composeApp-ui-release-29 C:\Users\T1650\.gradle\caches\8.14.3\transforms\ecc5372002a0f068e4d5cdbd802d7513\transformed\ui-release\res
+com.example.kmpnativo.composeApp-customview-poolingcontainer-1.0.0-30 C:\Users\T1650\.gradle\caches\8.14.3\transforms\f4268ee575a5931f7deb59426e79ec9e\transformed\customview-poolingcontainer-1.0.0\res
+com.example.kmpnativo.composeApp-pngs-31 C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\build\generated\res\pngs\release
+com.example.kmpnativo.composeApp-resValues-32 C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\build\generated\res\resValues\release
+com.example.kmpnativo.composeApp-packageReleaseResources-33 C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\build\intermediates\incremental\release\packageReleaseResources\merged.dir
+com.example.kmpnativo.composeApp-packageReleaseResources-34 C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\build\intermediates\incremental\release\packageReleaseResources\stripped.dir
+com.example.kmpnativo.composeApp-release-35 C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\build\intermediates\merged_res\release\mergeReleaseResources
+com.example.kmpnativo.composeApp-androidMain-36 C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\src\androidMain\res
+com.example.kmpnativo.composeApp-androidRelease-37 C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\src\androidRelease\res
+com.example.kmpnativo.composeApp-main-38 C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\src\main\res
+com.example.kmpnativo.composeApp-release-39 C:\Users\T1650\Documents\repo\KMP Nativo\composeApp\src\release\res

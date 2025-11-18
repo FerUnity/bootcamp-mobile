@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.persistenciaynetworkingmultiplatform.composeApp-mergeDebugResources-42:/values-v30/values-v30.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\T1650\\.gradle\\caches\\8.14.3\\transforms\\1918a9abaf0bc9d4f2975f2e52e2d5cd\\transformed\\material3\\res\\values-v30\\values-v30.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "72",
+                        "endOffsets": "123"
+                    }
+                }
+            ]
+        }
+    ]
+}

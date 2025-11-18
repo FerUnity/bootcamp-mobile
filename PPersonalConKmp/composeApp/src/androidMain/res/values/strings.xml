@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">ProyectoPersonal</string>
+    <string name="add_button">AddProduct</string>
+    <string name="email_label" translatable="false">Email</string>
+    <string name="save_button">Save</string>
+    <string name="details_button">Consultar</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="add_product_success">This product was added!</string>
+    <string name="price_label">USD %s</string>
+    <string name="deployment_1">Selection_1</string>
+    <string name="select_service">Service_selection</string>
+    <string name="option_select">select_option</string>
+    <string name="button_back">back_button</string>
+    <string name="selection">selection</string>
+    <string name="form_meds">meds_form</string>
+    <string name="name_label" translatable="false">nombre del medicamento:</string>
+    <string name="brand_label" translatable="false">marca del medicamento:</string>
+    <string name="description_label" translatable="false">descripcion del medicamento:</string>
+    <string name="category_label" translatable="false">categoria del medicamento:</string>
+    <string name="medlist_label" translatable="false">lista del medicamento:</string>
+    <string name="med_list" translatable="false">Lista de medicamentos</string>
+    <string name="localization_label">Localizacion</string>
+    <string name="loading_map" translatable="false">Cargando Mapa..</string>
+</resources>
