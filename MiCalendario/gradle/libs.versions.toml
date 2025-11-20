@@ -23,6 +23,9 @@ sqldelight = "2.2.1"
 ktor = "3.3.2"
 koin = "4.1.1"
 core-desugaring = "2.0.0"
+animatedVectorDrawable = "28.0.0"
+ui = "1.9.5"
+hilt = "2.51.1"
 
 
 [libraries]
@@ -53,7 +56,9 @@ ktor-clientOkhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 androidx-desugar-core = { module = "com.android.tools:desugar-library", version.ref = "core-desugaring" }
-
+animated-vector-drawable = { group = "com.android.support", name = "animated-vector-drawable", version.ref = "animatedVectorDrawable" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
+hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -64,3 +69,4 @@ composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "k
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 #Mi pry:
 sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
+kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }

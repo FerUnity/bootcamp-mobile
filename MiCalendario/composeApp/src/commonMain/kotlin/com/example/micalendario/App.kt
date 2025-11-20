@@ -1,30 +1,47 @@
 package com.example.micalendario
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButtonDefaults.elevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.micalendario.calendar.Calendar
+import com.example.micalendario.calendar.CalendarViewModel
+import com.example.micalendario.calendar.CalendarYear
+import com.example.micalendario.calendar.model.CalendarDay
+import com.example.micalendario.calendar.model.CalendarMonth
+import com.example.micalendario.calendar.model.DaySelected
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import java.text.SimpleDateFormat
-import java.util.Date
 
 @Suppress("SimpleDateFormat")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
 //Esta version es con DatePicker:
-fun App() {
+fun App(
+    onBackPressed: () -> Unit
+) {
     /*    MaterialTheme {
             var showContent by remember { mutableStateOf(false) }
             Column(
@@ -50,7 +67,10 @@ fun App() {
             }
         }*/
 
-    Surface(
+/*
+//Version con DatePicker
+
+Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
@@ -118,5 +138,63 @@ fun App() {
                 Text("Fecha Seleccionada: $formattedDate")
             }
         }
+    }*/
+
+    val calendarViewModel: CalendarViewModel = viewModel()
+    val calendarYear = calendarViewModel.calendarYear
+
+    CalendarContent(
+        selectedDates = calendarViewModel.datesSelected.toString(),
+        calendarYear = calendarYear,
+        onDayClicked = { calendarDay, calendarMonth ->
+            calendarViewModel.onDaySelected(
+                DaySelected(calendarDay.value.toInt(), calendarMonth, calendarYear)
+            )
+        },
+        onBackPressed = onBackPressed
+    )
+}
+
+@Composable
+fun CalendarContent(
+    selectedDates: String,
+    calendarYear: CalendarYear,
+    onDayClicked: (CalendarDay, CalendarMonth) -> Unit,
+    onBackPressed: () -> Unit
+) {
+    Scaffold(
+        modifier = Modifier.fillMaxSize().background(Color.White),
+        topBar = {
+           CalendarTopAppBar(selectedDates, onBackPressed)
+        }
+    ) {
+        Calendar(calendarYear, onDayClicked)
     }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CalendarTopAppBar(selectedDates: String, onBackPressed: () -> Unit) {
+    Column {
+        Spacer(modifier = Modifier
+            .height(56.dp)
+            .fillMaxWidth()
+            .background(Color.Blue)
+        )
+        TopAppBar(
+            title = {
+                Text(
+                    text = selectedDates.ifEmpty { "Select Dates" },
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+            },
+            Modifier.background(Color.Red)
+//            elevation(0.dp)
+
+        )
+    }
+
+
 }
