@@ -23,6 +23,7 @@ import java.util.Date
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
+//Esta version es con DatePicker:
 fun App() {
     /*    MaterialTheme {
             var showContent by remember { mutableStateOf(false) }
