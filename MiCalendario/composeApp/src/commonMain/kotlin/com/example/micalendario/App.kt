@@ -155,6 +155,7 @@ Surface(
     )
 }
 
+@Suppress("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CalendarContent(
     selectedDates: String,

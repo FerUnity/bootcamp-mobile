@@ -36,6 +36,8 @@ import com.example.micalendario.calendar.model.CalendarMonth
 import com.example.micalendario.calendar.model.DayOfWeek
 import com.example.micalendario.calendar.model.DaySelectedStatus
 import io.ktor.client.request.invoke
+import io.ktor.http.invoke
+import micalendario.composeapp.generated.resources.Res
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.skia.Surface
 
@@ -168,7 +170,12 @@ private fun DayContainer(
     content: @Composable () -> Unit
 ) {
     val stateDescriptionLabel = stringResource(
-        if (selected) R.string.selected else R.string.not_selected
+        if (selected) {
+            R.string.selected_day
+
+        } else {
+            R.string.unselected_day
+        }
     )
 
     Surface(
@@ -294,7 +301,6 @@ private fun DaySelectedStatus.isMarked(): Boolean {
         else -> false
     }
 }
-
 private val CELL_SIZE = 48.dp
 val DayStatusKey = SemanticsPropertyKey<DaySelectedStatus>("DayStatusKey")
 var SemanticsPropertyReceiver.dayStatusProperty by DayStatusKey

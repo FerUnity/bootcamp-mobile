@@ -13,7 +13,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         initKoin() //fun initial de Koin
         setContent {
-            App()
+            App(
+                onBackPressed = { finish() }
+            )
         }
     }
 }
