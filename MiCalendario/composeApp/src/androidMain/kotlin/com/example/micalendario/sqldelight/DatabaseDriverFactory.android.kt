@@ -7,6 +7,7 @@ import com.example.micalendario.AppDatabaseExample
 
 actual class DatabaseDriverFactory(private val context: Context)  {
     actual fun createDriver(): SqlDriver {
-       return AndroidSqliteDriver(AppDatabaseExample.Companion.Schema, context,"app.db")
+       return AndroidSqliteDriver(
+           schema = AppDatabaseExample.Companion.Schema, context,"holidays.db")
     }
 }

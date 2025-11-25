@@ -45,8 +45,18 @@ kotlin {
             implementation(libs.ktor.serializationKotlinxJson)
             implementation(libs.koin.core)
             implementation(libs.koin.android)
-//            implementation(libs.androidx.desugarLibrary)
-            //            coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
+            implementation(libs.kotlinx.coroutines.core)
+            // Fechas multiplataforma
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
+            // Ktor común
+            implementation("io.ktor:ktor-client-core:2.3.4")
+            implementation("io.ktor:ktor-client-content-negotiation:2.3.4")
+            implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.4")
+
+            // SQLDelight runtime
+            implementation("app.cash.sqldelight:runtime:2.0.2")
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -155,7 +165,7 @@ dependencies {
     implementation(libs.androidx.hilt.lifecycle.viewmodel) // This line is duplicated, consider removing one if not intended
     implementation(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
-    implementation("com.google.dagger:hilt-android-gradle-plugin")
+    implementation(libs.hilt.android.gradle.plugin)
 }
 
 compose.desktop {
