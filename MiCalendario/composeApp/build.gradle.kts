@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.Packaging
 import org.gradle.kotlin.dsl.implementation
 import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.testImplementation
@@ -11,6 +12,9 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.sqlDelight)
+//    id("app.cash.sqldelight")
+//    id("com.android.application")
+//    id("dagger.hilt.android.plugin")
 }
 
 kotlin {
@@ -43,19 +47,20 @@ kotlin {
             implementation(libs.ktor.ktorClientCore)
             implementation(libs.ktor.contentNegotiation)
             implementation(libs.ktor.serializationKotlinxJson)
-            implementation(libs.koin.core)
-            implementation(libs.koin.android)
             implementation(libs.kotlinx.coroutines.core)
             // Fechas multiplataforma
-            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.kotlinx.serialization.json)
             // Ktor común
-            implementation("io.ktor:ktor-client-core:2.3.4")
-            implementation("io.ktor:ktor-client-content-negotiation:2.3.4")
-            implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.4")
+            implementation(libs.ktor.client.core.v234)
+            implementation(libs.ktor.client.content.negotiation.v234)
+            implementation(libs.ktor.serialization.kotlinx.json.v234)
 
             // SQLDelight runtime
-            implementation("app.cash.sqldelight:runtime:2.0.2")
+            implementation(libs.runtime.v202)
+
+            implementation(libs.hilt.android.v2572)
+//
 
         }
         commonTest.dependencies {
@@ -114,13 +119,14 @@ android {
         compose = true
     }
 
-/*    composeOptions {
-        kotlinCompilerExtensionVersion = compose_version
-        kotlinCompilerVersion = "1.5.10"
-    }*/
+
+    /*    composeOptions {
+            kotlinCompilerExtensionVersion = compose_version
+            kotlinCompilerVersion = "1.5.10"
+        }*/
 
 
-    packagingOptions {
+    fun Packaging.() {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }

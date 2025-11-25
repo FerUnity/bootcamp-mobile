@@ -1,29 +1,37 @@
 [versions]
-agp = "8.12.3"
+agp = "8.12.0"
 android-compileSdk = "36"
 android-minSdk = "24"
 android-targetSdk = "36"
-androidx-activity = "1.11.0"
+androidx-activity = "1.12.0"
 androidx-appcompat = "1.7.1"
 androidx-core = "1.17.0"
 androidx-espresso = "3.7.0"
 androidx-lifecycle = "2.9.6"
 androidx-testExt = "1.3.0"
-composeHotReload = "1.0.0-rc03"
+composeHotReload = "1.0.0"
 composeMultiplatform = "1.9.3"
 #desugar_jdk_libs = "2.1.5"
 #desugar_jdk_libsVersion = "2.1.5"
 desugar_jdk_libs = "2.1.5"
 desugarLibrary = "1.1.5"
 hiltAndroid = "2.57.2"
+hiltAndroidVersion = "2.57.2"
+hiltCompiler = "2.57.2"
 hiltNavigationFragment = "1.3.0"
 junit = "4.13.2"
 kotlin = "2.2.21"
 kotlinx-coroutines = "1.10.2"
 #Mi proyecto:
+kotlinxDatetime = "0.7.1"
+kotlinxSerializationJson = "1.9.0"
+ktorClientContentNegotiation = "3.3.2"
+ktorClientCore = "3.3.2"
+ktorSerializationKotlinxJson = "3.3.2"
 lifecycleRuntimeKtx = "2.10.0"
 material = "1.13.0"
 navigationCompose = "2.9.6"
+runtime = "2.2.1"
 rxandroid = "2.1.1"
 rxjava = "2.2.21"
 sqldelight = "2.2.1"
@@ -32,7 +40,7 @@ koin = "4.1.1"
 core-desugaring = "2.0.0"
 animatedVectorDrawable = "28.0.0"
 ui = "1.9.5"
-hilt = "2.51.1"
+hilt = "2.57.2"
 
 
 [libraries]
@@ -49,8 +57,14 @@ androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-view
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin" }
+#noinspection SimilarGradleDependency
 hilt-android-v2572 = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
+#noinspection SimilarGradleDependency
+hilt-android-v2x = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidVersion" }
+#noinspection SimilarGradleDependency
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
+#noinspection SimilarGradleDependency
+hilt-compiler-v2x = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -64,14 +78,28 @@ androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutinesSwing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 #Mi proy:
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+#noinspection SimilarGradleDependency
+ktor-client-content-negotiation-v234 = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorClientContentNegotiation" }
+#noinspection SimilarGradleDependency
+ktor-client-core-v234 = { module = "io.ktor:ktor-client-core", version.ref = "ktorClientCore" }
+#noinspection SimilarGradleDependency
+ktor-serialization-kotlinx-json-v234 = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorSerializationKotlinxJson" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
+#noinspection SimilarGradleDependency
+runtime-v202 = { module = "app.cash.sqldelight:runtime", version.ref = "runtime" }
 rxandroid = { module = "io.reactivex.rxjava2:rxandroid", version.ref = "rxandroid" }
 rxjava = { module = "io.reactivex.rxjava2:rxjava", version.ref = "rxjava" }
 sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+#noinspection SimilarGradleDependency
 sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
 sqldelight-sqliteDriver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
+#noinspection SimilarGradleDependency
 ktor-ktorClientCore = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+#noinspection SimilarGradleDependency
 ktor-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+#noinspection SimilarGradleDependency
 ktor-serializationKotlinxJson = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-clientCio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-clientOkhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
@@ -80,6 +108,7 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 androidx-desugar-core = { module = "com.android.tools:desugar-library", version.ref = "core-desugaring" }
 animated-vector-drawable = { group = "com.android.support", name = "animated-vector-drawable", version.ref = "animatedVectorDrawable" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
+#noinspection SimilarGradleDependency
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 
 [plugins]
@@ -91,4 +120,6 @@ composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "k
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 #Mi pry:
 sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+#kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+dagger = {id = "dagger.hilt.android.plugin"}
+

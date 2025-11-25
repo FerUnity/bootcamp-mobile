@@ -15,9 +15,9 @@ import com.example.micalendario.sqldelight.HolidayRepository
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
+        /*enableEdgeToEdge()*/
         super.onCreate(savedInstanceState)
-        initKoin() //fun initial de Koin
+//        initKoin() //fun initial de Koin
         val driverFactory = DatabaseDriverFactory(this)
         val database = Database(driverFactory)
         val api = HolidayApi(httpClient)
