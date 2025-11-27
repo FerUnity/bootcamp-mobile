@@ -24,9 +24,10 @@ class MainActivity : ComponentActivity() {
         val repo = HolidayRepository(database, api)
         val viewModel = CalendarViewModel(repo)
         setContent {
+//            App()
             MaterialTheme {
                 CalendarScreen(viewModel = viewModel)
-//            App()
+
             }
         }
     }

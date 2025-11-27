@@ -12,6 +12,8 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.sqlDelight)
+    alias(libs.plugins.hilt)
+
 //    id("app.cash.sqldelight")
 //    id("com.android.application")
 //    id("dagger.hilt.android.plugin")
@@ -32,6 +34,16 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.sqldelight.androidDriver)
             implementation(libs.ktor.clientOkhttp)
+            implementation(libs.androidx.core.ktx)
+            implementation(libs.androidx.appcompat)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.androidx.lifecycle.viewmodelCompose)
+            implementation(libs.androidx.navigation.compose)
+            implementation(libs.hilt)
+            implementation(libs.hilt.compiler)
+            implementation(libs.androidx.hilt.navigation.compose)
+
 
         }
         commonMain.dependencies {
@@ -48,6 +60,8 @@ kotlin {
             implementation(libs.ktor.contentNegotiation)
             implementation(libs.ktor.serializationKotlinxJson)
             implementation(libs.kotlinx.coroutines.core)
+            // Koin is a good multiplatform alternative for DI
+            implementation(libs.koin.core)
             // Fechas multiplataforma
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)

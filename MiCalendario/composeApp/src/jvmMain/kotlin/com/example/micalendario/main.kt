@@ -18,6 +18,7 @@ fun main() = application {
         state = windowState,
         title = "micalendario",
     ) {
+//        App()
         val viewModel = remember {
             val driverFactory = DatabaseDriverFactory()
             val db = AppDatabaseExample(driverFactory.createDriver())
