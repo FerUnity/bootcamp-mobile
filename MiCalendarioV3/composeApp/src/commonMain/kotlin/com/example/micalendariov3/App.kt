@@ -16,8 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import micalendariov3.composeapp.generated.resources.Res
-import micalendariov3.composeapp.generated.resources.compose_multiplatform
 
 // Define tu datos de ejemplo
 /*val dataListHorizontal = List(7) { it }
@@ -86,59 +84,76 @@ fun App() {
 
     MatrixDeCards()
 }
-   @Composable
-   fun MatrixDeCards() {
-       // Un Box podría ser usado para envolver toda la matriz si se necesita.
-       Box(modifier = Modifier.fillMaxSize()) {
-           // LazyRow para la fila horizontal de 7 cuadros
-           LazyRow(
-               modifier = Modifier.fillMaxWidth(),
-               horizontalArrangement = Arrangement.spacedBy(8.dp),
-               contentPadding = PaddingValues(horizontal = 16.dp)
-           ) {
-               items(7) { index ->
-                   // Llama a la función para crear cada cuadro horizontal
-                   CuadroHorizontal(index = index)
-               }
-           }
-       }
-   }
 
-    @Composable
-    fun CuadroHorizontal(index: Int) {
-        // Aquí es donde cada cuadro horizontal se define.
-        // Podría ser un Card o un Box. QUE ENGLOBA EL MES COMPLETO
-        Card(
-            modifier = Modifier
-                .width(200.dp) // Ancho del cuadro horizontal
-                .height(350.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+enum class DayOfWeek {
+    Lu,
+    Ma,
+    Mi,
+    Ju,
+    Vi,
+    Sa,
+    Do
+}
+
+@Composable
+fun MatrixDeCards() {
+    // Un Box podría ser usado para envolver toda la matriz si se necesita.
+    Box(modifier = Modifier.fillMaxSize()) {
+        // LazyRow para la fila horizontal de 7 cuadros
+        LazyRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp)
         ) {
+            items(7) { index ->
+                // Llama a la función para crear cada cuadro horizontal
+//                CuadroHorizontal(index = index)
+                CuadroHorizontal(index = DayOfWeek.values()[index].name)
+            }
+        }
+    }
+}
+
+@Composable
+fun CuadroHorizontal(index: String) {
+    // Aquí es donde cada cuadro horizontal se define.
+    // Podría ser un Card o un Box. QUE ENGLOBA EL MES COMPLETO
+    Card(
+        modifier = Modifier
+            .width(200.dp) // Ancho del cuadro horizontal
+            .height(350.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
 //            PARA CREAR LAS CARDS VERTICALES:
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(8.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                // Llama a la función para crear las cards verticales
-                for (i in 0 until 5) {
-                    CardVertical(cuadroIndex = index, cardIndex = i)
-                }
-            }
-        }
-    }
-
-    @Composable
-    fun CardVertical(cuadroIndex: Int, cardIndex: Int) {
-        Card(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp), // Altura de cada card vertical
-            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                .fillMaxSize()
+                .padding(8.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            Box(modifier = Modifier.fillMaxSize().padding(8.dp)) {
-                Text(text = "Cuadro ${cuadroIndex + 1}, Card ${cardIndex + 1}")
+            // Llama a la función para crear las cards verticales
+            for (i in 0 until 5) {
+                    CardVertical(cuadroIndex = index)
+//                CardVertical(DayOfWeek.values()[i].name)
             }
         }
     }
+}
+
+@Composable
+//    fun CardVertical(cuadroIndex: String, cardIndex: Int) {
+fun CardVertical(cuadroIndex: String) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(60.dp), // Altura de cada card vertical
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Box(modifier = Modifier.fillMaxSize().padding(8.dp)) {
+            Text(
+//                    text = "Cuadro ${cuadroIndex + 1}, Card ${cardIndex + 1}"
+                text = cuadroIndex
+            )
+        }
+    }
+}
