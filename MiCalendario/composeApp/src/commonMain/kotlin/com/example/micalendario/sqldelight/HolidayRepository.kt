@@ -1,14 +1,15 @@
 package com.example.micalendario.sqldelight
 
+import com.example.micalendario.network.HolidayApi
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.toLocalDate
 
 class HolidayRepository(
-    private val database: HolidaysDatabase,
+    private val database: Database,
     private val api: HolidayApi
 ) {
 
-    private val queries = database.holidaysQueries
+    private val queries = database.userQueries
 
     /**
      * Se llama al iniciar la app para el año actual.

@@ -8,10 +8,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.ExperimentalTime
 
 data class CalendarState(
     val currentMonthStart: LocalDate,
@@ -27,11 +28,12 @@ class CalendarViewModel(
     private val _state: MutableStateFlow<CalendarState>
     val state: StateFlow<CalendarState> get() = _state
 
-    private val today: LocalDate = Clock.System.now()
+    @OptIn(ExperimentalTime::class)
+    private val today: LocalDate = kotlin.time.Clock.System.now()
         .toLocalDateTime(TimeZone.currentSystemDefault()).date
 
     init {
-        val firstDayOfMonth = LocalDate(today.year, today.monthNumber, 1)
+        val firstDayOfMonth = LocalDate(today.year, today.month.number, 1)
         _state = MutableStateFlow(
             CalendarState(currentMonthStart = firstDayOfMonth)
         )
@@ -55,7 +57,7 @@ class CalendarViewModel(
     }
 
     fun goToMonthOf(date: LocalDate) {
-        val first = LocalDate(date.year, date.monthNumber, 1)
+        val first = LocalDate(date.year, date.month.number, 1)
         updateMonth(first)
     }
 
@@ -77,7 +79,7 @@ class CalendarViewModel(
 
 
     private fun addMonths(date: LocalDate, delta: Int): LocalDate {
-        val newMonthNumber = date.monthNumber + delta
+        val newMonthNumber = date.month.number + delta
         val yearShift = floorDiv(newMonthNumber - 1, 12)
         val normalizedMonth = ((newMonthNumber - 1) % 12 + 12) % 12 + 1
         val year = date.year + yearShift

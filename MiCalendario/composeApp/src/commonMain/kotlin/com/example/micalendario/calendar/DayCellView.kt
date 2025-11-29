@@ -57,7 +57,7 @@ fun DayCellView(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = cell.date?.dayOfMonth?.toString() ?: "",
+                text = cell.date?.day?.toString() ?: "",
                 style = MaterialTheme.typography.bodyMedium,
                 color = textColor
             )

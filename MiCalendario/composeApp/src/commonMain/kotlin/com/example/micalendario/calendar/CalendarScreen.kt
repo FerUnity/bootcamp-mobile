@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.number
 
 @Composable
 fun CalendarScreen(
@@ -41,7 +42,7 @@ fun CalendarScreen(
 
     // Estados locales para la selección manual de fecha
     var yearText by remember { mutableStateOf(state.currentMonthStart.year.toString()) }
-    var monthText by remember { mutableStateOf(state.currentMonthStart.monthNumber.toString()) }
+    var monthText by remember { mutableStateOf(state.currentMonthStart.month.number.toString()) }
     var inputError by remember { mutableStateOf<String?>(null) }
 
     Column(

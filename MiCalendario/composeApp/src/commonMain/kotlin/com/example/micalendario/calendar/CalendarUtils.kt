@@ -2,6 +2,7 @@ package com.example.micalendario.calendar
 
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.number
 
 
 data class DayCell(
@@ -19,7 +20,7 @@ fun buildMonthCells(
     holidays: Set<LocalDate>,
     today: LocalDate
 ): List<List<DayCell>> {
-    val daysInMonth = daysInMonth(monthStart.year, monthStart.monthNumber)
+    val daysInMonth = daysInMonth(monthStart.year, monthStart.month.number)
     val firstDayOfWeek = dayOfWeekIndex(monthStart.dayOfWeek) // 1 = Lunes ... 7 = Domingo
 
     val cells = mutableListOf<DayCell>()
@@ -38,7 +39,7 @@ fun buildMonthCells(
 
     // Días reales del mes
     for (day in 1..daysInMonth) {
-        val date = LocalDate(monthStart.year, monthStart.monthNumber, day)
+        val date = LocalDate(monthStart.year, monthStart.month.number, day)
         val isSunday = date.dayOfWeek == DayOfWeek.SUNDAY
         val isHoliday = holidays.contains(date)
         val isToday = date == today
