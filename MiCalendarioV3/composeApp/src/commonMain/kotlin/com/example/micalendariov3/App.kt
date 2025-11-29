@@ -82,9 +82,9 @@ fun App() {
         }
     }*/
 
+//    Esta fun reemplazar por la fun MonthComponent(month: MonthObject) del ejemplo del profe:
     MatrixDeCards()
 }
-
 enum class DayOfWeek {
     Lu,
     Ma,
@@ -95,6 +95,7 @@ enum class DayOfWeek {
     Do
 }
 
+//Pintamos 1 mes:
 @Composable
 fun MatrixDeCards() {
     // Un Box podría ser usado para envolver toda la matriz si se necesita.
@@ -134,7 +135,6 @@ fun CuadroHorizontal(index: String) {
             // Llama a la función para crear las cards verticales
             for (i in 0 until 5) {
                     CardVertical(cuadroIndex = index)
-//                CardVertical(DayOfWeek.values()[i].name)
             }
         }
     }
