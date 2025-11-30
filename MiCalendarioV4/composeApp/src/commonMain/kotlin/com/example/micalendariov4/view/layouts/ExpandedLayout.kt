@@ -17,7 +17,7 @@ fun ExpandedLayout(monthQty: Int, monthColumnQty: Int) {
     var totalMonths = 0
     val monthRows = monthQty / monthColumnQty
 
-    // Esta es la vista de 3 meses en pantalla
+    // Esta es la vista de 3 meses en pantalla:
     Column {
         for (i in 1.. monthRows) {
             Row {
