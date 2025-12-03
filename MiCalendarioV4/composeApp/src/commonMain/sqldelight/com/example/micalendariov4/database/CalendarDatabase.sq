@@ -1,4 +1,4 @@
-CREATE TABLE Holiday (
+CREATE TABLE IF NOT EXISTS Holiday (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     year INTEGER NOT NULL,
     month INTEGER NOT NULL,
@@ -10,11 +10,14 @@ CREATE TABLE Holiday (
 selectHolidaysFromMonth:
 SELECT * FROM Holiday WHERE month = ? AND year = ? AND country = ?;
 
-selectHoliday:
+selectHolidayFromId:
 SELECT * FROM Holiday WHERE id = ?;
 
+selectHolidayFromDate:
+SELECT * FROM Holiday WHERE year = ? AND month = ? AND day = ?;
+
 insertHoliday:
-INSERT OR REPLACE INTO Holiday (id, year, month, day, description, country) VALUES (?, ?, ?, ?, ?, ?);
+INSERT OR REPLACE INTO Holiday (year, month, day, description, country) VALUES (?, ?, ?, ?, ?);
 
 removeHoliday:
 DELETE FROM Holiday WHERE id = ?;

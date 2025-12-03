@@ -2,6 +2,8 @@ package com.example.micalendariov4
 
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import com.example.micalendariov4.model.database.DatabaseDriverFactory
+import com.example.micalendariov4.model.database.HolidayDatabase
 import com.example.micalendariov4.view.App
 
 fun main() = application {
@@ -9,6 +11,8 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         title = "MiCalendarioV4",
     ) {
-        App()
+        val driver = DatabaseDriverFactory()
+        val database = HolidayDatabase(driver)
+        App(database)
     }
 }
