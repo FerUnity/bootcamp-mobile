@@ -219,7 +219,8 @@ fun AppMapaListaConMVVM(
                         ),
                         title = marker?.title ?: "Hospital seleccionado",
                         snippet = marker?.snippet ?: "Direccion",
-                        visible = marker?.visible ?: true
+//                        visible = marker?.visible ?: true
+                        visible = true
                     )
                 }
                 /*Marker(
